@@ -38,11 +38,11 @@ const serviceDatabase = {
     }  
   },
 
-  "PRECISION AIR": {
+  "BM COACH": {
 
     serviceType: "bus",
     
-    companyName: "PRECISION AIR",
+    companyName: "BM COACH",
     paymentAccountName: "FLY WITH US",
 
     bannerMessages: [
