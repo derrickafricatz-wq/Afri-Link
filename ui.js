@@ -1360,8 +1360,8 @@ ${passengers || "Not provided"}
 Travel Class:
 ${travelClass || "Not specified"}
 
-Parcel:
-${parcelAction || "Not specified"}
+Parcel Service:
+${parcelAction || "Not selected"}
 
 Parcel Type:
 ${parcelType || "Not provided"}
@@ -1369,8 +1369,20 @@ ${parcelType || "Not provided"}
 Parcel Destination:
 ${parcelDestination || "Not provided"}
 
+Receiver Name:
+${parcelReceiverName || "Not provided"}
+
 Receiver Phone:
-${receiverPhone || "Not provided"}
+${parcelReceiverPhone || "Not provided"}
+
+Sender Name:
+${parcelSenderName || "Not provided"}
+
+Sender Phone:
+${parcelSenderPhone || "Not provided"}
+
+Parcel Delivery Location:
+${parcelDeliveryLocation || "Not provided"}
 `;
 
 }
