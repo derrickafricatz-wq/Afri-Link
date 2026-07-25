@@ -1530,6 +1530,7 @@ ${parcelDeliveryLocation || "Not provided"}
   }
 
 }
+}  
 
 else if(serviceType === "tourism"){
 
