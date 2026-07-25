@@ -1344,6 +1344,8 @@ const senderPhone =
 const parcelDeliveryLocation =
   document.getElementById("parcelDeliveryLocation")?.value.trim() || "";
 
+  if(isFlightTravelSelected){
+
   dynamicBookingInfo = `
 Service Type:
 FLIGHT BOOKING
