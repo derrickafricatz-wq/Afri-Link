@@ -1317,6 +1317,9 @@ if(serviceType === "flight"){
   const travelClass =
     document.getElementById("bookingTravelClass")?.value || "";
 
+  const isFlightTravelSelected =
+  document.getElementById("flightTravelChoice")?.checked || false;
+
     const parcelAction =
     document.querySelector('input[name="parcelAction"]:checked')?.value || "";
 
