@@ -995,6 +995,89 @@ function updateDynamicBookingFields(){
 
 </div> 
 
+<div style="
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-bottom:14px;
+">
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,200,255,.08);
+    border:1px solid rgba(0,200,255,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="flightTravelChoice"
+      onchange="handleFlightTravelChoice()"
+    >
+
+    <span>
+      TRAVEL
+    </span>
+
+  </label>
+
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,255,136,.08);
+    border:1px solid rgba(0,255,136,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="flightSendParcelChoice"
+      onchange="handleFlightSendParcelChoice()"
+    >
+
+    <span>
+      SEND PARCEL
+    </span>
+
+  </label>
+
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,150,255,.08);
+    border:1px solid rgba(0,150,255,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="flightReceiveParcelChoice"
+      onchange="handleFlightReceiveParcelChoice()"
+    >
+
+    <span>
+      RECEIVE PARCEL
+    </span>
+
+  </label>
+
+</div>
+
         <input
         id="bookingDeparture"
         placeholder="Departure City / Airport"
