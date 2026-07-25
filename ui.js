@@ -1366,6 +1366,9 @@ ${parcelAction || "Not selected"}
 Parcel Type:
 ${parcelType || "Not provided"}
 
+${
+  parcelAction === "send"
+  ? `
 Parcel Destination:
 ${parcelDestination || "Not provided"}
 
@@ -1374,7 +1377,13 @@ ${parcelReceiverName || "Not provided"}
 
 Receiver Phone:
 ${parcelReceiverPhone || "Not provided"}
+`
+  : ""
+}
 
+${
+  parcelAction === "receive"
+  ? `
 Sender Name:
 ${parcelSenderName || "Not provided"}
 
@@ -1383,6 +1392,9 @@ ${parcelSenderPhone || "Not provided"}
 
 Parcel Delivery Location:
 ${parcelDeliveryLocation || "Not provided"}
+`
+  : ""
+}
 `;
 
 }
