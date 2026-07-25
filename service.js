@@ -1276,6 +1276,130 @@ style="
           BUS TRAVEL DETAILS
         </div>
 
+        <div style="
+  margin-bottom:14px;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,255,255,.05);
+  border:1px solid rgba(0,255,255,.2);
+">
+
+  <div style="
+    font-size:13px;
+    font-weight:900;
+    color:#00ffff;
+    margin-bottom:10px;
+  ">
+    BOOKING PURPOSE
+  </div>
+
+  <div style="
+    color:#ffffff;
+    font-size:13px;
+    line-height:1.6;
+  ">
+    You can book your bus travel, send a parcel, or receive a parcel.
+  </div>
+
+</div>
+
+
+<div style="
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-bottom:14px;
+">
+
+
+  <!-- =========================
+       BUS TRAVEL
+  ========================== -->
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,200,255,.08);
+    border:1px solid rgba(0,200,255,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="busTravelChoice"
+      onchange="handleBusTravelChoice()"
+    >
+
+    <span>
+      TRAVEL
+    </span>
+
+  </label>
+
+
+  <!-- =========================
+       BUS SEND PARCEL
+  ========================== -->
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,255,136,.08);
+    border:1px solid rgba(0,255,136,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="busSendParcelChoice"
+      onchange="handleBusSendParcelChoice()"
+    >
+
+    <span>
+      SEND PARCEL
+    </span>
+
+  </label>
+
+
+  <!-- =========================
+       BUS RECEIVE PARCEL
+  ========================== -->
+
+  <label style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background:rgba(0,150,255,.08);
+    border:1px solid rgba(0,150,255,.3);
+    color:#ffffff;
+    cursor:pointer;
+  ">
+
+    <input
+      type="checkbox"
+      id="busReceiveParcelChoice"
+      onchange="handleBusReceiveParcelChoice()"
+    >
+
+    <span>
+      RECEIVE PARCEL
+    </span>
+
+  </label>
+
+</div>
+
         <input
         id="bookingDeparture"
         placeholder="Departure / From"
