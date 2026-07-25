@@ -4,6 +4,8 @@ const serviceDatabase = {
 
     serviceType: "product",
 
+    paymentAccountName: "SHALOM NATURAL FOODS",
+
     bannerMessages: [
       "Welcome to SHALOM PRODUCTS",
       "Quality Agro Products Direct From Tanzania",
@@ -21,27 +23,22 @@ const serviceDatabase = {
       paymentAccounts: {
 
       mpesa: {
-        number: "07XXXXXXXX",
-        accountName: "SHALOM PRODUCTS"
+        number: "07XXXXXXXX"
       },
 
       airtel: {
-        number: "07",
-        accountName: "SHALOM PRODUCTS"
+        number: "07"
       },
 
       mixx: {
-        number: "08",
-        accountName: "SHALOM PRODUCTS"
+        number: "08"
       },
 
       nmb: {
-        accountName: "SHALOM PRODUCTS",
         accountNumber: "06"
       },
 
       crdb: {
-        accountName: "SHALOM PRODUCTS",
         accountNumber: "09"
       }
 
