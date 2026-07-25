@@ -38,4 +38,42 @@ const serviceDatabase = {
     }  
   },
 
+  "PRECISION AIR": {
+
+    serviceType: "Flight",
+    
+    companyName: "PRECISION AIR",
+    paymentAccountName: "FLY WITH US",
+
+    bannerMessages: [
+      "Welcome On Sky Bord.",
+      "This Is Precision Air, Way To Kigali",
+      "Smoother Flight. Happy Life"
+    ],
+
+      paymentAccounts: {
+
+      mpesa: {
+        number: "07XXXXXXXX"
+      },
+
+      airtel: {
+        number: "07"
+      },
+
+      mixx: {
+        number: "08"
+      },
+
+      nmb: {
+        accountNumber: "06"
+      },
+
+      crdb: {
+        accountNumber: "09"
+      }
+
+    }  
+  }
+  
 };
