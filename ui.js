@@ -1427,6 +1427,9 @@ else if(serviceType === "bus"){
   const passengers =
     document.getElementById("bookingPassengers")?.value || "";
 
+  const isBusTravelSelected =
+  document.getElementById("busTravelChoice")?.checked || false;
+
   const parcelAction =
   document.querySelector('input[name="parcelAction"]:checked')?.value || "";
 
