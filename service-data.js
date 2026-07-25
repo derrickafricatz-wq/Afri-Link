@@ -40,7 +40,7 @@ const serviceDatabase = {
 
   "PRECISION AIR": {
 
-    serviceType: "flight",
+    serviceType: "bus",
     
     companyName: "PRECISION AIR",
     paymentAccountName: "FLY WITH US",
