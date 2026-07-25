@@ -1298,6 +1298,12 @@ if(serviceType === "flight"){
   const receiverPhone =
     document.getElementById("receiverPhone")?.value.trim() || "";
 
+    const senderName =
+    document.getElementById("senderName")?.value.trim() || "";
+
+  const senderPhone =
+    document.getElementById("senderPhone")?.value.trim() || "";
+
   dynamicBookingInfo = `
 Service Type:
 FLIGHT BOOKING
