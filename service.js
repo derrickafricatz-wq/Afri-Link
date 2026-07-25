@@ -1050,6 +1050,87 @@ function updateDynamicBookingFields(){
 
         </select>
 
+        <!-- =========================
+     PARCEL SERVICE
+========================= -->
+
+<div style="
+  margin-top:18px;
+  padding:16px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(0,255,255,.25);
+">
+
+  <div style="
+    font-size:17px;
+    font-weight:900;
+    color:#00ffff;
+    margin-bottom:12px;
+  ">
+    PARCEL SERVICE
+  </div>
+
+  <div style="
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  ">
+
+    <label style="
+      padding:14px;
+      border-radius:10px;
+      background:rgba(0,255,136,.08);
+      border:1px solid rgba(0,255,136,.3);
+      color:#ffffff;
+      cursor:pointer;
+      text-align:center;
+    ">
+
+      <input
+        type="radio"
+        name="parcelAction"
+        value="send"
+        onchange="handleParcelChoice()"
+      >
+
+      SEND PARCEL
+
+    </label>
+
+    <label style="
+      padding:14px;
+      border-radius:10px;
+      background:rgba(0,150,255,.08);
+      border:1px solid rgba(0,150,255,.3);
+      color:#ffffff;
+      cursor:pointer;
+      text-align:center;
+    ">
+
+      <input
+        type="radio"
+        name="parcelAction"
+        value="receive"
+        onchange="handleParcelChoice()"
+      >
+
+      RECEIVE PARCEL
+
+    </label>
+
+  </div>
+
+</div>
+
+<div
+id="parcelDetails"
+style="
+  display:none;
+  margin-top:12px;
+">
+</div>
+
       </div>
 
     `;
