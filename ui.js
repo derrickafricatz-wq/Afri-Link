@@ -1316,6 +1316,18 @@ ${passengers || "Not provided"}
 
 Travel Class:
 ${travelClass || "Not specified"}
+
+Parcel:
+${parcelAction || "Not specified"}
+
+Parcel Type:
+${parcelType || "Not provided"}
+
+Parcel Destination:
+${parcelDestination || "Not provided"}
+
+Receiver Phone:
+${receiverPhone || "Not provided"}
 `;
 
 }
