@@ -1459,17 +1459,35 @@ ${parcelAction || "Not selected"}
 Parcel Type:
 ${parcelType || "Not provided"}
 
+${
+  parcelAction === "send"
+  ? `
 Parcel Destination:
 ${parcelDestination || "Not provided"}
 
-Receiver Phone:
-${receiverPhone || "Not provided"}
+Receiver Name:
+${parcelReceiverName || "Not provided"}
 
+Receiver Phone:
+${parcelReceiverPhone || "Not provided"}
+`
+  : ""
+}
+
+${
+  parcelAction === "receive"
+  ? `
 Sender Name:
-${senderName || "Not provided"}
+${parcelSenderName || "Not provided"}
 
 Sender Phone:
-${senderPhone || "Not provided"}
+${parcelSenderPhone || "Not provided"}
+
+Parcel Delivery Location:
+${parcelDeliveryLocation || "Not provided"}
+`
+  : ""
+}
 `;
 
 }
