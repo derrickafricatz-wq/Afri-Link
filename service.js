@@ -201,8 +201,8 @@ function showPaymentTab(){
     const paymentMethods =
   paymentProviders
     .filter(provider =>
-      companyData?.paymentAccounts?.[provider.id]?.enabled
-    )
+  companyData?.paymentAccounts?.[provider.id]
+)
     .map(provider => {
 
       const account =
