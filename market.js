@@ -34,6 +34,23 @@ const marketAds = [
 },
 
   {
+  company: "PRECISION AIR",
+  phone: "+255746644223",
+  whatsapp: "255742097868",
+  location: ",Tanzania",
+
+  categories: ["Transport"],
+  service: "Transportation",
+
+  expiresAt: "2026-12-22 23:59",
+
+  images: [
+    "images/o1.png",
+    "images/o2.jpg"
+  ]
+},
+
+  {
   company: "NEW DUNCAN FURNITURE",
   phone: "+255759376054",
   whatsapp: "255759376054",
