@@ -8,12 +8,12 @@ const bookingDetailsDatabase = {
     Payment: Mobile Money & Bank Transfer
   `,
 
-  "PRECISION AIR": `
-Airline: Precision Air
-Service Type: Passenger Flights & Air Travel
-Booking Type: Domestic & Regional Flights
+  "BM COACH": `
+Airline: Bm Coach
+Service Type: Passenger 
+Booking Type: Domestic & Regional 
 Travel: Tanzania & Selected Regional Destinations
-Services: Flight Booking & Passenger Travel
+Services:Booking & Passenger Travel
 Payment: Mobile Money & Bank Transfer
 `
 
