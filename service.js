@@ -63,16 +63,53 @@ let bannerTimer = null;
 
 function loadBookingDetails(){
 
-  const box = document.getElementById("bookingDetailsText");
+  const box =
+    document.getElementById("bookingDetailsText");
 
   if(!box) return;
 
-  const companyData =
-    serviceDatabase[activeService?.company];
+  const companyName =
+    activeService?.company;
 
-  box.innerHTML =
-    companyData?.bookingDetails ||
-    "Booking information will appear here.";
+  const bookingDetails =
+    bookingDetailsDatabase[companyName];
+
+  if(bookingDetails){
+
+    box.innerHTML =
+      bookingDetails
+        .trim()
+        .split("\n")
+        .filter(line => line.trim() !== "")
+        .map(line => `
+          <div style="
+            padding:12px 14px;
+            margin-bottom:8px;
+            border-radius:10px;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(0,255,255,.12);
+            color:#ffffff;
+            font-family:monospace;
+            font-size:14px;
+          ">
+            ${line.trim()}
+          </div>
+        `)
+        .join("");
+
+  } else {
+
+    box.innerHTML = `
+      <div style="
+        padding:20px;
+        text-align:center;
+        color:#aaa;
+      ">
+        Booking information will appear here.
+      </div>
+    `;
+
+  }
 
 }
 
