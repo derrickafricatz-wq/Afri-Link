@@ -1681,12 +1681,6 @@ ${mapLink}
 GPS Accuracy:
 ${customerAccuracy}
 
-Product:
-${product || "Not specified"}
-
-Quantity:
-${quantity || "Not specified"}
-
 ${dynamicBookingInfo}
 
 Notes:
