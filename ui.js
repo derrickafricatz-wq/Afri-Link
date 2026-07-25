@@ -1413,23 +1413,29 @@ else if(serviceType === "bus"){
   const passengers =
     document.getElementById("bookingPassengers")?.value || "";
 
-    const parcelAction =
-    document.querySelector('input[name="parcelAction"]:checked')?.value || "";
+  const parcelAction =
+  document.querySelector('input[name="parcelAction"]:checked')?.value || "";
 
-  const parcelType =
-    document.getElementById("parcelType")?.value.trim() || "";
+const parcelType =
+  document.getElementById("parcelType")?.value.trim() || "";
 
-  const parcelDestination =
-    document.getElementById("parcelDestination")?.value.trim() || "";
+const parcelDestination =
+  document.getElementById("parcelDestination")?.value.trim() || "";
 
-  const receiverPhone =
-    document.getElementById("receiverPhone")?.value.trim() || "";
+const parcelReceiverName =
+  document.getElementById("parcelReceiverName")?.value.trim() || "";
 
-    senderName =
-    document.getElementById("senderName")?.value.trim() || "";
+const parcelReceiverPhone =
+  document.getElementById("parcelReceiverPhone")?.value.trim() || "";
 
-    senderPhone =
-    document.getElementById("senderPhone")?.value.trim() || "";
+const parcelSenderName =
+  document.getElementById("parcelSenderName")?.value.trim() || "";
+
+const parcelSenderPhone =
+  document.getElementById("parcelSenderPhone")?.value.trim() || "";
+
+const parcelDeliveryLocation =
+  document.getElementById("parcelDeliveryLocation")?.value.trim() || "";  
 
   dynamicBookingInfo = `
 Service Type:
