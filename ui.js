@@ -1257,6 +1257,9 @@ document.getElementById("locationVerified").style.display = "block";
 
 function sendOrder(){
 
+let senderName = "";
+let senderPhone = "";  
+
 const name=document.getElementById("customerName").value.trim();
 const phone=document.getElementById("customerPhone").value.trim();
 const email=document.getElementById("customerEmail").value.trim();  
@@ -1298,10 +1301,10 @@ if(serviceType === "flight"){
   const receiverPhone =
     document.getElementById("receiverPhone")?.value.trim() || "";
 
-    const senderName =
+    senderName =
     document.getElementById("senderName")?.value.trim() || "";
 
-  const senderPhone =
+    senderPhone =
     document.getElementById("senderPhone")?.value.trim() || "";
 
   dynamicBookingInfo = `
@@ -1364,10 +1367,10 @@ else if(serviceType === "bus"){
   const receiverPhone =
     document.getElementById("receiverPhone")?.value.trim() || "";
 
-  const senderName =
+    senderName =
     document.getElementById("senderName")?.value.trim() || "";
 
-  const senderPhone =
+    senderPhone =
     document.getElementById("senderPhone")?.value.trim() || "";
 
   dynamicBookingInfo = `
