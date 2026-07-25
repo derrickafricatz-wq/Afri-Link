@@ -1352,6 +1352,24 @@ else if(serviceType === "bus"){
   const passengers =
     document.getElementById("bookingPassengers")?.value || "";
 
+    const parcelAction =
+    document.querySelector('input[name="parcelAction"]:checked')?.value || "";
+
+  const parcelType =
+    document.getElementById("parcelType")?.value.trim() || "";
+
+  const parcelDestination =
+    document.getElementById("parcelDestination")?.value.trim() || "";
+
+  const receiverPhone =
+    document.getElementById("receiverPhone")?.value.trim() || "";
+
+  const senderName =
+    document.getElementById("senderName")?.value.trim() || "";
+
+  const senderPhone =
+    document.getElementById("senderPhone")?.value.trim() || "";
+
   dynamicBookingInfo = `
 Service Type:
 BUS / TRANSPORT BOOKING
