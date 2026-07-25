@@ -218,7 +218,7 @@ function showPaymentTab(){
           account.number || "",
 
         accountName:
-          account.accountName || "",
+        companyData.paymentAccountName || "",
 
         accountNumber:
           account.accountNumber || "",
