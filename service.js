@@ -1888,3 +1888,37 @@ function handleParcelChoice(){
   }
 
 }
+
+function handleFlightTravelChoice(){
+
+  const travelChoice =
+    document.getElementById("flightTravelChoice");
+
+  const travelFields = [
+    "bookingDeparture",
+    "bookingDestination",
+    "bookingTravelDate",
+    "bookingPassengers",
+    "bookingTravelClass"
+  ];
+
+  travelFields.forEach(id => {
+
+    const field =
+      document.getElementById(id);
+
+    if(!field) return;
+
+    const container =
+      field.closest("div");
+
+    if(!container) return;
+
+    container.style.display =
+      travelChoice?.checked
+      ? ""
+      : "none";
+
+  });
+
+}
