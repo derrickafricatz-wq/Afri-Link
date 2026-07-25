@@ -1526,6 +1526,13 @@ ${product || "Not specified"}
 Quantity:
 ${quantity || "Not specified"}
 
+
+Sender Name:
+${senderName || "Not provided"}
+
+Sender Phone:
+${senderPhone || "Not provided"}
+
 ${dynamicBookingInfo}
 
 Notes:
