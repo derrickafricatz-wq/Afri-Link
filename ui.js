@@ -1286,6 +1286,18 @@ if(serviceType === "flight"){
   const travelClass =
     document.getElementById("bookingTravelClass")?.value || "";
 
+    const parcelAction =
+    document.querySelector('input[name="parcelAction"]:checked')?.value || "";
+
+  const parcelType =
+    document.getElementById("parcelType")?.value.trim() || "";
+
+  const parcelDestination =
+    document.getElementById("parcelDestination")?.value.trim() || "";
+
+  const receiverPhone =
+    document.getElementById("receiverPhone")?.value.trim() || "";
+
   dynamicBookingInfo = `
 Service Type:
 FLIGHT BOOKING
