@@ -1344,7 +1344,7 @@ const senderPhone =
 const parcelDeliveryLocation =
   document.getElementById("parcelDeliveryLocation")?.value.trim() || "";
 
-  if(isFlightTravelSelected){
+ if(isFlightTravelSelected){
 
   dynamicBookingInfo = `
 Service Type:
@@ -1364,6 +1364,15 @@ ${passengers || "Not provided"}
 
 Travel Class:
 ${travelClass || "Not specified"}
+`;
+
+}
+
+
+// PARCEL INFORMATION STAYS OUTSIDE
+// THE TRAVEL IF STATEMENT
+
+dynamicBookingInfo += `
 
 Parcel Service:
 ${parcelAction || "Not selected"}
@@ -1399,7 +1408,7 @@ Parcel Delivery Location:
 ${parcelDeliveryLocation || "Not provided"}
 `
   : ""
-}
+} 
 `;
 
 }
