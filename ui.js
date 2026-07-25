@@ -1454,6 +1454,8 @@ const parcelSenderPhone =
 const parcelDeliveryLocation =
   document.getElementById("parcelDeliveryLocation")?.value.trim() || "";  
 
+  if(isBusTravelSelected){
+
   dynamicBookingInfo = `
 Service Type:
 BUS / TRANSPORT BOOKING
@@ -1469,16 +1471,33 @@ ${travelDate || "Not provided"}
 
 Passengers:
 ${passengers || "Not provided"}
+`;
+
+}
+
+
+// ============================================
+// BUS PARCEL INFORMATION
+// ============================================
+
+if(parcelAction){
+
+  dynamicBookingInfo += `
 
 Parcel Service:
-${parcelAction || "Not selected"}
+${parcelAction}
 
 Parcel Type:
 ${parcelType || "Not provided"}
+`;
 
-${
-  parcelAction === "send"
-  ? `
+
+  // SEND PARCEL
+
+  if(parcelAction === "send"){
+
+    dynamicBookingInfo += `
+
 Parcel Destination:
 ${parcelDestination || "Not provided"}
 
@@ -1487,13 +1506,17 @@ ${parcelReceiverName || "Not provided"}
 
 Receiver Phone:
 ${parcelReceiverPhone || "Not provided"}
-`
-  : ""
-}
+`;
 
-${
-  parcelAction === "receive"
-  ? `
+  }
+
+
+  // RECEIVE PARCEL
+
+  if(parcelAction === "receive"){
+
+    dynamicBookingInfo += `
+
 Sender Name:
 ${parcelSenderName || "Not provided"}
 
@@ -1502,10 +1525,9 @@ ${parcelSenderPhone || "Not provided"}
 
 Parcel Delivery Location:
 ${parcelDeliveryLocation || "Not provided"}
-`
-  : ""
-}
 `;
+
+  }
 
 }
 
