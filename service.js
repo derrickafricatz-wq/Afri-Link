@@ -2012,3 +2012,78 @@ function handleFlightReceiveParcelChoice(){
   }
 
 }
+
+function handleBusTravelChoice(){
+
+  const travelChoice =
+    document.getElementById("busTravelChoice");
+
+  const travelFields = [
+    "bookingDeparture",
+    "bookingDestination",
+    "bookingTravelDate",
+    "bookingPassengers"
+  ];
+
+  travelFields.forEach(id => {
+
+    const field =
+      document.getElementById(id);
+
+    if(!field) return;
+
+    field.style.display =
+      travelChoice?.checked
+      ? ""
+      : "none";
+
+  });
+
+}
+
+function handleBusSendParcelChoice(){
+
+  const sendChoice =
+    document.getElementById("busSendParcelChoice");
+
+  if(!sendChoice) return;
+
+  // Find the existing SEND PARCEL radio button
+  const sendParcelRadio =
+    document.querySelector(
+      'input[name="parcelAction"][value="send"]'
+    );
+
+  if(sendChoice.checked){
+
+    if(sendParcelRadio){
+
+      sendParcelRadio.checked = true;
+
+      // Use your existing parcel system
+      handleParcelChoice();
+
+    }
+
+  }else{
+
+    // Remove SEND PARCEL selection
+    if(sendParcelRadio){
+
+      sendParcelRadio.checked = false;
+
+    }
+
+    const parcelBox =
+      document.getElementById("parcelDetails");
+
+    if(parcelBox){
+
+      parcelBox.style.display = "none";
+      parcelBox.innerHTML = "";
+
+    }
+
+  }
+
+}
