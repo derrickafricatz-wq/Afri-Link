@@ -1909,12 +1909,7 @@ function handleFlightTravelChoice(){
 
     if(!field) return;
 
-    const container =
-      field.closest("div");
-
-    if(!container) return;
-
-    container.style.display =
+    field.style.display =
       travelChoice?.checked
       ? ""
       : "none";
