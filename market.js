@@ -34,7 +34,7 @@ const marketAds = [
 },
 
   {
-  company: "PRECISION AIR",
+  company: "BM COACH",
   phone: "+255746644223",
   whatsapp: "255742097868",
   location: ",Tanzania",
