@@ -1298,14 +1298,20 @@ if(serviceType === "flight"){
   const parcelDestination =
     document.getElementById("parcelDestination")?.value.trim() || "";
 
-  const receiverPhone =
-    document.getElementById("receiverPhone")?.value.trim() || "";
+  const receiverName =
+  document.getElementById("parcelReceiverName")?.value.trim() || "";
 
-    senderName =
-    document.getElementById("senderName")?.value.trim() || "";
+const receiverPhone =
+  document.getElementById("parcelReceiverPhone")?.value.trim() || "";
 
-    senderPhone =
-    document.getElementById("senderPhone")?.value.trim() || "";
+const senderName =
+  document.getElementById("parcelSenderName")?.value.trim() || "";
+
+const senderPhone =
+  document.getElementById("parcelSenderPhone")?.value.trim() || "";
+
+const parcelDeliveryLocation =
+  document.getElementById("parcelDeliveryLocation")?.value.trim() || "";
 
   dynamicBookingInfo = `
 Service Type:
