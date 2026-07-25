@@ -968,6 +968,33 @@ function updateDynamicBookingFields(){
           FLIGHT TRAVEL DETAILS
         </div>
 
+       <div style="
+  margin-bottom:14px;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,255,255,.05);
+  border:1px solid rgba(0,255,255,.2);
+">
+
+  <div style="
+    font-size:13px;
+    font-weight:900;
+    color:#00ffff;
+    margin-bottom:10px;
+  ">
+    BOOKING PURPOSE
+  </div>
+
+  <div style="
+    color:#ffffff;
+    font-size:13px;
+    line-height:1.6;
+  ">
+    You can book your flight, send a parcel, or receive a parcel.
+  </div>
+
+</div> 
+
         <input
         id="bookingDeparture"
         placeholder="Departure City / Airport"
