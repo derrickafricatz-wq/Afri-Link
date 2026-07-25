@@ -1385,6 +1385,24 @@ ${travelDate || "Not provided"}
 
 Passengers:
 ${passengers || "Not provided"}
+
+Parcel Service:
+${parcelAction || "Not selected"}
+
+Parcel Type:
+${parcelType || "Not provided"}
+
+Parcel Destination:
+${parcelDestination || "Not provided"}
+
+Receiver Phone:
+${receiverPhone || "Not provided"}
+
+Sender Name:
+${senderName || "Not provided"}
+
+Sender Phone:
+${senderPhone || "Not provided"}
 `;
 
 }
