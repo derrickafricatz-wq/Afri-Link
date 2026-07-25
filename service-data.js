@@ -3,7 +3,8 @@ const serviceDatabase = {
   "SHALOM PRODUCTS": {
 
     serviceType: "product",
-
+    
+    companyName: "SHALOM PRODUCTS",
     paymentAccountName: "SHALOM NATURAL FOODS",
 
     bannerMessages: [
