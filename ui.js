@@ -1268,6 +1268,34 @@ const product=document.getElementById("customerProduct").value.trim();
 const quantity=document.getElementById("customerQuantity").value.trim();
 const note=document.getElementById("customerNote").value.trim();
 
+// =========================
+// PARCEL DATA
+// =========================
+
+const parcelAction =
+  document.querySelector('input[name="parcelAction"]:checked')?.value || "";
+
+const parcelType =
+  document.getElementById("parcelType")?.value.trim() || "";
+
+const parcelDestination =
+  document.getElementById("parcelDestination")?.value.trim() || "";
+
+const parcelReceiverName =
+  document.getElementById("parcelReceiverName")?.value.trim() || "";
+
+const parcelReceiverPhone =
+  document.getElementById("parcelReceiverPhone")?.value.trim() || "";
+
+const parcelSenderName =
+  document.getElementById("parcelSenderName")?.value.trim() || "";
+
+const parcelSenderPhone =
+  document.getElementById("parcelSenderPhone")?.value.trim() || "";
+
+const parcelDeliveryLocation =
+  document.getElementById("parcelDeliveryLocation")?.value.trim() || "";  
+
 const serviceType = getActiveServiceType();
 
 let dynamicBookingInfo = "";
@@ -1570,13 +1598,6 @@ ${product || "Not specified"}
 
 Quantity:
 ${quantity || "Not specified"}
-
-
-Sender Name:
-${senderName || "Not provided"}
-
-Sender Phone:
-${senderPhone || "Not provided"}
 
 ${dynamicBookingInfo}
 
