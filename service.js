@@ -1965,3 +1965,50 @@ function handleFlightSendParcelChoice(){
   }
 
         }
+
+function handleFlightReceiveParcelChoice(){
+
+  const receiveChoice =
+    document.getElementById("flightReceiveParcelChoice");
+
+  if(!receiveChoice) return;
+
+  // Find the existing RECEIVE PARCEL radio button
+  const receiveParcelRadio =
+    document.querySelector(
+      'input[name="parcelAction"][value="receive"]'
+    );
+
+  if(receiveChoice.checked){
+
+    if(receiveParcelRadio){
+
+      receiveParcelRadio.checked = true;
+
+      // Use the existing parcel system
+      handleParcelChoice();
+
+    }
+
+  }else{
+
+    // Remove RECEIVE selection
+    if(receiveParcelRadio){
+
+      receiveParcelRadio.checked = false;
+
+    }
+
+    const parcelBox =
+      document.getElementById("parcelDetails");
+
+    if(parcelBox){
+
+      parcelBox.style.display = "none";
+      parcelBox.innerHTML = "";
+
+    }
+
+  }
+
+}
