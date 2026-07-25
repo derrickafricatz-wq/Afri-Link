@@ -1510,3 +1510,190 @@ function openPaymentApp(appLink){
   window.location.href = appLink;
 
 }
+
+// ============================================
+// PARCEL SERVICE
+// ============================================
+
+function handleParcelChoice(){
+
+  const selected =
+    document.querySelector(
+      'input[name="parcelAction"]:checked'
+    );
+
+  const parcelBox =
+    document.getElementById("parcelDetails");
+
+  if(!selected || !parcelBox) return;
+
+  // =========================
+  // SEND PARCEL
+  // =========================
+
+  if(selected.value === "send"){
+
+    parcelBox.style.display = "block";
+
+    parcelBox.innerHTML = `
+
+      <div style="
+        padding:16px;
+        border-radius:14px;
+        background:rgba(0,255,136,.06);
+        border:1px solid rgba(0,255,136,.25);
+      ">
+
+        <div style="
+          font-size:16px;
+          font-weight:900;
+          color:#00ff88;
+          margin-bottom:14px;
+        ">
+          SEND PARCEL DETAILS
+        </div>
+
+        <input
+          id="parcelType"
+          placeholder="Type of Parcel (Bag, Box, Envelope...)"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelDestination"
+          placeholder="Parcel Destination"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelReceiverName"
+          placeholder="Receiver Full Name"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelReceiverPhone"
+          type="tel"
+          placeholder="Receiver Phone Number"
+          style="
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+      </div>
+
+    `;
+
+  }
+
+
+  // =========================
+  // RECEIVE PARCEL
+  // =========================
+
+  else if(selected.value === "receive"){
+
+    parcelBox.style.display = "block";
+
+    parcelBox.innerHTML = `
+
+      <div style="
+        padding:16px;
+        border-radius:14px;
+        background:rgba(0,150,255,.06);
+        border:1px solid rgba(0,150,255,.25);
+      ">
+
+        <div style="
+          font-size:16px;
+          font-weight:900;
+          color:#00aaff;
+          margin-bottom:14px;
+        ">
+          RECEIVE PARCEL DETAILS
+        </div>
+
+        <input
+          id="parcelType"
+          placeholder="Type of Parcel (Bag, Box, Envelope...)"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelSenderName"
+          placeholder="Sender Full Name"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelSenderPhone"
+          type="tel"
+          placeholder="Sender Phone Number"
+          style="
+            width:100%;
+            padding:14px;
+            margin-bottom:10px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+        <input
+          id="parcelDeliveryLocation"
+          placeholder="Delivery Location"
+          style="
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            box-sizing:border-box;
+          "
+        >
+
+      </div>
+
+    `;
+
+  }
+
+}
