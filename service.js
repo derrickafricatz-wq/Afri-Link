@@ -1922,3 +1922,51 @@ function handleFlightTravelChoice(){
   });
 
 }
+
+function handleFlightSendParcelChoice(){
+
+  const sendChoice =
+    document.getElementById("flightSendParcelChoice");
+
+  if(!sendChoice) return;
+
+  // Find the existing SEND PARCEL radio button
+  const sendParcelRadio =
+    document.querySelector(
+      'input[name="parcelAction"][value="send"]'
+    );
+
+  if(sendChoice.checked){
+
+    if(sendParcelRadio){
+
+      sendParcelRadio.checked = true;
+
+      // Use your existing parcel system
+      handleParcelChoice();
+
+    }
+
+  }else{
+
+    // If SEND PARCEL is unchecked,
+    // remove the parcel selection only if it was SEND
+    if(sendParcelRadio){
+
+      sendParcelRadio.checked = false;
+
+    }
+
+    const parcelBox =
+      document.getElementById("parcelDetails");
+
+    if(parcelBox){
+
+      parcelBox.style.display = "none";
+      parcelBox.innerHTML = "";
+
+    }
+
+  }
+
+        }
