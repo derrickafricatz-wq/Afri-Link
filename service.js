@@ -1211,6 +1211,140 @@ function updateDynamicBookingFields(){
   CHECK MY SEAT
 </button>
 
+<!-- =========================================
+     CHECK MY SEAT FORM
+========================================= -->
+
+<div
+  id="checkMySeatPanel"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:18px;
+    border-radius:15px;
+    background:rgba(0,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.25);
+  "
+>
+
+  <div style="
+    font-size:17px;
+    font-weight:900;
+    color:#00ffff;
+    margin-bottom:15px;
+    text-align:center;
+  ">
+    CHECK MY SEAT
+  </div>
+
+
+  <input
+    id="checkSeatCustomerName"
+    type="text"
+    placeholder="Enter Your Full Name"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatCustomerPhone"
+    type="tel"
+    placeholder="Enter Your Phone Number"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatDeparture"
+    type="text"
+    placeholder="Departure / From"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatDestination"
+    type="text"
+    placeholder="Destination / To"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatTravelDate"
+    type="date"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <button
+    type="button"
+    onclick="checkMySeat()"
+    style="
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#00ffff;
+      color:#000000;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    "
+  >
+    CHECK SEAT AVAILABILITY
+  </button>
+
+
+  <div
+    id="checkSeatResult"
+    style="
+      display:none;
+      margin-top:15px;
+      padding:15px;
+      border-radius:12px;
+      background:rgba(0,0,0,0.25);
+      text-align:center;
+    "
+  ></div>
+
+</div>
+
         <!-- =========================
      PARCEL SERVICE
 ========================= -->
@@ -1550,6 +1684,140 @@ style="
   CHECK MY SEAT
 </button>
 
+
+<!-- =========================================
+     CHECK MY SEAT FORM
+========================================= -->
+
+<div
+  id="checkMySeatPanel"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:18px;
+    border-radius:15px;
+    background:rgba(0,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.25);
+  "
+>
+
+  <div style="
+    font-size:17px;
+    font-weight:900;
+    color:#00ffff;
+    margin-bottom:15px;
+    text-align:center;
+  ">
+    CHECK MY SEAT
+  </div>
+
+
+  <input
+    id="checkSeatCustomerName"
+    type="text"
+    placeholder="Enter Your Full Name"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatCustomerPhone"
+    type="tel"
+    placeholder="Enter Your Phone Number"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatDeparture"
+    type="text"
+    placeholder="Departure / From"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatDestination"
+    type="text"
+    placeholder="Destination / To"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <input
+    id="checkSeatTravelDate"
+    type="date"
+    style="
+      width:100%;
+      padding:14px;
+      margin-bottom:10px;
+      border:none;
+      border-radius:10px;
+      box-sizing:border-box;
+    "
+  >
+
+
+  <button
+    type="button"
+    onclick="checkMySeat()"
+    style="
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#00ffff;
+      color:#000000;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    "
+  >
+    CHECK SEAT AVAILABILITY
+  </button>
+
+
+  <div
+    id="checkSeatResult"
+    style="
+      display:none;
+      margin-top:15px;
+      padding:15px;
+      border-radius:12px;
+      background:rgba(0,0,0,0.25);
+      text-align:center;
+    "
+  ></div>
+
+</div>
 
         <!-- =========================
      PARCEL SERVICE
