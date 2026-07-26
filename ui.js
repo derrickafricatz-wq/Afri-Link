@@ -1706,6 +1706,8 @@ closeOrderPage();
 
 async function submitSeatRequest(){
 
+  alert("SUBMIT SEAT REQUEST BUTTON IS WORKING");
+
   const serviceType = getActiveServiceType();
 
   // Only allow Flight or Bus
