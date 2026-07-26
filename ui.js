@@ -1699,3 +1699,129 @@ window.open(
 closeOrderPage();
 
 }
+
+// ============================================
+// SUBMIT SEAT REQUEST
+// ============================================
+
+async function submitSeatRequest(){
+
+  const serviceType = getActiveServiceType();
+
+  // Only allow Flight or Bus
+  if(serviceType !== "flight" && serviceType !== "bus"){
+
+    alert("Seat requests are only available for Flight and Bus services.");
+
+    return;
+
+  }
+
+  // Check whether Travel is selected
+  const travelSelected =
+    serviceType === "flight"
+    ? document.getElementById("flightTravelChoice")?.checked
+    : document.getElementById("busTravelChoice")?.checked;
+
+  if(!travelSelected){
+
+    alert("Please select TRAVEL first.");
+
+    return;
+
+  }
+
+  // Customer information
+  const customerName =
+    document.getElementById("customerName")?.value.trim() || "";
+
+  const customerPhone =
+    document.getElementById("customerPhone")?.value.trim() || "";
+
+  // Travel information
+  const departure =
+    document.getElementById("bookingDeparture")?.value.trim() || "";
+
+  const destination =
+    document.getElementById("bookingDestination")?.value.trim() || "";
+
+  const travelDate =
+    document.getElementById("bookingTravelDate")?.value || "";
+
+  const passengers =
+    document.getElementById("bookingPassengers")?.value || "";
+
+  // Required information
+  if(
+    customerName === "" ||
+    customerPhone === "" ||
+    departure === "" ||
+    destination === "" ||
+    travelDate === "" ||
+    passengers === ""
+  ){
+
+    alert(
+      "Please complete your customer and travel information before requesting a seat."
+    );
+
+    return;
+
+  }
+
+  // Save request to Supabase
+  const { data, error } = await supabase
+    .from("seat_requests")
+    .insert([{
+
+      company_name:
+        selectedCompany?.company || "",
+
+      service_type:
+        serviceType,
+
+      customer_name:
+        customerName,
+
+      customer_phone:
+        customerPhone,
+
+      departure:
+        departure,
+
+      destination:
+        destination,
+
+      travel_date:
+        travelDate,
+
+      passengers:
+        Number(passengers),
+
+      status:
+        "pending"
+
+    }]);
+
+  // Error
+  if(error){
+
+    console.error(
+      "Seat request error:",
+      error
+    );
+
+    alert(
+      "Unable to submit seat request. Please try again."
+    );
+
+    return;
+
+  }
+
+  // Success
+  alert(
+    "Your seat request has been submitted successfully. Please wait for the available seat update."
+  );
+
+}
