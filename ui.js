@@ -1979,16 +1979,19 @@ async function checkSeatAvailability(){
   // has provided available seats
 
   if(
-    request.available_seats &&
-    request.status === "seats_available"
-  ){
+  request.available_seats &&
+  request.status === "seats_available"
+){
 
-    console.log(
-      "AVAILABLE SEATS:",
-      request.available_seats
-    );
+  alert(
+    "SEATS AVAILABLE!\n\n" +
+    "Your seat request has been reviewed.\n\n" +
+    "Available Seats:\n" +
+    request.available_seats +
+    "\n\nPlease select your preferred seat."
+  );
 
-  }
+}
 
 },
 
