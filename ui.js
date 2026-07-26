@@ -2193,46 +2193,162 @@ async function checkMySeat(){
   // SEATS AVAILABLE
   // =======================================
 
+ if(
+  request.status === "seats_available" &&
+  request.available_seats
+){
+
+  // =======================================
+  // GET PASSENGER COUNT
+  // =======================================
+
+  const passengerCount =
+    Number(request.passengers) || 1;
+
+
+  // =======================================
+  // CONVERT AVAILABLE SEATS TO ARRAY
+  // =======================================
+
+  const availableSeats =
+    String(request.available_seats)
+      .split(",")
+      .map(seat => seat.trim())
+      .filter(seat => seat !== "");
+
+
+  // =======================================
+  // SHOW SUCCESS MESSAGE
+  // =======================================
+
+  resultBox.innerHTML = `
+
+    <div style="
+      color:#00ff88;
+      font-size:18px;
+      font-weight:900;
+    ">
+      SEATS AVAILABLE!
+    </div>
+
+    <div style="
+      margin-top:10px;
+      font-size:14px;
+    ">
+      You requested
+      <strong>${passengerCount}</strong>
+      passenger(s).
+    </div>
+
+    <div style="
+      margin-top:10px;
+      font-size:14px;
+    ">
+      Please select
+      <strong>${passengerCount}</strong>
+      seat(s).
+    </div>
+
+  `;
+
+
+  // =======================================
+  // SHOW SEAT SELECTION AREA
+  // =======================================
+
+  const seatSelectionArea =
+    document.getElementById(
+      "seatSelectionArea"
+    );
+
+  const availableSeatsContainer =
+    document.getElementById(
+      "availableSeatsContainer"
+    );
+
+
   if(
-    request.status === "seats_available" &&
-    request.available_seats
+    seatSelectionArea &&
+    availableSeatsContainer
   ){
 
-    resultBox.innerHTML = `
+    seatSelectionArea.style.display =
+      "block";
 
-      <div style="
-        color:#00ff88;
-        font-size:18px;
-        font-weight:900;
-      ">
-        SEATS AVAILABLE!
-      </div>
 
-      <div style="
-        margin-top:12px;
-        font-size:14px;
-      ">
-        Your request has been reviewed.
-      </div>
+    // Clear previous seats
 
-      <div style="
-        margin-top:12px;
-        padding:12px;
-        border-radius:10px;
-        background:rgba(0,255,136,0.12);
-        color:#00ff88;
-        font-size:18px;
-        font-weight:900;
-      ">
-        Available Seats:
-        ${request.available_seats}
-      </div>
+    availableSeatsContainer.innerHTML =
+      "";
 
-    `;
 
-    return;
+    // =====================================
+    // CREATE SEAT BUTTONS
+    // =====================================
+
+    availableSeats.forEach(
+      seat => {
+
+        const seatButton =
+          document.createElement(
+            "button"
+          );
+
+
+        seatButton.type =
+          "button";
+
+
+        seatButton.textContent =
+          "SEAT " + seat;
+
+
+        seatButton.dataset.seat =
+          seat;
+
+
+        seatButton.style.cssText = `
+          padding:12px 16px;
+          border:none;
+          border-radius:10px;
+          background:#00ffff;
+          color:#000000;
+          font-size:14px;
+          font-weight:900;
+          cursor:pointer;
+        `;
+
+
+        // =================================
+        // SELECT SEAT
+        // =================================
+
+        seatButton.onclick =
+          function(){
+
+            toggleSeatSelection(
+              seat,
+              seatButton,
+              passengerCount
+            );
+
+          };
+
+
+        availableSeatsContainer
+          .appendChild(
+            seatButton
+          );
+
+      }
+    );
 
   }
+
+
+  return;
+
+} 
 
 
   // =======================================
