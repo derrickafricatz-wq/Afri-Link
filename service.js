@@ -1332,16 +1332,91 @@ function updateDynamicBookingFields(){
 
 
   <div
-    id="checkSeatResult"
+  id="checkSeatResult"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.25);
+    text-align:center;
+  "
+></div>
+
+
+<!-- =========================================
+     SELECT AVAILABLE SEATS
+========================================= -->
+
+<div
+  id="seatSelectionArea"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    background:rgba(0,255,255,0.06);
+    border:1px solid rgba(0,255,255,0.20);
+  "
+>
+
+  <div
     style="
-      display:none;
-      margin-top:15px;
-      padding:15px;
-      border-radius:12px;
-      background:rgba(0,0,0,0.25);
-      text-align:center;
+      color:#00ffff;
+      font-size:16px;
+      font-weight:900;
+      margin-bottom:10px;
     "
-  ></div>
+  >
+    SELECT YOUR SEAT(S)
+  </div>
+
+
+  <div
+    id="availableSeatsContainer"
+    style="
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+    "
+  >
+  </div>
+
+
+  <div
+    id="selectedSeatsDisplay"
+    style="
+      margin-top:15px;
+      font-size:14px;
+      font-weight:900;
+    "
+  >
+    Selected Seats: None
+  </div>
+
+
+  <button
+    type="button"
+    id="confirmSelectedSeatsButton"
+    onclick="confirmSelectedSeats()"
+    style="
+      width:100%;
+      margin-top:15px;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#00ff88;
+      color:#000000;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    "
+  >
+    CONFIRM SELECTED SEATS
+  </button>
+
+</div>
 
 </div>
 
@@ -1806,16 +1881,91 @@ style="
 
 
   <div
-    id="checkSeatResult"
+  id="checkSeatResult"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.25);
+    text-align:center;
+  "
+></div>
+
+
+<!-- =========================================
+     SELECT AVAILABLE SEATS
+========================================= -->
+
+<div
+  id="seatSelectionArea"
+  style="
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    border-radius:12px;
+    background:rgba(0,255,255,0.06);
+    border:1px solid rgba(0,255,255,0.20);
+  "
+>
+
+  <div
     style="
-      display:none;
-      margin-top:15px;
-      padding:15px;
-      border-radius:12px;
-      background:rgba(0,0,0,0.25);
-      text-align:center;
+      color:#00ffff;
+      font-size:16px;
+      font-weight:900;
+      margin-bottom:10px;
     "
-  ></div>
+  >
+    SELECT YOUR SEAT(S)
+  </div>
+
+
+  <div
+    id="availableSeatsContainer"
+    style="
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+    "
+  >
+  </div>
+
+
+  <div
+    id="selectedSeatsDisplay"
+    style="
+      margin-top:15px;
+      font-size:14px;
+      font-weight:900;
+    "
+  >
+    Selected Seats: None
+  </div>
+
+
+  <button
+    type="button"
+    id="confirmSelectedSeatsButton"
+    onclick="confirmSelectedSeats()"
+    style="
+      width:100%;
+      margin-top:15px;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#00ff88;
+      color:#000000;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    "
+  >
+    CONFIRM SELECTED SEATS
+  </button>
+
+</div>
 
 </div>
 
