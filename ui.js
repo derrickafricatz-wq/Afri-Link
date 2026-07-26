@@ -1769,6 +1769,17 @@ async function submitSeatRequest(){
 
   }
 
+  console.log("Submitting seat request:", {
+  company_name: selectedCompany?.company || "",
+  service_type: serviceType,
+  customer_name: customerName,
+  customer_phone: customerPhone,
+  departure: departure,
+  destination: destination,
+  travel_date: travelDate,
+  passengers: Number(passengers)
+});
+
   // Save request to Supabase
   const { data, error } = await supabase
     .from("seat_requests")
