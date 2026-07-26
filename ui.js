@@ -1918,6 +1918,9 @@ async function checkSeatAvailability(){
   const customerPhone =
     document.getElementById("customerPhone")?.value.trim() || "";
 
+    const notifiedSeatRequestId =
+    localStorage.getItem("notifiedSeatRequestId") || "";
+
   if(customerPhone === ""){
 
     return;
@@ -1980,7 +1983,8 @@ async function checkSeatAvailability(){
 
   if(
   request.available_seats &&
-  request.status === "seats_available"
+  request.status === "seats_available" &&
+  notifiedSeatRequestId !== request.id
 ){
 
   alert(
@@ -1989,6 +1993,12 @@ async function checkSeatAvailability(){
     "Available Seats:\n" +
     request.available_seats +
     "\n\nPlease select your preferred seat."
+  );
+
+
+  localStorage.setItem(
+    "notifiedSeatRequestId",
+    request.id
   );
 
 }
