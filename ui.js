@@ -1940,3 +1940,320 @@ function openCheckMySeat(){
   }
 
 }
+
+// =========================================
+// CHECK MY SEAT - SEARCH SUPABASE
+// =========================================
+
+async function checkMySeat(){
+
+  // =======================================
+  // GET CUSTOMER DETAILS
+  // =======================================
+
+  const customerName =
+    document
+      .getElementById("checkSeatCustomerName")
+      ?.value
+      .trim() || "";
+
+  const customerPhone =
+    document
+      .getElementById("checkSeatCustomerPhone")
+      ?.value
+      .trim() || "";
+
+  const departure =
+    document
+      .getElementById("checkSeatDeparture")
+      ?.value
+      .trim() || "";
+
+  const destination =
+    document
+      .getElementById("checkSeatDestination")
+      ?.value
+      .trim() || "";
+
+  const travelDate =
+    document
+      .getElementById("checkSeatTravelDate")
+      ?.value || "";
+
+
+  // =======================================
+  // RESULT BOX
+  // =======================================
+
+  const resultBox =
+    document.getElementById(
+      "checkSeatResult"
+    );
+
+
+  // =======================================
+  // VALIDATE
+  // =======================================
+
+  if(
+    customerName === "" ||
+    customerPhone === "" ||
+    departure === "" ||
+    destination === "" ||
+    travelDate === ""
+  ){
+
+    resultBox.style.display = "block";
+
+    resultBox.innerHTML = `
+      <div style="
+        color:#ffcc00;
+        font-weight:900;
+      ">
+        Please complete all information
+        before checking your seat.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // SHOW LOADING
+  // =======================================
+
+  resultBox.style.display = "block";
+
+  resultBox.innerHTML = `
+    <div style="
+      color:#00ffff;
+      font-weight:900;
+    ">
+      Checking your seat availability...
+    </div>
+  `;
+
+
+  // =======================================
+  // SEARCH SUPABASE
+  // =======================================
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("seat_requests")
+
+    .select("*")
+
+    .eq(
+      "customer_name",
+      customerName
+    )
+
+    .eq(
+      "customer_phone",
+      customerPhone
+    )
+
+    .eq(
+      "departure",
+      departure
+    )
+
+    .eq(
+      "destination",
+      destination
+    )
+
+    .eq(
+      "travel_date",
+      travelDate
+    )
+
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+
+    .limit(1);
+
+
+  // =======================================
+  // DATABASE ERROR
+  // =======================================
+
+  if(error){
+
+    console.error(
+      "Check seat error:",
+      error
+    );
+
+    resultBox.innerHTML = `
+      <div style="
+        color:#ff4444;
+        font-weight:900;
+      ">
+        Unable to check your seat.
+      </div>
+
+      <div style="
+        margin-top:8px;
+        font-size:13px;
+      ">
+        Please check your internet connection
+        and try again.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // NO REQUEST FOUND
+  // =======================================
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    resultBox.innerHTML = `
+      <div style="
+        color:#ffcc00;
+        font-weight:900;
+      ">
+        No seat request found.
+      </div>
+
+      <div style="
+        margin-top:8px;
+        font-size:13px;
+      ">
+        Please make sure you entered the
+        same information used when you
+        submitted your seat request.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // GET REQUEST
+  // =======================================
+
+  const request =
+    data[0];
+
+
+  // =======================================
+  // REQUEST STILL PENDING
+  // =======================================
+
+  if(
+    request.status === "pending" ||
+    !request.available_seats
+  ){
+
+    resultBox.innerHTML = `
+      <div style="
+        color:#00ffff;
+        font-weight:900;
+      ">
+        YOUR REQUEST IS STILL BEING REVIEWED
+      </div>
+
+      <div style="
+        margin-top:8px;
+        font-size:13px;
+      ">
+        The in-charge has not updated
+        the available seats yet.
+        Please check again later.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // SEATS AVAILABLE
+  // =======================================
+
+  if(
+    request.status === "seats_available" &&
+    request.available_seats
+  ){
+
+    resultBox.innerHTML = `
+
+      <div style="
+        color:#00ff88;
+        font-size:18px;
+        font-weight:900;
+      ">
+        SEATS AVAILABLE!
+      </div>
+
+      <div style="
+        margin-top:12px;
+        font-size:14px;
+      ">
+        Your request has been reviewed.
+      </div>
+
+      <div style="
+        margin-top:12px;
+        padding:12px;
+        border-radius:10px;
+        background:rgba(0,255,136,0.12);
+        color:#00ff88;
+        font-size:18px;
+        font-weight:900;
+      ">
+        Available Seats:
+        ${request.available_seats}
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // OTHER STATUS
+  // =======================================
+
+  resultBox.innerHTML = `
+
+    <div style="
+      color:#00ffff;
+      font-weight:900;
+    ">
+      REQUEST STATUS
+    </div>
+
+    <div style="
+      margin-top:10px;
+    ">
+      ${request.status || "Pending"}
+    </div>
+
+  `;
+
+}
