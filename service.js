@@ -1078,7 +1078,8 @@ function updateDynamicBookingFields(){
 
 </div>
 
-    <input
+    
+<input
   id="bookingDeparture"
   placeholder="Departure City / Airport"
   style="
@@ -1183,6 +1184,31 @@ function updateDynamicBookingFields(){
   "
 >
   SUBMIT SEAT REQUEST
+</button>
+
+
+<!-- =========================
+     CHECK MY SEAT
+========================= -->
+
+<button
+  type="button"
+  id="checkMySeatButton"
+  onclick="openCheckMySeat()"
+  style="
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00ffff;
+    color:#000000;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+  "
+>
+  CHECK MY SEAT
 </button>
 
         <!-- =========================
