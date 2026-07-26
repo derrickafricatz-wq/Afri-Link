@@ -1990,4 +1990,13 @@ async function checkSeatAvailability(){
 
   }
 
-}
+},
+
+// =========================================
+// AUTOMATIC SEAT AVAILABILITY CHECK
+// =========================================
+
+setInterval(
+  checkSeatAvailability,
+  10000
+);
