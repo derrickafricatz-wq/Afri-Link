@@ -12,7 +12,19 @@
 
 <title>In-Charge Seat Dashboard</title>
 
+
+<!-- =========================================
+     SUPABASE LIBRARY
+========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
 <style>
+
+/* =========================================
+   GLOBAL
+========================================= */
 
 *{
   box-sizing:border-box;
@@ -20,13 +32,19 @@
 
 body{
   margin:0;
+  padding:0;
   font-family:Arial, sans-serif;
   background:#07111f;
   color:#ffffff;
 }
 
+
+/* =========================================
+   HEADER
+========================================= */
+
 .dashboardHeader{
-  padding:20px;
+  padding:22px 15px;
   background:#0d1b2a;
   text-align:center;
   border-bottom:1px solid rgba(0,255,255,.2);
@@ -36,6 +54,7 @@ body{
   margin:0;
   color:#00ffff;
   font-size:22px;
+  font-weight:900;
 }
 
 .dashboardHeader p{
@@ -44,6 +63,11 @@ body{
   font-size:14px;
 }
 
+
+/* =========================================
+   CONTAINER
+========================================= */
+
 .dashboardContainer{
   width:100%;
   max-width:1000px;
@@ -51,24 +75,179 @@ body{
   padding:20px;
 }
 
-.dashboardCard{
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.dashboardTopBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.dashboardTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#00ffff;
+}
+
+.refreshButton{
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  background:#00ffff;
+  color:#001015;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.refreshButton:active{
+  transform:scale(.97);
+}
+
+
+/* =========================================
+   REQUEST CARD
+========================================= */
+
+.requestCard{
   background:#0d1b2a;
   border-radius:15px;
   padding:20px;
-  margin-bottom:20px;
-  border:1px solid rgba(0,255,255,.15);
+  margin-bottom:18px;
+  border:1px solid rgba(0,255,255,.18);
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
 }
 
-.dashboardCard h2{
-  margin-top:0;
-  color:#00ffff;
-  font-size:18px;
+.requestHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
 }
+
+.requestHeader h3{
+  margin:0;
+  color:#ffffff;
+  font-size:17px;
+}
+
+.statusBadge{
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(255,193,7,.15);
+  border:1px solid rgba(255,193,7,.4);
+  color:#ffc107;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+
+/* =========================================
+   REQUEST INFORMATION
+========================================= */
+
+.infoGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.infoBox{
+  background:rgba(255,255,255,.04);
+  border-radius:10px;
+  padding:12px;
+}
+
+.infoLabel{
+  display:block;
+  color:#8fa3b8;
+  font-size:11px;
+  margin-bottom:5px;
+  text-transform:uppercase;
+}
+
+.infoValue{
+  color:#ffffff;
+  font-size:14px;
+  font-weight:700;
+  word-break:break-word;
+}
+
+
+/* =========================================
+   EMPTY MESSAGE
+========================================= */
 
 .emptyMessage{
   text-align:center;
-  padding:30px 15px;
+  padding:40px 20px;
   color:#8fa3b8;
+  background:#0d1b2a;
+  border-radius:15px;
+  border:1px solid rgba(0,255,255,.15);
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loadingMessage{
+  text-align:center;
+  padding:30px;
+  color:#00ffff;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.errorMessage{
+  text-align:center;
+  padding:20px;
+  color:#ff6b6b;
+  background:rgba(255,0,0,.08);
+  border:1px solid rgba(255,0,0,.2);
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px){
+
+  .dashboardContainer{
+    padding:14px;
+  }
+
+  .dashboardHeader h1{
+    font-size:19px;
+  }
+
+  .infoGrid{
+    grid-template-columns:1fr;
+  }
+
+  .dashboardTopBar{
+    align-items:stretch;
+  }
+
+  .refreshButton{
+    width:100%;
+  }
+
 }
 
 </style>
@@ -79,9 +258,9 @@ body{
 <body>
 
 
-<!-- =========================
+<!-- =========================================
      DASHBOARD HEADER
-========================= -->
+========================================= -->
 
 <div class="dashboardHeader">
 
@@ -96,24 +275,46 @@ body{
 </div>
 
 
-<!-- =========================
-     DASHBOARD CONTENT
-========================= -->
+
+<!-- =========================================
+     MAIN DASHBOARD
+========================================= -->
 
 <div class="dashboardContainer">
 
 
-  <!-- SEAT REQUESTS -->
+  <div class="dashboardTopBar">
 
-  <div class="dashboardCard">
-
-    <h2>
+    <div class="dashboardTitle">
       SEAT REQUESTS
-    </h2>
+    </div>
 
-    <div class="emptyMessage">
+    <button
+      class="refreshButton"
+      onclick="loadSeatRequests()"
+    >
+      🔄 REFRESH REQUESTS
+    </button>
 
-      No seat requests available yet.
+  </div>
+
+
+  <!-- ERROR MESSAGE -->
+
+  <div
+    id="errorMessage"
+    class="errorMessage"
+    style="display:none;"
+  ></div>
+
+
+  <!-- REQUEST LIST -->
+
+  <div id="seatRequestsContainer">
+
+    <div class="loadingMessage">
+
+      Loading seat requests...
 
     </div>
 
@@ -121,6 +322,460 @@ body{
 
 
 </div>
+
+
+
+<!-- =========================================
+     SUPABASE + DASHBOARD SCRIPT
+========================================= -->
+
+<script>
+
+
+// =========================================
+// SUPABASE CONNECTION
+// =========================================
+
+const SUPABASE_URL =
+  "https://xbemkmvvbkxknuduthsg.supabase.co";
+
+
+const SUPABASE_KEY =
+  "YOUR_EXISTING_ANON_KEY";
+
+
+const client =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+
+// =========================================
+// LOAD SEAT REQUESTS
+// =========================================
+
+async function loadSeatRequests(){
+
+
+  const container =
+    document.getElementById(
+      "seatRequestsContainer"
+    );
+
+
+  const errorBox =
+    document.getElementById(
+      "errorMessage"
+    );
+
+
+  // Clear previous error
+
+  errorBox.style.display =
+    "none";
+
+  errorBox.textContent =
+    "";
+
+
+  // Loading message
+
+  container.innerHTML = `
+
+    <div class="loadingMessage">
+
+      Loading seat requests...
+
+    </div>
+
+  `;
+
+
+  // =======================================
+  // GET REQUESTS FROM SUPABASE
+  // =======================================
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("seat_requests")
+
+    .select("*")
+
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
+
+
+  // =======================================
+  // HANDLE ERROR
+  // =======================================
+
+  if(error){
+
+    console.error(
+      "Seat dashboard error:",
+      error
+    );
+
+
+    errorBox.textContent =
+      "Unable to load seat requests: " +
+      error.message;
+
+
+    errorBox.style.display =
+      "block";
+
+
+    container.innerHTML =
+      "";
+
+
+    return;
+
+  }
+
+
+  // =======================================
+  // NO REQUESTS
+  // =======================================
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    container.innerHTML = `
+
+      <div class="emptyMessage">
+
+        No seat requests available yet.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // DISPLAY REQUESTS
+  // =======================================
+
+  container.innerHTML = "";
+
+
+  data.forEach(
+    request => {
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "requestCard";
+
+
+      card.innerHTML = `
+
+        <div class="requestHeader">
+
+          <h3>
+            ${escapeHTML(
+              request.company_name ||
+              "Company Not Provided"
+            )}
+          </h3>
+
+          <div class="statusBadge">
+
+            ${escapeHTML(
+              request.status ||
+              "pending"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="infoGrid">
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Service
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.service_type ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Customer
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.customer_name ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Phone
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.customer_phone ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Passengers
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                String(
+                  request.passengers ||
+                  "Not provided"
+                )
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Departure
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.departure ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Destination
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.destination ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Travel Date
+            </span>
+
+            <span class="infoValue">
+
+              ${escapeHTML(
+                request.travel_date ||
+                "Not provided"
+              )}
+
+            </span>
+
+          </div>
+
+
+          <div class="infoBox">
+
+            <span class="infoLabel">
+              Request Time
+            </span>
+
+            <span class="infoValue">
+
+              ${formatDate(
+                request.created_at
+              )}
+
+            </span>
+
+          </div>
+
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        card
+      );
+
+
+    }
+  );
+
+
+}
+
+
+
+// =========================================
+// ESCAPE HTML
+// =========================================
+
+function escapeHTML(
+  value
+){
+
+  return String(
+    value
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+
+// =========================================
+// FORMAT DATE
+// =========================================
+
+function formatDate(
+  value
+){
+
+  if(!value){
+
+    return "Not provided";
+
+  }
+
+
+  const date =
+    new Date(
+      value
+    );
+
+
+  if(
+    isNaN(
+      date.getTime()
+    )
+  ){
+
+    return "Not provided";
+
+  }
+
+
+  return date.toLocaleString();
+
+}
+
+
+
+// =========================================
+// INITIAL LOAD
+// =========================================
+
+loadSeatRequests();
+
+
+
+// =========================================
+// AUTO REFRESH EVERY 10 SECONDS
+// =========================================
+
+setInterval(
+  loadSeatRequests,
+  10000
+);
+
+
+</script>
 
 
 </body>
