@@ -646,7 +646,7 @@ async function loadSeatRequests(){
 <div class="infoBox">
 
   <span class="infoLabel">
-    Selected Seats
+    SELECTED SEATS
   </span>
 
   <span
@@ -654,14 +654,19 @@ async function loadSeatRequests(){
     style="
       color:#00ff88;
       font-weight:900;
+      font-size:15px;
     "
   >
 
     ${
-      request.selected_seat
+      request.selected_seat !== null &&
+      request.selected_seat !== undefined &&
+      String(request.selected_seat).trim() !== ""
       ? " " +
         escapeHTML(
-          request.selected_seat
+          String(
+            request.selected_seat
+          )
         )
       : "Not selected yet"
     }
