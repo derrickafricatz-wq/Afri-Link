@@ -1426,53 +1426,76 @@ style="
 </div>
 
         <input
-        id="bookingDeparture"
-        placeholder="Departure / From"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+  id="bookingDeparture"
+  placeholder="Departure / From"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingDestination"
-        placeholder="Destination / To"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingDestination"
+  placeholder="Destination / To"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingTravelDate"
-        type="date"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingTravelDate"
+  type="date"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingPassengers"
-        type="number"
-        min="1"
-        placeholder="Number of Passengers"
-        style="
-        width:100%;
-        padding:14px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingPassengers"
+  type="number"
+  min="1"
+  placeholder="Number of Passengers"
+  style="
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
+
+
+<!-- SUBMIT SEAT REQUEST -->
+
+<button
+  type="button"
+  id="submitSeatRequestButton"
+  onclick="submitSeatRequest()"
+  style="
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00ff88;
+    color:#000000;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+  "
+>
+  SUBMIT SEAT REQUEST
+</button>
 
         <!-- =========================
      PARCEL SERVICE
