@@ -2373,3 +2373,121 @@ async function checkMySeat(){
   `;
 
 }
+
+// =========================================
+// SELECT / DESELECT MULTIPLE SEATS
+// =========================================
+
+let selectedSeats = [];
+
+function toggleSeatSelection(
+  seat,
+  seatButton,
+  passengerCount
+){
+
+  // =======================================
+  // CHECK IF SEAT IS ALREADY SELECTED
+  // =======================================
+
+  const seatIndex =
+    selectedSeats.indexOf(seat);
+
+
+  // =======================================
+  // DESELECT SEAT
+  // =======================================
+
+  if(seatIndex !== -1){
+
+    selectedSeats.splice(
+      seatIndex,
+      1
+    );
+
+
+    // Return button to normal
+
+    seatButton.style.background =
+      "#00ffff";
+
+    seatButton.style.color =
+      "#000000";
+
+  }
+
+  // =======================================
+  // SELECT NEW SEAT
+  // =======================================
+
+  else{
+
+    // Don't allow more seats
+    // than passenger count
+
+    if(
+      selectedSeats.length >=
+      passengerCount
+    ){
+
+      alert(
+        "You can select only " +
+        passengerCount +
+        " seat(s)."
+      );
+
+      return;
+
+    }
+
+
+    // Add seat
+
+    selectedSeats.push(
+      seat
+    );
+
+
+    // Highlight selected seat
+
+    seatButton.style.background =
+      "#00ff88";
+
+    seatButton.style.color =
+      "#000000";
+
+  }
+
+
+  // =======================================
+  // UPDATE SELECTED SEATS DISPLAY
+  // =======================================
+
+  const selectedSeatsDisplay =
+    document.getElementById(
+      "selectedSeatsDisplay"
+    );
+
+
+  if(
+    selectedSeatsDisplay
+  ){
+
+    if(
+      selectedSeats.length === 0
+    ){
+
+      selectedSeatsDisplay.innerHTML =
+        "Selected Seats: None";
+
+    }else{
+
+      selectedSeatsDisplay.innerHTML =
+        "Selected Seats: " +
+        selectedSeats.join(", ");
+
+    }
+
+  }
+
+}
