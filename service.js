@@ -1078,87 +1078,112 @@ function updateDynamicBookingFields(){
 
 </div>
 
-        <input
-        id="bookingDeparture"
-        placeholder="Departure City / Airport"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+    <input
+  id="bookingDeparture"
+  placeholder="Departure City / Airport"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingDestination"
-        placeholder="Destination City / Airport"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingDestination"
+  placeholder="Destination City / Airport"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingTravelDate"
-        type="date"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingTravelDate"
+  type="date"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <input
-        id="bookingPassengers"
-        type="number"
-        min="1"
-        placeholder="Number of Passengers"
-        style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<input
+  id="bookingPassengers"
+  type="number"
+  min="1"
+  placeholder="Number of Passengers"
+  style="
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-        <select
-        id="bookingTravelClass"
-        style="
-        width:100%;
-        padding:14px;
-        border:none;
-        border-radius:10px;
-        box-sizing:border-box;
-        ">
+<select
+  id="bookingTravelClass"
+  style="
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  box-sizing:border-box;
+  ">
 
-          <option value="">
-            Select Travel Class
-          </option>
+  <option value="">
+    Select Travel Class
+  </option>
 
-          <option value="Economy">
-            Economy
-          </option>
+  <option value="Economy">
+    Economy
+  </option>
 
-          <option value="Premium Economy">
-            Premium Economy
-          </option>
+  <option value="Premium Economy">
+    Premium Economy
+  </option>
 
-          <option value="Business">
-            Business
-          </option>
+  <option value="Business">
+    Business
+  </option>
 
-          <option value="First Class">
-            First Class
-          </option>
+  <option value="First Class">
+    First Class
+  </option>
 
-        </select>
+</select>
+
+
+<!-- =========================
+     SUBMIT SEAT REQUEST
+========================= -->
+
+<button
+  type="button"
+  id="submitSeatRequestButton"
+  onclick="submitSeatRequest()"
+  style="
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00ff88;
+    color:#000000;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+  "
+>
+  SUBMIT SEAT REQUEST
+</button>
 
         <!-- =========================
      PARCEL SERVICE
