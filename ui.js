@@ -2491,3 +2491,235 @@ function toggleSeatSelection(
   }
 
 }
+
+// =========================================
+// CONFIRM SELECTED SEATS
+// =========================================
+
+async function confirmSelectedSeats(){
+
+  // =======================================
+  // CHECK SELECTED SEATS
+  // =======================================
+
+  if(
+    !selectedSeats ||
+    selectedSeats.length === 0
+  ){
+
+    alert(
+      "Please select at least one seat before confirming."
+    );
+
+    return;
+
+  }
+
+
+  // =======================================
+  // GET CUSTOMER DETAILS
+  // =======================================
+
+  const customerName =
+    document
+      .getElementById("checkSeatCustomerName")
+      ?.value
+      .trim() || "";
+
+  const customerPhone =
+    document
+      .getElementById("checkSeatCustomerPhone")
+      ?.value
+      .trim() || "";
+
+  const departure =
+    document
+      .getElementById("checkSeatDeparture")
+      ?.value
+      .trim() || "";
+
+  const destination =
+    document
+      .getElementById("checkSeatDestination")
+      ?.value
+      .trim() || "";
+
+  const travelDate =
+    document
+      .getElementById("checkSeatTravelDate")
+      ?.value || "";
+
+
+  // =======================================
+  // VALIDATE CUSTOMER DETAILS
+  // =======================================
+
+  if(
+    customerName === "" ||
+    customerPhone === "" ||
+    departure === "" ||
+    destination === "" ||
+    travelDate === ""
+  ){
+
+    alert(
+      "Please complete your booking information before confirming your seat(s)."
+    );
+
+    return;
+
+  }
+
+
+  // =======================================
+  // SHOW CONFIRMATION
+  // =======================================
+
+  const confirmed =
+    confirm(
+      "Confirm selected seat(s):\n\n" +
+      selectedSeats.join(", ") +
+      "\n\nDo you want to confirm these seat(s)?"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  // =======================================
+  // UPDATE SUPABASE
+  // =======================================
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("seat_requests")
+
+    .update({
+
+      selected_seat:
+        selectedSeats.join(", "),
+
+      status:
+        "seat_selected"
+
+    })
+
+    .eq(
+      "customer_name",
+      customerName
+    )
+
+    .eq(
+      "customer_phone",
+      customerPhone
+    )
+
+    .eq(
+      "departure",
+      departure
+    )
+
+    .eq(
+      "destination",
+      destination
+    )
+
+    .eq(
+      "travel_date",
+      travelDate
+    );
+
+
+  // =======================================
+  // ERROR
+  // =======================================
+
+  if(error){
+
+    console.error(
+      "Seat selection error:",
+      error
+    );
+
+    alert(
+      "Unable to confirm your selected seat(s). Please try again."
+    );
+
+    return;
+
+  }
+
+
+  // =======================================
+  // SUCCESS
+  // =======================================
+
+  alert(
+    "Your seat(s) have been confirmed successfully!\n\n" +
+    "Selected Seat(s): " +
+    selectedSeats.join(", ")
+  );
+
+
+  // =======================================
+  // UPDATE DISPLAY
+  // =======================================
+
+  const selectedSeatsDisplay =
+    document.getElementById(
+      "selectedSeatsDisplay"
+    );
+
+
+  if(
+    selectedSeatsDisplay
+  ){
+
+    selectedSeatsDisplay.innerHTML =
+      "Confirmed Seat(s): " +
+      selectedSeats.join(", ");
+
+  }
+
+
+  // =======================================
+  // DISABLE SEAT BUTTONS
+  // =======================================
+
+  const availableSeatsContainer =
+    document.getElementById(
+      "availableSeatsContainer"
+    );
+
+
+  if(
+    availableSeatsContainer
+  ){
+
+    const seatButtons =
+      availableSeatsContainer
+        .querySelectorAll("button");
+
+
+    seatButtons.forEach(
+      button => {
+
+        button.disabled =
+          true;
+
+        button.style.cursor =
+          "not-allowed";
+
+      }
+    );
+
+  }
+
+}
