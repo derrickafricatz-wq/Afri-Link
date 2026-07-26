@@ -1908,3 +1908,86 @@ console.log(
   );
 
 }
+
+// =========================================
+// CHECK SEAT AVAILABILITY
+// =========================================
+
+async function checkSeatAvailability(){
+
+  const customerPhone =
+    document.getElementById("customerPhone")?.value.trim() || "";
+
+  if(customerPhone === ""){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("seat_requests")
+
+    .select("*")
+
+    .eq(
+      "customer_phone",
+      customerPhone
+    )
+
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+
+    .limit(1);
+
+
+  if(error){
+
+    console.error(
+      "Seat availability check error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !data ||
+    data.length === 0
+  ){
+
+    return;
+
+  }
+
+
+  const request =
+    data[0];
+
+
+  // Check whether in-charge
+  // has provided available seats
+
+  if(
+    request.available_seats &&
+    request.status === "seats_available"
+  ){
+
+    console.log(
+      "AVAILABLE SEATS:",
+      request.available_seats
+    );
+
+  }
+
+}
