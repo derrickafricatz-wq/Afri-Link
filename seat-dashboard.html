@@ -657,6 +657,58 @@ async function loadSeatRequests(){
 
           </div>
 
+               <div style="
+          margin-top:20px;
+          padding-top:18px;
+          border-top:1px solid rgba(0,255,255,.15);
+        ">
+
+          <div style="
+            color:#00ffff;
+            font-size:13px;
+            font-weight:900;
+            margin-bottom:10px;
+          ">
+            AVAILABLE SEATS
+          </div>
+
+          <input
+            type="text"
+            id="availableSeats-${request.id}"
+            placeholder="Example: 1, 2, 5, 8"
+            value="${escapeHTML(
+              request.available_seats || ""
+            )}"
+            style="
+              width:100%;
+              padding:14px;
+              border:none;
+              border-radius:10px;
+              margin-bottom:10px;
+              box-sizing:border-box;
+              background:#ffffff;
+              color:#000000;
+              font-size:14px;
+            "
+          >
+
+          <button
+            onclick="updateAvailableSeats('${request.id}')"
+            style="
+              width:100%;
+              padding:14px;
+              border:none;
+              border-radius:10px;
+              background:#00ffff;
+              color:#001015;
+              font-weight:900;
+              cursor:pointer;
+            "
+          >
+            UPDATE AVAILABLE SEATS
+          </button>
+
+        </div>
 
         </div>
 
