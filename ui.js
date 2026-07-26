@@ -1854,6 +1854,23 @@ async function submitSeatRequest(){
   // YOUR SUPABASE CLIENT IS "client"
   // =========================
 
+const {
+  data: {
+    session
+  }
+} = await client.auth.getSession();
+
+console.log(
+  "SUPABASE SESSION:",
+  session
+);
+
+console.log(
+  "SUPABASE ACCESS TOKEN:",
+  session?.access_token
+);
+  
+
   const { data, error } = await client
     .from("seat_requests")
     .insert([seatRequest])
