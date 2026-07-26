@@ -1909,98 +1909,34 @@ console.log(
 
 }
 
-// =========================================
-// CHECK SEAT AVAILABILITY
-// =========================================
+function openCheckMySeat(){
 
-async function checkSeatAvailability(){
+  const panel =
+    document.getElementById(
+      "checkMySeatPanel"
+    );
 
-  const customerPhone =
-    document.getElementById("customerPhone")?.value.trim() || "";
-
-    const notifiedSeatRequestId =
-    localStorage.getItem("notifiedSeatRequestId") || "";
-
-  if(customerPhone === ""){
-
-    return;
-
-  }
-
-
-  const {
-    data,
-    error
-  } = await client
-
-    .from("seat_requests")
-
-    .select("*")
-
-    .eq(
-      "customer_phone",
-      customerPhone
-    )
-
-    .order(
-      "created_at",
-      {
-        ascending:false
-      }
-    )
-
-    .limit(1);
-
-
-  if(error){
+  if(!panel){
 
     console.error(
-      "Seat availability check error:",
-      error
+      "Check My Seat panel was not found."
     );
 
     return;
 
   }
 
-
   if(
-    !data ||
-    data.length === 0
+    panel.style.display === "none" ||
+    panel.style.display === ""
   ){
 
-    return;
+    panel.style.display = "block";
+
+  }else{
+
+    panel.style.display = "none";
 
   }
-
-
-  const request =
-    data[0];
-
-
-  // Check whether in-charge
-  // has provided available seats
-
-  if(
-  request.available_seats &&
-  request.status === "seats_available" &&
-  notifiedSeatRequestId !== request.id
-){
-
-  alert(
-    "SEATS AVAILABLE!\n\n" +
-    "Your seat request has been reviewed.\n\n" +
-    "Available Seats:\n" +
-    request.available_seats +
-    "\n\nPlease select your preferred seat."
-  );
-
-
-  localStorage.setItem(
-    "notifiedSeatRequestId",
-    request.id
-  );
-
-}
 
 }
