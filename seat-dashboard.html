@@ -808,6 +808,95 @@ function formatDate(
 
 
 // =========================================
+// UPDATE AVAILABLE SEATS
+// =========================================
+
+async function updateAvailableSeats(requestId){
+
+  const input =
+    document.getElementById(
+      `availableSeats-${requestId}`
+    );
+
+  if(!input){
+
+    alert(
+      "Available seats input was not found."
+    );
+
+    return;
+
+  }
+
+  const availableSeats =
+    input.value.trim();
+
+  if(availableSeats === ""){
+
+    alert(
+      "Please enter the available seat numbers."
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("seat_requests")
+
+    .update({
+
+      available_seats:
+        availableSeats,
+
+      status:
+        "seats_available"
+
+    })
+
+    .eq(
+      "id",
+      requestId
+    )
+
+    .select();
+
+
+  if(error){
+
+    console.error(
+      "Update available seats error:",
+      error
+    );
+
+    alert(
+      "Unable to update available seats.\n\n" +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  alert(
+    "Available seats updated successfully."
+  );
+
+
+  loadSeatRequests();
+
+}
+
+
+
+// =========================================
 // INITIAL LOAD
 // =========================================
 
@@ -821,7 +910,7 @@ loadSeatRequests();
 
 setInterval(
   loadSeatRequests,
-  10000
+  50000
 );
 
 
