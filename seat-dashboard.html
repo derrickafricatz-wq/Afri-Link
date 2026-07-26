@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>In-Charge Seat Dashboard</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#07111f;
+  color:#ffffff;
+}
+
+.dashboardHeader{
+  padding:20px;
+  background:#0d1b2a;
+  text-align:center;
+  border-bottom:1px solid rgba(0,255,255,.2);
+}
+
+.dashboardHeader h1{
+  margin:0;
+  color:#00ffff;
+  font-size:22px;
+}
+
+.dashboardHeader p{
+  margin:8px 0 0;
+  color:#aebdca;
+  font-size:14px;
+}
+
+.dashboardContainer{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+.dashboardCard{
+  background:#0d1b2a;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:20px;
+  border:1px solid rgba(0,255,255,.15);
+}
+
+.dashboardCard h2{
+  margin-top:0;
+  color:#00ffff;
+  font-size:18px;
+}
+
+.emptyMessage{
+  text-align:center;
+  padding:30px 15px;
+  color:#8fa3b8;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     DASHBOARD HEADER
+========================= -->
+
+<div class="dashboardHeader">
+
+  <h1>
+    IN-CHARGE DASHBOARD
+  </h1>
+
+  <p>
+    Flight & Bus Seat Management
+  </p>
+
+</div>
+
+
+<!-- =========================
+     DASHBOARD CONTENT
+========================= -->
+
+<div class="dashboardContainer">
+
+
+  <!-- SEAT REQUESTS -->
+
+  <div class="dashboardCard">
+
+    <h2>
+      SEAT REQUESTS
+    </h2>
+
+    <div class="emptyMessage">
+
+      No seat requests available yet.
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+</body>
+
+</html>
