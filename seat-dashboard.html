@@ -625,37 +625,67 @@ async function loadSeatRequests(){
 
           <div class="infoBox">
 
-            <span class="infoLabel">
-              Travel Date
-            </span>
+  <span class="infoLabel">
+    Travel Date
+  </span>
 
-            <span class="infoValue">
+  <span class="infoValue">
 
-              ${escapeHTML(
-                request.travel_date ||
-                "Not provided"
-              )}
+    ${escapeHTML(
+      request.travel_date ||
+      "Not provided"
+    )}
 
-            </span>
+  </span>
 
-          </div>
+</div>
 
 
-          <div class="infoBox">
+<!-- SELECTED SEATS -->
 
-            <span class="infoLabel">
-              Request Time
-            </span>
+<div class="infoBox">
 
-            <span class="infoValue">
+  <span class="infoLabel">
+    Selected Seats
+  </span>
 
-              ${formatDate(
-                request.created_at
-              )}
+  <span
+    class="infoValue"
+    style="
+      color:#00ff88;
+      font-weight:900;
+    "
+  >
 
-            </span>
+    ${
+      request.selected_seat
+      ? " " +
+        escapeHTML(
+          request.selected_seat
+        )
+      : "Not selected yet"
+    }
 
-          </div>
+  </span>
+
+</div>
+
+
+<div class="infoBox">
+
+  <span class="infoLabel">
+    Request Time
+  </span>
+
+  <span class="infoValue">
+
+    ${formatDate(
+      request.created_at
+    )}
+
+  </span>
+
+</div>
 
                <div style="
           margin-top:20px;
