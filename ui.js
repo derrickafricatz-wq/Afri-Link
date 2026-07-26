@@ -2003,7 +2003,7 @@ async function checkSeatAvailability(){
 
 }
 
-},
+}
 
 // =========================================
 // AUTOMATIC SEAT AVAILABILITY CHECK
