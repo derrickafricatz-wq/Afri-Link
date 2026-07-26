@@ -1864,21 +1864,18 @@ async function submitSeatRequest(){
   // HANDLE ERROR
   // =========================
 
-  if(error){
+ if(error){
 
-    console.error(
-      "Seat request error:",
-      error
-    );
+  console.error("SEAT REQUEST ERROR:", error);
 
-    alert(
-      "Unable to submit seat request. Please try again."
-    );
+  alert(
+    "SUPABASE ERROR:\n\n" +
+    error.message
+  );
 
-    return;
+  return;
 
-  }
-
+} 
 
   // =========================
   // SUCCESS
