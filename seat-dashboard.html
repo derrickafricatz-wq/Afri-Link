@@ -555,102 +555,73 @@ let countdownTimer =
 let secondsUntilRefresh =
   10;
 
-
+  // =========================================
+// SEAT REQUEST
 // =========================================
-// LOAD SEAT REQUESTS
-// =========================================
 
-async function loadSeatRequests(
-  showLoading = false
-){
+async function loadSeatRequests(showLoading = false){
 
-  // ---------------------------------------
-  // PREVENT DUPLICATE LOAD
-  // ---------------------------------------
-
-  if(
-    isLoadingSeatRequests
-  ){
+  if(isLoadingSeatRequests){
 
     console.log(
-      "A refresh is already running."
+      "Refresh already running. Skipping duplicate request."
     );
 
     return;
 
   }
 
-
-  isLoadingSeatRequests =
-    true;
-
+  isLoadingSeatRequests = true;
 
   const container =
     document.getElementById(
       "seatRequestsContainer"
     );
 
-
   const errorBox =
     document.getElementById(
       "errorMessage"
     );
 
-
-  if(
-    !container ||
-    !errorBox
-  ){
+  if(!container || !errorBox){
 
     console.error(
       "Dashboard elements not found."
     );
 
-    isLoadingSeatRequests =
-      false;
+    isLoadingSeatRequests = false;
 
     return;
 
   }
 
-
   try{
 
-
-    // -------------------------------------
-    // SHOW LOADING ONLY FIRST TIME
-    // -------------------------------------
-
-    if(
-      showLoading
-    ){
+    if(showLoading){
 
       container.innerHTML = `
-
         <div class="loadingMessage">
-
           Loading seat requests...
-
         </div>
-
       `;
 
     }
 
+    console.log(
+      "Fetching latest data from Supabase..."
+    );
 
-    // -------------------------------------
-    // FRESH SUPABASE QUERY
-    // -------------------------------------
+
+    // =====================================
+    // FORCE A COMPLETELY FRESH QUERY
+    // =====================================
 
     const {
       data,
       error
     } = await client
-
       .from("seat_requests")
-
       .select("*")
-
       .order(
         "created_at",
         {
@@ -659,37 +630,24 @@ async function loadSeatRequests(
       );
 
 
-    // -------------------------------------
-    // HANDLE ERROR
-    // -------------------------------------
-
-    if(
-      error
-    ){
+    if(error){
 
       console.error(
         "Supabase loading error:",
         error
       );
 
-
       errorBox.textContent =
         "Unable to load seat requests: " +
         error.message;
 
-
       errorBox.style.display =
         "block";
-
 
       return;
 
     }
 
-
-    // -------------------------------------
-    // HIDE ERROR
-    // -------------------------------------
 
     errorBox.style.display =
       "none";
@@ -698,9 +656,9 @@ async function loadSeatRequests(
       "";
 
 
-    // -------------------------------------
-    // NO DATA
-    // -------------------------------------
+    // =====================================
+    // NO REQUESTS
+    // =====================================
 
     if(
       !data ||
@@ -724,9 +682,9 @@ async function loadSeatRequests(
     }
 
 
-    // -------------------------------------
-    // CREATE REQUEST CARDS
-    // -------------------------------------
+    // =====================================
+    // BUILD FRESH DASHBOARD
+    // =====================================
 
     const fragment =
       document.createDocumentFragment();
@@ -734,7 +692,6 @@ async function loadSeatRequests(
 
     data.forEach(
       request => {
-
 
         const card =
           document.createElement(
@@ -745,10 +702,6 @@ async function loadSeatRequests(
         card.className =
           "requestCard";
 
-
-        // ---------------------------------
-        // SELECTED SEAT
-        // ---------------------------------
 
         const selectedSeat =
           request.selected_seat !== null &&
@@ -764,10 +717,6 @@ async function loadSeatRequests(
           : "";
 
 
-        // ---------------------------------
-        // AVAILABLE SEATS
-        // ---------------------------------
-
         const availableSeats =
           request.available_seats !== null &&
           request.available_seats !== undefined
@@ -778,10 +727,6 @@ async function loadSeatRequests(
 
           : "";
 
-
-        // ---------------------------------
-        // BUILD CARD
-        // ---------------------------------
 
         card.innerHTML = `
 
@@ -795,7 +740,6 @@ async function loadSeatRequests(
               )}
 
             </h3>
-
 
             <div class="statusBadge">
 
@@ -940,10 +884,6 @@ async function loadSeatRequests(
             </div>
 
 
-            <!-- =========================
-                 SELECTED SEAT
-            ========================== -->
-
             <div class="infoBox">
 
               <span class="infoLabel">
@@ -956,11 +896,9 @@ async function loadSeatRequests(
 
                 ${
                   selectedSeat
-
                   ? escapeHTML(
                       selectedSeat
                     )
-
                   : "Not selected yet"
                 }
 
@@ -989,12 +927,7 @@ async function loadSeatRequests(
           </div>
 
 
-          <!-- =================================
-               AVAILABLE SEAT MANAGEMENT
-          ================================= -->
-
           <div class="seatManagement">
-
 
             <div class="seatTitle">
 
@@ -1040,7 +973,6 @@ async function loadSeatRequests(
 
             </button>
 
-
           </div>
 
         `;
@@ -1050,29 +982,24 @@ async function loadSeatRequests(
           card
         );
 
-
       }
     );
 
 
-    // -------------------------------------
-    // REPLACE OLD CARDS WITH FRESH DATA
-    // -------------------------------------
+    // =====================================
+    // PUT NEW DATA ON SCREEN
+    // =====================================
 
     container.replaceChildren(
       fragment
     );
 
 
-    // -------------------------------------
-    // UPDATE TIME
-    // -------------------------------------
-
     updateLastRefreshTime();
 
 
     console.log(
-      "Fresh dashboard data loaded:",
+      "SUCCESS: Latest Supabase data displayed.",
       data.length,
       "requests"
     );
@@ -1080,24 +1007,19 @@ async function loadSeatRequests(
 
   }catch(error){
 
-
     console.error(
-      "Dashboard error:",
+      "Dashboard refresh error:",
       error
     );
-
 
     errorBox.textContent =
       "Dashboard error: " +
       error.message;
 
-
     errorBox.style.display =
       "block";
 
-
   }finally{
-
 
     isLoadingSeatRequests =
       false;
@@ -1105,7 +1027,6 @@ async function loadSeatRequests(
   }
 
 }
-
 
 
 // =========================================
