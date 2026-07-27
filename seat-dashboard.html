@@ -12,19 +12,10 @@
 
 <title>In-Charge Seat Dashboard</title>
 
-
-<!-- =========================================
-     SUPABASE LIBRARY
-========================================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <style>
-
-/* =========================================
-   GLOBAL
-========================================= */
 
 *{
   box-sizing:border-box;
@@ -33,7 +24,7 @@
 body{
   margin:0;
   padding:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#07111f;
   color:#ffffff;
 }
@@ -86,7 +77,7 @@ body{
   align-items:center;
   gap:12px;
   flex-wrap:wrap;
-  margin-bottom:20px;
+  margin-bottom:12px;
 }
 
 .dashboardTitle{
@@ -107,6 +98,33 @@ body{
 
 .refreshButton:active{
   transform:scale(.97);
+}
+
+.refreshButton:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+
+/* =========================================
+   LAST UPDATED
+========================================= */
+
+.lastUpdated{
+  width:100%;
+  margin-bottom:20px;
+  padding:10px 12px;
+  background:rgba(0,255,255,.06);
+  border:1px solid rgba(0,255,255,.12);
+  border-radius:10px;
+  color:#8fa3b8;
+  font-size:12px;
+  text-align:center;
+}
+
+.lastUpdated span{
+  color:#00ff88;
+  font-weight:900;
 }
 
 
@@ -183,7 +201,72 @@ body{
 
 
 /* =========================================
-   EMPTY MESSAGE
+   SEAT MANAGEMENT
+========================================= */
+
+.seatManagement{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1px solid rgba(0,255,255,.15);
+}
+
+.seatTitle{
+  color:#00ffff;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.seatInput{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:10px;
+  background:#ffffff;
+  color:#000000;
+  font-size:14px;
+  outline:none;
+}
+
+.seatInput:focus{
+  box-shadow:0 0 0 3px rgba(0,255,255,.25);
+}
+
+.updateSeatButton{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#00ffff;
+  color:#001015;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.updateSeatButton:active{
+  transform:scale(.98);
+}
+
+.updateSeatButton:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+
+/* =========================================
+   SELECTED SEAT
+========================================= */
+
+.selectedSeatValue{
+  color:#00ff88;
+  font-weight:900;
+  font-size:15px;
+}
+
+
+/* =========================================
+   EMPTY
 ========================================= */
 
 .emptyMessage{
@@ -259,7 +342,7 @@ body{
 
 
 <!-- =========================================
-     DASHBOARD HEADER
+     HEADER
 ========================================= -->
 
 <div class="dashboardHeader">
@@ -273,7 +356,6 @@ body{
   </p>
 
 </div>
-
 
 
 <!-- =========================================
@@ -290,8 +372,10 @@ body{
     </div>
 
     <button
+      id="refreshButton"
       class="refreshButton"
-      onclick="loadSeatRequests()"
+      type="button"
+      onclick="manualRefresh()"
     >
       REFRESH REQUESTS
     </button>
@@ -299,7 +383,24 @@ body{
   </div>
 
 
-  <!-- ERROR MESSAGE -->
+  <!-- LAST UPDATED -->
+
+  <div class="lastUpdated">
+
+    Automatic refresh:
+    <span>Every 10 seconds</span>
+
+    &nbsp; | &nbsp;
+
+    Last updated:
+    <span id="lastUpdatedTime">
+      Not yet
+    </span>
+
+  </div>
+
+
+  <!-- ERROR -->
 
   <div
     id="errorMessage"
@@ -324,11 +425,6 @@ body{
 </div>
 
 
-
-<!-- =========================================
-     SUPABASE + DASHBOARD SCRIPT
-========================================= -->
-
 <script>
 
 
@@ -339,38 +435,83 @@ body{
 const SUPABASE_URL =
   "https://xbemkmvvbkxknuduthsg.supabase.co";
 
-const SUPABASE_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZ2Ymt4a251ZHV0aHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI";
+
+
 
 const client =
   supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+      global:{
+        fetch:(
+          url,
+          options = {}
+        ) => {
+
+          return fetch(
+            url,
+            {
+              ...options,
+              cache:"no-store"
+            }
+          );
+
+        }
+      }
+    }
   );
-  
+
+
+// =========================================
+// SETTINGS
+// =========================================
+
+const AUTO_REFRESH_TIME =
+  10000;
+
+
+// =========================================
+// STATE
+// =========================================
+
+let isLoadingSeatRequests =
+  false;
+
+let isUpdatingSeat =
+  false;
+
+let autoRefreshTimer =
+  null;
+
+
 // =========================================
 // LOAD SEAT REQUESTS
 // =========================================
 
-let isLoadingSeatRequests = false;
+async function loadSeatRequests(
+  showLoading = false
+){
 
-async function loadSeatRequests(){
+  // ---------------------------------------
+  // PREVENT OVERLAPPING LOADS
+  // ---------------------------------------
 
-  // =======================================
-  // PREVENT OVERLAPPING REFRESHES
-  // =======================================
-
-  if(isLoadingSeatRequests){
+  if(
+    isLoadingSeatRequests
+  ){
 
     console.log(
-      "Seat requests are already loading..."
+      "Refresh already running."
     );
 
     return;
 
   }
 
-  isLoadingSeatRequests = true;
+
+  isLoadingSeatRequests =
+    true;
 
 
   const container =
@@ -385,47 +526,15 @@ async function loadSeatRequests(){
     );
 
 
-  if(!container || !errorBox){
-
-    console.error(
-      "Dashboard elements not found."
-    );
-
-    isLoadingSeatRequests = false;
-
-    return;
-
-  }
-
-
-  // =======================================
-  // CLEAR ERROR
-  // =======================================
-
-  errorBox.style.display =
-    "none";
-
-  errorBox.textContent =
-    "";
-
-
-  // =======================================
-  // SHOW LOADING ONLY IF EMPTY
-  // =======================================
-
   if(
-    container.children.length === 0
+    !container ||
+    !errorBox
   ){
 
-    container.innerHTML = `
+    isLoadingSeatRequests =
+      false;
 
-      <div class="loadingMessage">
-
-        Loading seat requests...
-
-      </div>
-
-    `;
+    return;
 
   }
 
@@ -433,9 +542,30 @@ async function loadSeatRequests(){
   try{
 
 
-    // =====================================
-    // GET FRESH DATA FROM SUPABASE
-    // =====================================
+    // -------------------------------------
+    // SHOW LOADING ONLY ON INITIAL LOAD
+    // -------------------------------------
+
+    if(
+      showLoading
+    ){
+
+      container.innerHTML = `
+
+        <div class="loadingMessage">
+
+          Loading seat requests...
+
+        </div>
+
+      `;
+
+    }
+
+
+    // -------------------------------------
+    // GET FRESH DATA
+    // -------------------------------------
 
     const {
       data,
@@ -454,14 +584,16 @@ async function loadSeatRequests(){
       );
 
 
-    // =====================================
-    // HANDLE SUPABASE ERROR
-    // =====================================
+    // -------------------------------------
+    // HANDLE ERROR
+    // -------------------------------------
 
-    if(error){
+    if(
+      error
+    ){
 
       console.error(
-        "Seat dashboard error:",
+        "Seat request loading error:",
         error
       );
 
@@ -480,9 +612,20 @@ async function loadSeatRequests(){
     }
 
 
-    // =====================================
+    // -------------------------------------
+    // HIDE ERROR
+    // -------------------------------------
+
+    errorBox.style.display =
+      "none";
+
+    errorBox.textContent =
+      "";
+
+
+    // -------------------------------------
     // NO REQUESTS
-    // =====================================
+    // -------------------------------------
 
     if(
       !data ||
@@ -499,14 +642,16 @@ async function loadSeatRequests(){
 
       `;
 
+      updateLastRefreshTime();
+
       return;
 
     }
 
 
-    // =====================================
-    // BUILD REQUESTS
-    // =====================================
+    // -------------------------------------
+    // BUILD FRESH DASHBOARD
+    // -------------------------------------
 
     const fragment =
       document.createDocumentFragment();
@@ -526,16 +671,44 @@ async function loadSeatRequests(){
           "requestCard";
 
 
+        const selectedSeat =
+          request.selected_seat !== null &&
+          request.selected_seat !== undefined &&
+          String(
+            request.selected_seat
+          ).trim() !== ""
+
+          ? String(
+              request.selected_seat
+            ).trim()
+
+          : "";
+
+
+        const availableSeats =
+          request.available_seats !== null &&
+          request.available_seats !== undefined
+
+          ? String(
+              request.available_seats
+            ).trim()
+
+          : "";
+
+
         card.innerHTML = `
 
           <div class="requestHeader">
 
             <h3>
+
               ${escapeHTML(
                 request.company_name ||
                 "Company Not Provided"
               )}
+
             </h3>
+
 
             <div class="statusBadge">
 
@@ -687,23 +860,16 @@ async function loadSeatRequests(){
               </span>
 
               <span
-                class="infoValue"
-                style="
-                  color:#00ff88;
-                  font-weight:900;
-                  font-size:15px;
-                "
+                class="infoValue selectedSeatValue"
               >
 
                 ${
-  request.selected_seat !== null &&
-  request.selected_seat !== undefined &&
-  String(request.selected_seat).trim() !== ""
-    ? escapeHTML(
-        String(request.selected_seat).trim()
-      )
-    : "Not selected yet"
-}
+                  selectedSeat
+                  ? escapeHTML(
+                      selectedSeat
+                    )
+                  : "Not selected yet"
+                }
 
               </span>
 
@@ -734,18 +900,10 @@ async function loadSeatRequests(){
                AVAILABLE SEATS
           ================================= -->
 
-          <div style="
-            margin-top:20px;
-            padding-top:18px;
-            border-top:1px solid rgba(0,255,255,.15);
-          ">
+          <div class="seatManagement">
 
-            <div style="
-              color:#00ffff;
-              font-size:13px;
-              font-weight:900;
-              margin-bottom:10px;
-            ">
+
+            <div class="seatTitle">
 
               AVAILABLE SEATS
 
@@ -753,45 +911,38 @@ async function loadSeatRequests(){
 
 
             <input
+
               type="text"
+
+              class="seatInput"
+
               id="availableSeats-${request.id}"
+
+              data-request-id="${request.id}"
+
               placeholder="Example: 1, 2, 5, 8"
-              value="${
-  request.available_seats !== null &&
-  request.available_seats !== undefined
-    ? escapeHTML(
-        String(
-          request.available_seats
-        ).trim()
-      )
-    : ""
-}"
-              style="
-                width:100%;
-                padding:14px;
-                border:none;
-                border-radius:10px;
-                margin-bottom:10px;
-                box-sizing:border-box;
-                background:#ffffff;
-                color:#000000;
-                font-size:14px;
-              "
+
+              value="${escapeHTML(
+                availableSeats
+              )}"
+
             >
 
 
             <button
-              onclick="updateAvailableSeats('${request.id}')"
-              style="
-                width:100%;
-                padding:14px;
-                border:none;
-                border-radius:10px;
-                background:#00ffff;
-                color:#001015;
-                font-weight:900;
-                cursor:pointer;
+
+              type="button"
+
+              class="updateSeatButton"
+
+              id="updateSeat-${request.id}"
+
+              onclick="
+                updateAvailableSeats(
+                  '${request.id}'
+                )
               "
+
             >
 
               UPDATE AVAILABLE SEATS
@@ -813,42 +964,36 @@ async function loadSeatRequests(){
     );
 
 
-    // =====================================
-    // REPLACE OLD DATA ONLY AFTER
-    // SUPABASE DATA IS READY
-    // =====================================
+    // -------------------------------------
+    // REPLACE DASHBOARD
+    // -------------------------------------
 
     container.replaceChildren(
       fragment
     );
 
 
-    console.log(
-  "Seat requests refreshed successfully:",
-  data.length
-);
+    updateLastRefreshTime();
 
-console.log(
-  "Latest request ID:",
-  data[0]?.id
-);
+
+    console.log(
+      "Dashboard refreshed:",
+      data.length,
+      "requests"
+    );
 
 
   }catch(error){
 
 
-    // =====================================
-    // CATCH UNEXPECTED ERRORS
-    // =====================================
-
     console.error(
-      "Unexpected seat dashboard error:",
+      "Unexpected dashboard error:",
       error
     );
 
 
     errorBox.textContent =
-      "Unable to load seat requests: " +
+      "Dashboard error: " +
       error.message;
 
 
@@ -859,14 +1004,411 @@ console.log(
   }finally{
 
 
-    // =====================================
-    // ALLOW NEXT REFRESH
-    // =====================================
-
     isLoadingSeatRequests =
       false;
 
   }
+
+}
+
+
+// =========================================
+// UPDATE AVAILABLE SEATS
+// =========================================
+
+async function updateAvailableSeats(
+  requestId
+){
+
+  if(
+    isUpdatingSeat
+  ){
+
+    return;
+
+  }
+
+
+  const input =
+    document.getElementById(
+      `availableSeats-${requestId}`
+    );
+
+
+  const button =
+    document.getElementById(
+      `updateSeat-${requestId}`
+    );
+
+
+  if(
+    !input
+  ){
+
+    alert(
+      "Seat input was not found."
+    );
+
+    return;
+
+  }
+
+
+  const availableSeats =
+    input.value.trim();
+
+
+  // =======================================
+  // ALLOW EMPTY VALUE
+  // EMPTY = CLEAR AVAILABLE + SELECTED
+  // =======================================
+
+  isUpdatingSeat =
+    true;
+
+
+  if(
+    button
+  ){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "UPDATING...";
+
+  }
+
+
+  try{
+
+
+    // =====================================
+    // FIND CURRENT REQUEST
+    // =====================================
+
+    const {
+      data: currentRequest,
+      error: currentError
+    } = await client
+
+      .from("seat_requests")
+
+      .select(
+        "selected_seat"
+      )
+
+      .eq(
+        "id",
+        requestId
+      )
+
+      .maybeSingle();
+
+
+    if(
+      currentError
+    ){
+
+      throw currentError;
+
+    }
+
+
+    const currentSelectedSeat =
+      currentRequest &&
+      currentRequest.selected_seat !== null &&
+      currentRequest.selected_seat !== undefined
+
+      ? String(
+          currentRequest.selected_seat
+        ).trim()
+
+      : "";
+
+
+    // =====================================
+    // DETERMINE NEW SELECTED SEAT
+    // =====================================
+
+    let newSelectedSeat =
+      currentSelectedSeat;
+
+
+    // -------------------------------------
+    // IF AVAILABLE SEATS CLEARED
+    // CLEAR SELECTED SEAT TOO
+    // -------------------------------------
+
+    if(
+      availableSeats === ""
+    ){
+
+      newSelectedSeat =
+        null;
+
+    }
+
+
+    // -------------------------------------
+    // IF AVAILABLE SEATS CHANGED
+    // CHECK WHETHER OLD SELECTED SEAT
+    // STILL EXISTS
+    // -------------------------------------
+
+    else if(
+      currentSelectedSeat !== ""
+    ){
+
+      const availableList =
+        availableSeats
+
+          .split(",")
+
+          .map(
+            seat =>
+              seat.trim()
+          )
+
+          .filter(
+            seat =>
+              seat !== ""
+          );
+
+
+      if(
+        !availableList.includes(
+          currentSelectedSeat
+        )
+      ){
+
+        newSelectedSeat =
+          null;
+
+      }
+
+    }
+
+
+    // =====================================
+    // UPDATE SUPABASE
+    // =====================================
+
+    const {
+      error: updateError
+    } = await client
+
+      .from("seat_requests")
+
+      .update({
+
+        available_seats:
+          availableSeats === ""
+          ? null
+          : availableSeats,
+
+        selected_seat:
+          newSelectedSeat,
+
+        status:
+          availableSeats === ""
+          ? "pending"
+          : "seats_available"
+
+      })
+
+      .eq(
+        "id",
+        requestId );
+
+
+    if(
+      updateError
+    ){
+
+      throw updateError;
+
+    }
+
+
+    // =====================================
+    // GET THE EXACT FRESH ROW
+    // =====================================
+
+    const {
+      data: freshRequest,
+      error: freshError
+    } = await client
+
+      .from("seat_requests")
+
+      .select("*")
+
+      .eq(
+        "id",
+        requestId
+      )
+
+      .maybeSingle();
+
+
+    if(
+      freshError
+    ){
+
+      throw freshError;
+
+    }
+
+
+    // =====================================
+    // UPDATE INPUT WITH ACTUAL DATABASE VALUE
+    // =====================================
+
+    if(
+      input
+    ){
+
+      input.value =
+        freshRequest &&
+        freshRequest.available_seats !== null &&
+        freshRequest.available_seats !== undefined
+
+        ? String(
+            freshRequest.available_seats
+          ).trim()
+
+        : "";
+
+    }
+
+
+    alert(
+      "Seat availability updated successfully."
+    );
+
+
+    // =====================================
+    // REFRESH FULL DASHBOARD
+    // =====================================
+
+    await loadSeatRequests(
+      false
+    );
+
+
+  }catch(error){
+
+
+    console.error(
+      "Seat update error:",
+      error
+    );
+
+
+    alert(
+      "Unable to update seats.\n\n" +
+      error.message
+    );
+
+
+  }finally{
+
+
+    isUpdatingSeat =
+      false;
+
+
+    if(
+      button
+    ){
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "UPDATE AVAILABLE SEATS";
+
+    }
+
+  }
+
+}
+
+
+// =========================================
+// MANUAL REFRESH
+// =========================================
+
+async function manualRefresh(){
+
+  const button =
+    document.getElementById(
+      "refreshButton"
+    );
+
+
+  if(
+    button
+  ){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "REFRESHING...";
+
+  }
+
+
+  try{
+
+    await loadSeatRequests(
+      false
+    );
+
+  }finally{
+
+    if(
+      button
+    ){
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "REFRESH REQUESTS";
+
+    }
+
+  }
+
+}
+
+
+// =========================================
+// LAST REFRESH TIME
+// =========================================
+
+function updateLastRefreshTime(){
+
+  const element =
+    document.getElementById(
+      "lastUpdatedTime"
+    );
+
+
+  if(
+    !element
+  ){
+
+    return;
+
+  }
+
+
+  element.textContent =
+    new Date().toLocaleTimeString();
 
 }
 
@@ -911,7 +1453,6 @@ function escapeHTML(
 }
 
 
-
 // =========================================
 // FORMAT DATE
 // =========================================
@@ -920,7 +1461,9 @@ function formatDate(
   value
 ){
 
-  if(!value){
+  if(
+    !value
+  ){
 
     return "Not provided";
 
@@ -948,145 +1491,62 @@ function formatDate(
 
 }
 
+
 // =========================================
-// UPDATE AVAILABLE SEATS
+// START DASHBOARD
 // =========================================
 
-async function updateAvailableSeats(requestId){
+async function startDashboard(){
 
-  const input =
-    document.getElementById(
-      `availableSeats-${requestId}`
-    );
+  // ---------------------------------------
+  // FIRST LOAD
+  // ---------------------------------------
 
-  if(!input){
-
-    alert(
-      "Available seats input was not found."
-    );
-
-    return;
-
-  }
-
-  const availableSeats =
-    input.value.trim();
-
-  if(availableSeats === ""){
-
-    alert(
-      "Please enter the available seat numbers."
-    );
-
-    input.focus();
-
-    return;
-
-  }
-
-  const {
-    data,
-    error
-  } = await client
-
-    .from("seat_requests")
-
-    .update({
-
-      available_seats:
-        availableSeats,
-
-      status:
-        "seats_available"
-
-    })
-
-    .eq(
-      "id",
-      requestId
-    )
-
-    .select();
-
-
-  if(error){
-
-    console.error(
-      "Update available seats error:",
-      error
-    );
-
-    alert(
-      "Unable to update available seats.\n\n" +
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  alert(
-    "Available seats updated successfully."
+  await loadSeatRequests(
+    true
   );
 
 
- await loadSeatRequests();
+  // ---------------------------------------
+  // AUTO REFRESH EVERY 10 SECONDS
+  // ---------------------------------------
 
-}
+  if(
+    autoRefreshTimer
+  ){
 
+    clearInterval(
+      autoRefreshTimer
+    );
 
-
-// =========================================
-// INITIAL LOAD
-// =========================================
-
-loadSeatRequests();
-
-
-
-// =========================================
-// AUTO REFRESH EVERY 3 MINUTES
-// =========================================
-
-const AUTO_REFRESH_TIME =
-  3 * 60 * 1000;
+  }
 
 
-function startAutoRefresh(){
+  autoRefreshTimer =
+    setInterval(
+      function(){
 
-  setInterval(
-    async function(){
-
-      console.log(
-        "Automatic seat request refresh started..."
-      );
-
-      try{
-
-        await loadSeatRequests();
-
-        console.log(
-          "Automatic seat request refresh completed."
+        loadSeatRequests(
+          false
         );
 
-      }catch(error){
+      },
+      AUTO_REFRESH_TIME
+    );
 
-        console.error(
-          "Automatic refresh failed:",
-          error
-        );
 
-      }
-
-    },
-    AUTO_REFRESH_TIME
+  console.log(
+    "Automatic refresh started: every 10 seconds."
   );
 
 }
 
 
-startAutoRefresh();
+// =========================================
+// RUN
+// =========================================
+
+startDashboard();
 
 
 </script>
