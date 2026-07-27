@@ -347,14 +347,30 @@ const client =
     SUPABASE_URL,
     SUPABASE_KEY
   );
-
-
-
+  
 // =========================================
 // LOAD SEAT REQUESTS
 // =========================================
 
+let isLoadingSeatRequests = false;
+
 async function loadSeatRequests(){
+
+  // =======================================
+  // PREVENT OVERLAPPING REFRESHES
+  // =======================================
+
+  if(isLoadingSeatRequests){
+
+    console.log(
+      "Seat requests are already loading..."
+    );
+
+    return;
+
+  }
+
+  isLoadingSeatRequests = true;
 
 
   const container =
@@ -369,7 +385,22 @@ async function loadSeatRequests(){
     );
 
 
-  // Clear previous error
+  if(!container || !errorBox){
+
+    console.error(
+      "Dashboard elements not found."
+    );
+
+    isLoadingSeatRequests = false;
+
+    return;
+
+  }
+
+
+  // =======================================
+  // CLEAR ERROR
+  // =======================================
 
   errorBox.style.display =
     "none";
@@ -378,48 +409,434 @@ async function loadSeatRequests(){
     "";
 
 
-  // Loading message
-
-  container.innerHTML = `
-
-    <div class="loadingMessage">
-
-      Loading seat requests...
-
-    </div>
-
-  `;
-
-
   // =======================================
-  // GET REQUESTS FROM SUPABASE
+  // SHOW LOADING ONLY IF EMPTY
   // =======================================
 
-  const {
-    data,
-    error
-  } = await client
+  if(
+    container.children.length === 0
+  ){
 
-    .from("seat_requests")
+    container.innerHTML = `
 
-    .select("*")
+      <div class="loadingMessage">
 
-    .order(
-      "created_at",
-      {
-        ascending:false
+        Loading seat requests...
+
+      </div>
+
+    `;
+
+  }
+
+
+  try{
+
+
+    // =====================================
+    // GET FRESH DATA FROM SUPABASE
+    // =====================================
+
+    const {
+      data,
+      error
+    } = await client
+
+      .from("seat_requests")
+
+      .select("*")
+
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+    // =====================================
+    // HANDLE SUPABASE ERROR
+    // =====================================
+
+    if(error){
+
+      console.error(
+        "Seat dashboard error:",
+        error
+      );
+
+
+      errorBox.textContent =
+        "Unable to load seat requests: " +
+        error.message;
+
+
+      errorBox.style.display =
+        "block";
+
+
+      return;
+
+    }
+
+
+    // =====================================
+    // NO REQUESTS
+    // =====================================
+
+    if(
+      !data ||
+      data.length === 0
+    ){
+
+      container.innerHTML = `
+
+        <div class="emptyMessage">
+
+          No seat requests available yet.
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    // =====================================
+    // BUILD REQUESTS
+    // =====================================
+
+    const fragment =
+      document.createDocumentFragment();
+
+
+    data.forEach(
+      request => {
+
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+
+        card.className =
+          "requestCard";
+
+
+        card.innerHTML = `
+
+          <div class="requestHeader">
+
+            <h3>
+              ${escapeHTML(
+                request.company_name ||
+                "Company Not Provided"
+              )}
+            </h3>
+
+            <div class="statusBadge">
+
+              ${escapeHTML(
+                request.status ||
+                "pending"
+              )}
+
+            </div>
+
+          </div>
+
+
+          <div class="infoGrid">
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Service
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.service_type ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Customer
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.customer_name ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Phone
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.customer_phone ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Passengers
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  String(
+                    request.passengers ||
+                    "Not provided"
+                  )
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Departure
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.departure ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Destination
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.destination ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Travel Date
+              </span>
+
+              <span class="infoValue">
+
+                ${escapeHTML(
+                  request.travel_date ||
+                  "Not provided"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                SELECTED SEATS
+              </span>
+
+              <span
+                class="infoValue"
+                style="
+                  color:#00ff88;
+                  font-weight:900;
+                  font-size:15px;
+                "
+              >
+
+                ${
+                  request.selected_seat !== null &&
+                  request.selected_seat !== undefined &&
+                  String(
+                    request.selected_seat
+                  ).trim() !== ""
+
+                  ? escapeHTML(
+                      String(
+                        request.selected_seat
+                      )
+                    )
+
+                  : "Not selected yet"
+                }
+
+              </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+              <span class="infoLabel">
+                Request Time
+              </span>
+
+              <span class="infoValue">
+
+                ${formatDate(
+                  request.created_at
+                )}
+
+              </span>
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               AVAILABLE SEATS
+          ================================= -->
+
+          <div style="
+            margin-top:20px;
+            padding-top:18px;
+            border-top:1px solid rgba(0,255,255,.15);
+          ">
+
+            <div style="
+              color:#00ffff;
+              font-size:13px;
+              font-weight:900;
+              margin-bottom:10px;
+            ">
+
+              AVAILABLE SEATS
+
+            </div>
+
+
+            <input
+              type="text"
+              id="availableSeats-${request.id}"
+              placeholder="Example: 1, 2, 5, 8"
+              value="${escapeHTML(
+                request.available_seats || ""
+              )}"
+              style="
+                width:100%;
+                padding:14px;
+                border:none;
+                border-radius:10px;
+                margin-bottom:10px;
+                box-sizing:border-box;
+                background:#ffffff;
+                color:#000000;
+                font-size:14px;
+              "
+            >
+
+
+            <button
+              onclick="updateAvailableSeats('${request.id}')"
+              style="
+                width:100%;
+                padding:14px;
+                border:none;
+                border-radius:10px;
+                background:#00ffff;
+                color:#001015;
+                font-weight:900;
+                cursor:pointer;
+              "
+            >
+
+              UPDATE AVAILABLE SEATS
+
+            </button>
+
+
+          </div>
+
+        `;
+
+
+        fragment.appendChild(
+          card
+        );
+
+
       }
     );
 
 
-  // =======================================
-  // HANDLE ERROR
-  // =======================================
+    // =====================================
+    // REPLACE OLD DATA ONLY AFTER
+    // SUPABASE DATA IS READY
+    // =====================================
 
-  if(error){
+    container.replaceChildren(
+      fragment
+    );
+
+
+    console.log(
+      "Seat requests refreshed successfully:",
+      data.length
+    );
+
+
+  }catch(error){
+
+
+    // =====================================
+    // CATCH UNEXPECTED ERRORS
+    // =====================================
 
     console.error(
-      "Seat dashboard error:",
+      "Unexpected seat dashboard error:",
       error
     );
 
@@ -433,334 +850,19 @@ async function loadSeatRequests(){
       "block";
 
 
-    container.innerHTML =
-      "";
+  }finally{
 
 
-    return;
+    // =====================================
+    // ALLOW NEXT REFRESH
+    // =====================================
 
-  }
-
-
-  // =======================================
-  // NO REQUESTS
-  // =======================================
-
-  if(
-    !data ||
-    data.length === 0
-  ){
-
-    container.innerHTML = `
-
-      <div class="emptyMessage">
-
-        No seat requests available yet.
-
-      </div>
-
-    `;
-
-    return;
+    isLoadingSeatRequests =
+      false;
 
   }
-
-
-  // =======================================
-  // DISPLAY REQUESTS
-  // =======================================
-
-  container.innerHTML = "";
-
-
-  data.forEach(
-    request => {
-
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "requestCard";
-
-
-      card.innerHTML = `
-
-        <div class="requestHeader">
-
-          <h3>
-            ${escapeHTML(
-              request.company_name ||
-              "Company Not Provided"
-            )}
-          </h3>
-
-          <div class="statusBadge">
-
-            ${escapeHTML(
-              request.status ||
-              "pending"
-            )}
-
-          </div>
-
-        </div>
-
-
-        <div class="infoGrid">
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Service
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                request.service_type ||
-                "Not provided"
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Customer
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                request.customer_name ||
-                "Not provided"
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Phone
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                request.customer_phone ||
-                "Not provided"
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Passengers
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                String(
-                  request.passengers ||
-                  "Not provided"
-                )
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Departure
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                request.departure ||
-                "Not provided"
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-            <span class="infoLabel">
-              Destination
-            </span>
-
-            <span class="infoValue">
-
-              ${escapeHTML(
-                request.destination ||
-                "Not provided"
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="infoBox">
-
-  <span class="infoLabel">
-    Travel Date
-  </span>
-
-  <span class="infoValue">
-
-    ${escapeHTML(
-      request.travel_date ||
-      "Not provided"
-    )}
-
-  </span>
-
-</div>
-
-
-<!-- SELECTED SEATS -->
-
-<div class="infoBox">
-
-  <span class="infoLabel">
-    SELECTED SEATS
-  </span>
-
-  <span
-    class="infoValue"
-    style="
-      color:#00ff88;
-      font-weight:900;
-      font-size:15px;
-    "
-  >
-
-    ${
-      request.selected_seat !== null &&
-      request.selected_seat !== undefined &&
-      String(request.selected_seat).trim() !== ""
-      ? " " +
-        escapeHTML(
-          String(
-            request.selected_seat
-          )
-        )
-      : "Not selected yet"
-    }
-
-  </span>
-
-</div>
-
-
-<div class="infoBox">
-
-  <span class="infoLabel">
-    Request Time
-  </span>
-
-  <span class="infoValue">
-
-    ${formatDate(
-      request.created_at
-    )}
-
-  </span>
-
-</div>
-
-               <div style="
-          margin-top:20px;
-          padding-top:18px;
-          border-top:1px solid rgba(0,255,255,.15);
-        ">
-
-          <div style="
-            color:#00ffff;
-            font-size:13px;
-            font-weight:900;
-            margin-bottom:10px;
-          ">
-            AVAILABLE SEATS
-          </div>
-
-          <input
-            type="text"
-            id="availableSeats-${request.id}"
-            placeholder="Example: 1, 2, 5, 8"
-            value="${escapeHTML(
-              request.available_seats || ""
-            )}"
-            style="
-              width:100%;
-              padding:14px;
-              border:none;
-              border-radius:10px;
-              margin-bottom:10px;
-              box-sizing:border-box;
-              background:#ffffff;
-              color:#000000;
-              font-size:14px;
-            "
-          >
-
-          <button
-            onclick="updateAvailableSeats('${request.id}')"
-            style="
-              width:100%;
-              padding:14px;
-              border:none;
-              border-radius:10px;
-              background:#00ffff;
-              color:#001015;
-              font-weight:900;
-              cursor:pointer;
-            "
-          >
-            UPDATE AVAILABLE SEATS
-          </button>
-
-        </div>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(
-        card
-      );
-
-
-    }
-  );
-
 
 }
-
 
 
 // =========================================
