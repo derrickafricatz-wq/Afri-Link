@@ -696,20 +696,14 @@ async function loadSeatRequests(){
               >
 
                 ${
-                  request.selected_seat !== null &&
-                  request.selected_seat !== undefined &&
-                  String(
-                    request.selected_seat
-                  ).trim() !== ""
-
-                  ? escapeHTML(
-                      String(
-                        request.selected_seat
-                      )
-                    )
-
-                  : "Not selected yet"
-                }
+  request.selected_seat !== null &&
+  request.selected_seat !== undefined &&
+  String(request.selected_seat).trim() !== ""
+    ? escapeHTML(
+        String(request.selected_seat).trim()
+      )
+    : "Not selected yet"
+}
 
               </span>
 
