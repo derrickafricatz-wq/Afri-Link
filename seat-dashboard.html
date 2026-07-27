@@ -1554,44 +1554,62 @@ function formatDate(
 
 function startAutoRefresh(){
 
-  // ---------------------------------------
-  // CLEAR OLD TIMER
-  // ---------------------------------------
+  if(autoRefreshTimer){
 
-  if(
-    autoRefreshTimer
-  ){
-
-    clearInterval(
+    clearTimeout(
       autoRefreshTimer
     );
 
   }
 
 
-  // ---------------------------------------
-  // START 10 SECOND REFRESH
-  // ---------------------------------------
+  async function refreshLoop(){
+
+    console.log(
+      "AUTO REFRESH: Checking for latest seat requests..."
+    );
+
+
+    try{
+
+      await loadSeatRequests(
+        false
+      );
+
+      resetCountdown();
+
+
+    }catch(error){
+
+      console.error(
+        "Auto refresh failed:",
+        error
+      );
+
+    }
+
+
+    // ===================================
+    // WAIT 10 SECONDS AFTER COMPLETION
+    // THEN REFRESH AGAIN
+    // ===================================
+
+    autoRefreshTimer =
+      setTimeout(
+        refreshLoop,
+        AUTO_REFRESH_TIME
+      );
+
+  }
+
+
+  // =====================================
+  // FIRST AUTOMATIC REFRESH
+  // =====================================
 
   autoRefreshTimer =
-    setInterval(
-      async function(){
-
-
-        console.log(
-          "AUTO REFRESH: Getting fresh requests..."
-        );
-
-
-        await loadSeatRequests(
-          false
-        );
-
-
-        resetCountdown();
-
-
-      },
+    setTimeout(
+      refreshLoop,
       AUTO_REFRESH_TIME
     );
 
