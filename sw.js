@@ -1,6 +1,6 @@
 // Holly Echo - Offline Service Worker (FINAL CLEAN VERSION)
 
-const APP_VERSION = "1.0.31";
+const APP_VERSION = "1.0.32";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
 /* =========================
@@ -153,6 +153,12 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   const requestUrl = event.request.url;
+
+// NEVER CACHE SUPABASE API REQUESTS
+if (requestUrl.includes("supabase.co")) {
+  event.respondWith(fetch(event.request));
+  return;
+}
 
  // VIDEO FIX
 if (
