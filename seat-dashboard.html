@@ -469,7 +469,7 @@ const client =
 // =========================================
 
 const AUTO_REFRESH_TIME =
-  10000;
+  50000;
 
 
 // =========================================
@@ -569,20 +569,22 @@ async function loadSeatRequests(
     // -------------------------------------
 
     const {
-      data,
-      error
-    } = await client
+  data,
+  error
+} = await client
 
-      .from("seat_requests")
+  .from("seat_requests")
 
-      .select("*")
+  .select("*")
 
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
+  .order(
+    "created_at",
+    {
+      ascending:false
+    }
+  )
+
+  .limit(100);
 
 
     // -------------------------------------
