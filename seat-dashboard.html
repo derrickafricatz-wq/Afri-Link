@@ -1052,18 +1052,41 @@ loadSeatRequests();
 const AUTO_REFRESH_TIME =
   3 * 60 * 1000;
 
-setInterval(
-  function(){
 
-    console.log(
-      "Automatic seat request refresh..."
-    );
+function startAutoRefresh(){
 
-    loadSeatRequests();
+  setInterval(
+    async function(){
 
-  },
-  AUTO_REFRESH_TIME
-);
+      console.log(
+        "Automatic seat request refresh started..."
+      );
+
+      try{
+
+        await loadSeatRequests();
+
+        console.log(
+          "Automatic seat request refresh completed."
+        );
+
+      }catch(error){
+
+        console.error(
+          "Automatic refresh failed:",
+          error
+        );
+
+      }
+
+    },
+    AUTO_REFRESH_TIME
+  );
+
+}
+
+
+startAutoRefresh();
 
 
 </script>
