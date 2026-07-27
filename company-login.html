@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Company Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+
+<h2>Company In-Charge Login</h2>
+
+<input id="email" type="email" placeholder="Company Email">
+
+<br><br>
+
+<input id="password" type="password" placeholder="Password">
+
+<br><br>
+
+<button onclick="loginCompany()">
+LOGIN
+</button>
+
+
+<script>
+
+const SUPABASE_URL = "https://xbemkmvvbkxknuduthsg.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_ANON_KEY_HERE";
+
+
+const client = supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+async function loginCompany(){
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+
+const {
+data,
+error
+}
+=
+await client.auth.signInWithPassword({
+
+email: email,
+
+password: password
+
+});
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("Login successful");
+
+window.location.href =
+"seat-dashboard.html";
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>
