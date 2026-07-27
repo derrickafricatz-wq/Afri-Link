@@ -1,6 +1,6 @@
 // Holly Echo - Offline Service Worker (FINAL CLEAN VERSION)
 
-const APP_VERSION = "1.0.28";
+const APP_VERSION = "1.0.29";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
 /* =========================
@@ -149,6 +149,50 @@ self.addEventListener("activate", (event) => {
 ========================= */
 
 self.addEventListener("fetch", (event) => {
+
+   // =========================================
+// ALWAYS GET FRESH SEAT DASHBOARD
+// NEVER USE OLD CACHE
+// =========================================
+
+if (
+  new URL(event.request.url).pathname.endsWith(
+    "/seat-dashboard.html"
+  )
+) {
+
+  event.respondWith(
+
+    fetch(
+      event.request,
+      {
+        cache: "no-store"
+      }
+    )
+
+    .then(
+      (response) => {
+
+        return response;
+
+      }
+    )
+
+    .catch(
+      () => {
+
+        return caches.match(
+          event.request
+        );
+
+      }
+    )
+
+  );
+
+  return;
+
+}
 
   if (event.request.method !== "GET") return;
 
