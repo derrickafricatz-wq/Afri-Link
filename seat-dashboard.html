@@ -290,10 +290,10 @@ body{
     </div>
 
     <button
-  class="refreshButton"
-  onclick="forceRefreshSeatRequests()"
->
-  REFRESH REQUESTS
+      class="refreshButton"
+      onclick="loadSeatRequests()"
+    >
+      REFRESH REQUESTS
     </button>
 
   </div>
@@ -837,54 +837,6 @@ function formatDate(
 
 
   return date.toLocaleString();
-
-}
-
-// =========================================
-// FORCE REFRESH SEAT REQUESTS
-// =========================================
-
-async function forceRefreshSeatRequests(){
-
-  const button =
-    document.querySelector(
-      ".refreshButton"
-    );
-
-  if(button){
-
-    button.disabled = true;
-
-    button.textContent =
-      "REFRESHING...";
-
-  }
-
-  try{
-
-    await loadSeatRequests();
-
-  }catch(error){
-
-    console.error(
-      "Force refresh error:",
-      error
-    );
-
-    alert(
-      "Unable to refresh seat requests."
-    );
-
-  }
-
-  if(button){
-
-    button.disabled = false;
-
-    button.textContent =
-      "REFRESH REQUESTS";
-
-  }
 
 }
 
