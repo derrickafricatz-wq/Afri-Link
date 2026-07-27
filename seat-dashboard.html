@@ -1015,39 +1015,19 @@ async function loadSeatRequests(
 
 // =========================================
 // UPDATE AVAILABLE SEATS
-// =========================================
+// =======================================
 
-async function updateAvailableSeats(
-  requestId
-){
-
-  if(
-    isUpdatingSeat
-  ){
-
-    return;
-
-  }
-
+  async function updateAvailableSeats(requestId){
 
   const input =
     document.getElementById(
       `availableSeats-${requestId}`
     );
 
-
-  const button =
-    document.getElementById(
-      `updateSeat-${requestId}`
-    );
-
-
-  if(
-    !input
-  ){
+  if(!input){
 
     alert(
-      "Seat input was not found."
+      "Available seats input was not found."
     );
 
     return;
@@ -1059,234 +1039,96 @@ async function updateAvailableSeats(
     input.value.trim();
 
 
-  // =======================================
-  // ALLOW EMPTY VALUE
-  // EMPTY = CLEAR AVAILABLE + SELECTED
-  // =======================================
+  if(availableSeats === ""){
 
-  isUpdatingSeat =
-    true;
+    alert(
+      "Please enter the available seat numbers."
+    );
 
+    input.focus();
 
-  if(
-    button
-  ){
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "UPDATING...";
+    return;
 
   }
 
 
-  try{
+  // =========================================
+  // UPDATE AVAILABLE SEATS
+  // AND CLEAR OLD SELECTED SEAT
+  // =========================================
 
+  const {
+    data,
+    error
+  } = await client
 
-    // =====================================
-    // FIND CURRENT REQUEST
-    // =====================================
+    .from("seat_requests")
 
-    const {
-      data: currentRequest,
-      error: currentError
-    } = await client
+    .update({
 
-      .from("seat_requests")
+      // New available seats
+      available_seats:
+        availableSeats,
 
-      .select(
-        "selected_seat"
-      )
+      // IMPORTANT:
+      // Clear the previous customer's
+      // selected seat
+      selected_seat:
+        null,
 
-      .eq(
-        "id",
-        requestId
-      )
+      // New status
+      status:
+        "seats_available"
 
-      .maybeSingle();
+    })
 
+    .eq(
+      "id",
+      requestId
+    )
 
-    if(
-      currentError
-    ){
+    .select();
 
-      throw currentError;
 
-    }
+  // =========================================
+  // HANDLE ERROR
+  // =========================================
 
+  if(error){
 
-    const currentSelectedSeat =
-      currentRequest &&
-      currentRequest.selected_seat !== null &&
-      currentRequest.selected_seat !== undefined
-
-      ? String(
-          currentRequest.selected_seat
-        ).trim()
-
-      : "";
-
-
-    // =====================================
-    // DETERMINE NEW SELECTED SEAT
-    // =====================================
-
-    let newSelectedSeat =
-      currentSelectedSeat;
-
-
-    // -------------------------------------
-    // IF AVAILABLE SEATS CLEARED
-    // CLEAR SELECTED SEAT TOO
-    // -------------------------------------
-
-    if(
-      availableSeats === ""
-    ){
-
-      newSelectedSeat =
-        null;
-
-    }
-
-
-    // -------------------------------------
-    // IF AVAILABLE SEATS CHANGED
-    // CHECK WHETHER OLD SELECTED SEAT
-    // STILL EXISTS
-    // -------------------------------------
-
-    else if(
-      currentSelectedSeat !== ""
-    ){
-
-      const availableList =
-        availableSeats
-
-          .split(",")
-
-          .map(
-            seat =>
-              seat.trim()
-          )
-
-          .filter(
-            seat =>
-              seat !== ""
-          );
-
-
-      if(
-        !availableList.includes(
-          currentSelectedSeat
-        )
-      ){
-
-        newSelectedSeat =
-          null;
-
-      }
-
-    }
-
-
-    // =====================================
-    // UPDATE SUPABASE
-    // =====================================
-
-    const {
-      error: updateError
-    } = await client
-
-      .from("seat_requests")
-
-      .update({
-
-        available_seats:
-          availableSeats === ""
-          ? null
-          : availableSeats,
-
-        selected_seat:
-          newSelectedSeat,
-
-        status:
-          availableSeats === ""
-          ? "pending"
-          : "seats_available"
-
-      })
-
-      .eq(
-        "id",
-        requestId );
-
-
-    if(
-      updateError
-    ){
-
-      throw updateError;
-
-    }
-
-
-    // =====================================
-    // GET THE EXACT FRESH ROW
-    // =====================================
-
-    const {
-      data: freshRequest,
-      error: freshError
-    } = await client
-
-      .from("seat_requests")
-
-      .select("*")
-
-      .eq(
-        "id",
-        requestId
-      )
-
-      .maybeSingle();
-
-
-    if(
-      freshError
-    ){
-
-      throw freshError;
-
-    }
-
-
-    // =====================================
-    // UPDATE INPUT WITH ACTUAL DATABASE VALUE
-    // =====================================
-
-    if(
-      input
-    ){
-
-      input.value =
-        freshRequest &&
-        freshRequest.available_seats !== null &&
-        freshRequest.available_seats !== undefined
-
-        ? String(
-            freshRequest.available_seats
-          ).trim()
-
-        : "";
-
-    }
-
+    console.error(
+      "Update available seats error:",
+      error
+    );
 
     alert(
-      "Seat availability updated successfully."
+      "Unable to update available seats.\n\n" +
+      error.message
     );
+
+    return;
+
+  }
+
+
+  // =========================================
+  // SUCCESS
+  // =========================================
+
+  alert(
+    "Available seats updated successfully.\n\n" +
+    "Previous selected seat has been cleared.\n\n" +
+    "The customer can now select a new seat."
+  );
+
+
+  // =========================================
+  // LOAD FRESH DATA FROM SUPABASE
+  // =========================================
+
+  await loadSeatRequests();
+
+}
 
 
     // =====================================
