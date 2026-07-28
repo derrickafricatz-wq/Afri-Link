@@ -1845,23 +1845,12 @@ if(companyError){
 const companyEmail =
   companyData?.email || "";
 
-  console.log(
-  "SELECTED COMPANY:",
-  selectedCompany
-);
-
-console.log(
-  "COMPANY NAME BEING SEARCHED:",
-  selectedCompany?.company_name
-);
-
-console.log(
-  "COMPANY DATA FOUND:",
-  companyData
-);
-
-console.log(
-  "COMPANY EMAIL FOUND:",
+alert(
+  "Company Name: " +
+  selectedCompany?.company_name +
+  "\n\nCompany Data: " +
+  JSON.stringify(companyData) +
+  "\n\nCompany Email: " +
   companyEmail
 );
 
