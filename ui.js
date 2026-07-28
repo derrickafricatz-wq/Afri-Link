@@ -1860,7 +1860,9 @@ console.log(
   const seatRequest = {
 
   company_name:
-  selectedCompany?.company || "",
+  selectedCompany?.company ||
+  selectedCompany?.company_name ||
+  "",
 
    company_email:
   companyEmail,
