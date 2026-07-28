@@ -1590,15 +1590,43 @@ function startAutoRefresh(){
 
 
 
-// =========================================
-// START DASHBOARD
-// =========================================
-
 async function startDashboard(){
 
 
   console.log(
     "Starting In-Charge Dashboard..."
+  );
+
+
+  // ---------------------------------------
+  // CHECK LOGGED-IN COMPANY
+  // ---------------------------------------
+
+  const {
+    data: {
+      user
+    },
+    error
+  } = await client.auth.getUser();
+
+
+  if(error || !user){
+
+    alert(
+      "Please login first."
+    );
+
+    window.location.href =
+      "company-login.html";
+
+    return;
+
+  }
+
+
+  console.log(
+    "Logged-in company Auth ID:",
+    user.id
   );
 
 
