@@ -1822,7 +1822,7 @@ const { data: companyData, error: companyError } =
     .select("email")
     .ilike(
       "company_name",
-      selectedCompany?.company_name?.trim()
+      selectedCompany?.company?.trim()
     )
     .maybeSingle();
 
