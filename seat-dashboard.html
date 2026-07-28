@@ -583,17 +583,21 @@ async function loadSeatRequests(showLoading = false){
     // =====================================
 
     const {
-      data,
-      error
-    } = await client
-      .from("seat_requests")
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
+  data,
+  error
+} = await client
+  .from("seat_requests")
+  .select("*")
+  .eq(
+    "company_email",
+    loggedInCompanyEmail
+  )
+  .order(
+    "created_at",
+    {
+      ascending:false
+    }
+  );
 
 
     if(error){
