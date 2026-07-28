@@ -1845,6 +1845,15 @@ if(companyError){
 const companyEmail =
   companyData?.email || "";
 
+alert(
+  "Company Name: " +
+  selectedCompany?.company_name +
+  "\n\nCompany Data: " +
+  JSON.stringify(companyData) +
+  "\n\nCompany Email: " +
+  companyEmail
+);
+
 console.log(
   "COMPANY NAME:",
   selectedCompany?.company_name
