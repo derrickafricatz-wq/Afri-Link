@@ -1,92 +1,1061 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-<title>Company Login</title>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>In-Charge Portal</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+<style>
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+
+  margin:0;
+
+  min-height:100vh;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:20px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #12304a 0%,
+      #07111f 45%,
+      #030811 100%
+    );
+
+  color:#ffffff;
+
+}
+
+
+/* =========================================
+   AUTH CONTAINER
+========================================= */
+
+.authContainer{
+
+  width:100%;
+
+  max-width:430px;
+
+  background:
+    rgba(
+      13,
+      27,
+      42,
+      .96
+    );
+
+  border:
+
+    1px solid
+
+    rgba(
+      0,
+      255,
+      255,
+      .20
+    );
+
+  border-radius:24px;
+
+  padding:30px 24px;
+
+  box-shadow:
+
+    0 20px 60px
+
+    rgba(
+      0,
+      0,
+      0,
+      .45
+    );
+
+}
+
+
+/* =========================================
+   LOGO / ICON
+========================================= */
+
+.portalIcon{
+
+  width:70px;
+
+  height:70px;
+
+  margin:
+
+    0 auto 18px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:20px;
+
+  background:
+
+    rgba(
+      0,
+      255,
+      255,
+      .10
+    );
+
+  border:
+
+    1px solid
+
+    rgba(
+      0,
+      255,
+      255,
+      .25
+    );
+
+  font-size:32px;
+
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.authHeader{
+
+  text-align:center;
+
+  margin-bottom:25px;
+
+}
+
+.authHeader h1{
+
+  margin:0;
+
+  color:#00ffff;
+
+  font-size:24px;
+
+  font-weight:900;
+
+}
+
+.authHeader p{
+
+  margin:
+
+    8px 0 0;
+
+  color:#9fb1c2;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.formGroup{
+
+  margin-bottom:15px;
+
+}
+
+.formGroup label{
+
+  display:block;
+
+  margin-bottom:7px;
+
+  color:#b9c9d8;
+
+  font-size:12px;
+
+  font-weight:700;
+
+}
+
+.formInput{
+
+  width:100%;
+
+  padding:14px 15px;
+
+  border:
+
+    1px solid
+
+    rgba(
+      255,
+      255,
+      255,
+      .10
+    );
+
+  border-radius:12px;
+
+  outline:none;
+
+  background:#07111f;
+
+  color:#ffffff;
+
+  font-size:14px;
+
+}
+
+.formInput:focus{
+
+  border-color:#00ffff;
+
+  box-shadow:
+
+    0 0 0 3px
+
+    rgba(
+      0,
+      255,
+      255,
+      .10
+    );
+
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.primaryButton{
+
+  width:100%;
+
+  padding:15px;
+
+  margin-top:5px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#00ffff;
+
+  color:#001015;
+
+  font-size:14px;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+.primaryButton:active{
+
+  transform:scale(.98);
+
+}
+
+.primaryButton:disabled{
+
+  opacity:.6;
+
+  cursor:not-allowed;
+
+}
+
+
+/* =========================================
+   SWITCH
+========================================= */
+
+.switchText{
+
+  text-align:center;
+
+  margin-top:20px;
+
+  color:#8fa3b8;
+
+  font-size:13px;
+
+}
+
+.switchButton{
+
+  border:none;
+
+  background:none;
+
+  color:#00ffff;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+  padding:0;
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.message{
+
+  display:none;
+
+  margin-bottom:15px;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  text-align:center;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+}
+
+.errorMessage{
+
+  color:#ff8585;
+
+  background:
+
+    rgba(
+      255,
+      0,
+      0,
+      .08
+    );
+
+  border:
+
+    1px solid
+
+    rgba(
+      255,
+      0,
+      0,
+      .20
+    );
+
+}
+
+.successMessage{
+
+  color:#00ff88;
+
+  background:
+
+    rgba(
+      0,
+      255,
+      136,
+      .08
+    );
+
+  border:
+
+    1px solid
+
+    rgba(
+      0,
+      255,
+      136,
+      .20
+    );
+
+}
+
+
+/* =========================================
+   REGISTER FORM HIDDEN
+========================================= */
+
+#registerForm{
+
+  display:none;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:480px){
+
+  body{
+
+    padding:15px;
+
+  }
+
+  .authContainer{
+
+    padding:25px 18px;
+
+    border-radius:20px;
+
+  }
+
+  .authHeader h1{
+
+    font-size:21px;
+
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<h2>Company In-Charge Login</h2>
 
-<input id="email" type="email" placeholder="Company Email">
+<div class="authContainer">
 
-<br><br>
 
-<input id="password" type="password" placeholder="Password">
+  <!-- =====================================
+       ICON
+  ====================================== -->
 
-<br><br>
+  <div class="portalIcon">
 
-<button onclick="loginCompany()">
-LOGIN
-</button>
+    ✈️🚌
+
+  </div>
+
+
+  <!-- =====================================
+       LOGIN FORM
+  ====================================== -->
+
+  <div id="loginForm">
+
+
+    <div class="authHeader">
+
+      <h1>
+        IN-CHARGE PORTAL
+      </h1>
+
+      <p>
+        Sign in to manage your company's
+        flight and bus seat requests.
+      </p>
+
+    </div>
+
+
+    <div
+      id="loginMessage"
+      class="message errorMessage"
+    ></div>
+
+
+    <div class="formGroup">
+
+      <label>
+        COMPANY EMAIL
+      </label>
+
+      <input
+        id="email"
+        class="formInput"
+        type="email"
+        placeholder="Enter company email"
+        autocomplete="email"
+      >
+
+    </div>
+
+
+    <div class="formGroup">
+
+      <label>
+        PASSWORD
+      </label>
+
+      <input
+        id="password"
+        class="formInput"
+        type="password"
+        placeholder="Enter password"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+
+    <button
+      id="loginButton"
+      class="primaryButton"
+      type="button"
+      onclick="loginCompany()"
+    >
+
+      LOGIN TO DASHBOARD
+
+    </button>
+
+
+    <div class="switchText">
+
+      New in-charge?
+
+      <button
+        class="switchButton"
+        type="button"
+        onclick="showRegister()"
+      >
+
+        CREATE ACCOUNT
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =====================================
+       REGISTER FORM
+  ====================================== -->
+
+  <div id="registerForm">
+
+
+    <div class="authHeader">
+
+      <h1>
+        CREATE ACCOUNT
+      </h1>
+
+      <p>
+        Register your in-charge account
+        to access your company's dashboard.
+      </p>
+
+    </div>
+
+
+    <div
+      id="registerMessage"
+      class="message errorMessage"
+    ></div>
+
+
+    <div class="formGroup">
+
+      <label>
+        FULL NAME
+      </label>
+
+      <input
+        id="registerName"
+        class="formInput"
+        type="text"
+        placeholder="Enter your full name"
+        autocomplete="name"
+      >
+
+    </div>
+
+
+    <div class="formGroup">
+
+      <label>
+        COMPANY EMAIL
+      </label>
+
+      <input
+        id="registerEmail"
+        class="formInput"
+        type="email"
+        placeholder="Enter company email"
+        autocomplete="email"
+      >
+
+    </div>
+
+
+    <div class="formGroup">
+
+      <label>
+        PASSWORD
+      </label>
+
+      <input
+        id="registerPassword"
+        class="formInput"
+        type="password"
+        placeholder="Create a password"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <div class="formGroup">
+
+      <label>
+        CONFIRM PASSWORD
+      </label>
+
+      <input
+        id="registerConfirmPassword"
+        class="formInput"
+        type="password"
+        placeholder="Confirm your password"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <button
+      id="registerButton"
+      class="primaryButton"
+      type="button"
+      onclick="registerCompany()"
+    >
+
+      CREATE ACCOUNT
+
+    </button>
+
+
+    <div class="switchText">
+
+      Already have an account?
+
+      <button
+        class="switchButton"
+        type="button"
+        onclick="showLogin()"
+      >
+
+        LOGIN
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
 
 
 <script>
 
-const SUPABASE_URL = "https://xbemkmvvbkxknuduthsg.supabase.co";
+
+// =========================================
+// SUPABASE CONNECTION
+// =========================================
+
+const SUPABASE_URL =
+  "https://xbemkmvvbkxknuduthsg.supabase.co";
+
 
 const SUPABASE_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZ2Ymt4a251ZHV0aHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZiIiwiaWF0IjoxNzc5NDk1Mjk4LCJleHAiOjIwOTUwNzEyOTh9.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI";
 
 
-const client = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+const client =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
+
+// =========================================
+// SHOW REGISTER
+// =========================================
+
+function showRegister(){
+
+  document.getElementById(
+    "loginForm"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "registerForm"
+  ).style.display =
+    "block";
+
+}
+
+
+
+// =========================================
+// SHOW LOGIN
+// =========================================
+
+function showLogin(){
+
+  document.getElementById(
+    "registerForm"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "loginForm"
+  ).style.display =
+    "block";
+
+}
+
+
+
+// =========================================
+// LOGIN
+// =========================================
 
 async function loginCompany(){
 
-const email =
-document.getElementById("email").value;
+  const email =
+    document.getElementById(
+      "email"
+    ).value.trim();
 
 
-const password =
-document.getElementById("password").value;
+  const password =
+    document.getElementById(
+      "password"
+    ).value;
 
 
+  if(
+    email === "" ||
+    password === ""
+  ){
 
-const {
-data,
-error
+    showMessage(
+      "loginMessage",
+      "Please enter your company email and password."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "loginButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "LOGGING IN...";
+
+
+  try{
+
+
+    const {
+      data,
+      error
+    } =
+    await client.auth.signInWithPassword({
+
+      email:
+        email,
+
+      password:
+        password
+
+    });
+
+
+    if(error){
+
+      showMessage(
+        "loginMessage",
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    console.log(
+      "Company login successful:",
+      data.user
+    );
+
+
+    window.location.href =
+      "seat-dashboard.html";
+
+
+  }catch(error){
+
+    showMessage(
+      "loginMessage",
+      error.message
+    );
+
+  }finally{
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "LOGIN TO DASHBOARD";
+
+  }
+
 }
-=
-await client.auth.signInWithPassword({
-
-email: email,
-
-password: password
-
-});
 
 
 
-if(error){
+// =========================================
+// REGISTER
+// =========================================
 
-alert(error.message);
+async function registerCompany(){
 
-return;
+  const name =
+    document.getElementById(
+      "registerName"
+    ).value.trim();
+
+
+  const email =
+    document.getElementById(
+      "registerEmail"
+    ).value.trim();
+
+
+  const password =
+    document.getElementById(
+      "registerPassword"
+    ).value;
+
+
+  const confirmPassword =
+    document.getElementById(
+      "registerConfirmPassword"
+    ).value;
+
+
+  if(
+    name === "" ||
+    email === "" ||
+    password === "" ||
+    confirmPassword === ""
+  ){
+
+    showMessage(
+      "registerMessage",
+      "Please complete all fields."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    password !== confirmPassword
+  ){
+
+    showMessage(
+      "registerMessage",
+      "Passwords do not match."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    password.length < 6
+  ){
+
+    showMessage(
+      "registerMessage",
+      "Password must contain at least 6 characters."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "registerButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "CREATING ACCOUNT...";
+
+
+  try{
+
+
+    const {
+      data,
+      error
+    } =
+    await client.auth.signUp({
+
+      email:
+        email,
+
+      password:
+        password,
+
+      options:{
+
+        data:{
+
+          full_name:
+            name
+
+        }
+
+      }
+
+    });
+
+
+    if(error){
+
+      showMessage(
+        "registerMessage",
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "Account created successfully. You can now log in."
+    );
+
+
+    showLogin();
+
+
+  }catch(error){
+
+    showMessage(
+      "registerMessage",
+      error.message
+    );
+
+  }finally{
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "CREATE ACCOUNT";
+
+  }
 
 }
 
 
 
-alert("Login successful");
+// =========================================
+// MESSAGE
+// =========================================
 
-window.location.href =
-"seat-dashboard.html";
+function showMessage(
+  elementId,
+  message
+){
 
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  element.textContent =
+    message;
+
+
+  element.style.display =
+    "block";
 
 }
-
 
 </script>
 
 
 </body>
+
 </html>
