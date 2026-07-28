@@ -1629,6 +1629,56 @@ async function startDashboard(){
     user.id
   );
 
+  // ---------------------------------------
+// FIND COMPANY RECORD
+// ---------------------------------------
+
+const {
+  data: company,
+  error: companyError
+} = await client
+  .from("companies")
+  .select("*")
+  .eq(
+    "auth_id",
+    user.id
+  )
+  .single();
+
+
+if(companyError || !company){
+
+  console.error(
+    "Company record not found:",
+    companyError
+  );
+
+  alert(
+    "Your login is valid, but your company account was not found."
+  );
+
+  return;
+
+}
+
+
+console.log(
+  "Logged-in company:",
+  company
+);
+
+
+console.log(
+  "Company ID:",
+  company.id
+);
+
+
+console.log(
+  "Company Name:",
+  company.company_name
+);
+
 
   // ---------------------------------------
   // INITIAL DATA LOAD
