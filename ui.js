@@ -1812,9 +1812,50 @@ async function submitSeatRequest(){
   }
 
 
-  // =========================
-  // PREPARE SEAT REQUEST
-  // =========================
+// =========================
+// GET COMPANY EMAIL
+// =========================
+
+const { data: companyData, error: companyError } =
+  await client
+    .from("companies")
+    .select("email")
+    .eq(
+      "company_name",
+      selectedCompany?.company_name
+    )
+    .maybeSingle();
+
+if(companyError){
+
+  console.error(
+    "COMPANY EMAIL ERROR:",
+    companyError
+  );
+
+  alert(
+    "Unable to find company email:\n\n" +
+    companyError.message
+  );
+
+  return;
+
+}
+
+const companyEmail =
+  companyData?.email || "";
+
+console.log(
+  "COMPANY NAME:",
+  selectedCompany?.company_name
+);
+
+console.log(
+  "COMPANY EMAIL:",
+  companyEmail
+);
+  
+  
 
   const seatRequest = {
 
