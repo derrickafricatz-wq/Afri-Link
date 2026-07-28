@@ -1868,7 +1868,7 @@ console.log(
 
   const seatRequest = {
 
-    company_name:
+  company_name:
   selectedCompany?.company || "",
 
    company_email:
