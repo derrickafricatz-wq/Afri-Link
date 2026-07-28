@@ -40,7 +40,7 @@ const serviceDatabase = {
 
   "BM COACH": {
 
-    serviceType: "bus",
+    serviceType: "flight",
     
     companyName: "BM COACH",
     paymentAccountName: "FLY WITH US",
