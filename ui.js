@@ -1819,7 +1819,10 @@ async function submitSeatRequest(){
   const seatRequest = {
 
     company_name:
-      selectedCompany?.company || "",
+  selectedCompany?.company || "",
+
+company_email:
+  selectedCompany?.email || "",
 
     service_type:
       serviceType,
