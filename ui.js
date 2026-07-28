@@ -1820,9 +1820,9 @@ const { data: companyData, error: companyError } =
   await client
     .from("companies")
     .select("email")
-    .eq(
+    .ilike(
       "company_name",
-      selectedCompany?.company_name
+      selectedCompany?.company_name?.trim()
     )
     .maybeSingle();
 
