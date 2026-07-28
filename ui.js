@@ -1862,8 +1862,8 @@ console.log(
     company_name:
   selectedCompany?.company || "",
 
-company_email:
-  selectedCompany?.email || "",
+   company_email:
+  companyEmail,
 
     service_type:
       serviceType,
