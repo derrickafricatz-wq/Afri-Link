@@ -10,112 +10,456 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>In-Charge Portal</title>
+<title>In-Charge Portal | Company Access</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <style>
 
-/* =========================================
-   GLOBAL
-========================================= */
+/* =====================================================
+   GLOBAL RESET
+===================================================== */
 
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
 }
 
 body{
 
-  margin:0;
+  min-height:100vh;
+
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color:#ffffff;
+
+  background:
+    #030812;
+
+  overflow-x:hidden;
+
+}
+
+
+/* =====================================================
+   ANIMATED BACKGROUND
+===================================================== */
+
+.background{
+
+  position:fixed;
+
+  inset:0;
+
+  overflow:hidden;
+
+  z-index:0;
+
+  background:
+
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(0,255,255,.12),
+      transparent 32%
+    ),
+
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(0,120,255,.13),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      135deg,
+      #020611,
+      #071321 50%,
+      #020611
+    );
+
+}
+
+
+.background::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:600px;
+
+  height:600px;
+
+  border-radius:50%;
+
+  background:
+    rgba(0,255,255,.035);
+
+  filter:
+    blur(80px);
+
+  top:-250px;
+
+  left:-200px;
+
+  animation:
+    floatOne 12s ease-in-out infinite;
+
+}
+
+
+.background::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:500px;
+
+  height:500px;
+
+  border-radius:50%;
+
+  background:
+    rgba(0,100,255,.04);
+
+  filter:
+    blur(90px);
+
+  right:-200px;
+
+  bottom:-200px;
+
+  animation:
+    floatTwo 15s ease-in-out infinite;
+
+}
+
+
+@keyframes floatOne{
+
+  0%,
+  100%{
+    transform:translate(0,0);
+  }
+
+  50%{
+    transform:translate(100px,80px);
+  }
+
+}
+
+
+@keyframes floatTwo{
+
+  0%,
+  100%{
+    transform:translate(0,0);
+  }
+
+  50%{
+    transform:translate(-80px,-60px);
+  }
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.gridOverlay{
+
+  position:absolute;
+
+  inset:0;
+
+  opacity:.12;
+
+  background-image:
+
+    linear-gradient(
+      rgba(255,255,255,.04) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.04) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    55px 55px;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.portal{
+
+  position:relative;
+
+  z-index:2;
+
+  min-height:100vh;
+
+  width:100%;
+
+  display:grid;
+
+  grid-template-columns:
+    1.15fr
+    .85fr;
+
+}
+
+
+/* =====================================================
+   LEFT BRAND AREA
+===================================================== */
+
+.brandSide{
+
+  min-height:100vh;
+
+  padding:
+    60px
+    7vw;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  position:relative;
+
+}
+
+
+.brandContent{
+
+  max-width:650px;
+
+}
+
+
+.brandLine{
+
+  width:60px;
+
+  height:4px;
+
+  border-radius:10px;
+
+  background:
+    #00ffff;
+
+  margin-bottom:28px;
+
+  box-shadow:
+    0 0 25px
+    rgba(0,255,255,.6);
+
+}
+
+
+.brandSide h1{
+
+  font-size:
+    clamp(
+      42px,
+      5vw,
+      78px
+    );
+
+  line-height:
+    .98;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    -3px;
+
+}
+
+
+.brandSide h1 span{
+
+  color:
+    #00ffff;
+
+}
+
+
+.brandDescription{
+
+  max-width:520px;
+
+  margin-top:28px;
+
+  color:
+    #9cafc2;
+
+  font-size:
+    16px;
+
+  line-height:
+    1.8;
+
+}
+
+
+.featureList{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:12px;
+
+  margin-top:38px;
+
+}
+
+
+.feature{
+
+  padding:
+    10px
+    15px;
+
+  border-radius:
+    50px;
+
+  border:
+    1px solid
+    rgba(0,255,255,.14);
+
+  background:
+    rgba(255,255,255,.035);
+
+  color:
+    #b8cad9;
+
+  font-size:
+    12px;
+
+  letter-spacing:
+    .5px;
+
+}
+
+
+.brandFooter{
+
+  position:absolute;
+
+  bottom:30px;
+
+  left:60px;
+
+  color:
+    #506274;
+
+  font-size:
+    11px;
+
+  letter-spacing:
+    1px;
+
+}
+
+
+/* =====================================================
+   AUTH SIDE
+===================================================== */
+
+.authSide{
 
   min-height:100vh;
 
   display:flex;
 
-  justify-content:center;
-
   align-items:center;
 
-  padding:20px;
+  justify-content:center;
 
-  font-family:
-    Arial,
-    sans-serif;
-
-  background:
-    radial-gradient(
-      circle at top,
-      #12304a 0%,
-      #07111f 45%,
-      #030811 100%
-    );
-
-  color:#ffffff;
+  padding:
+    35px;
 
 }
 
 
-/* =========================================
-   AUTH CONTAINER
-========================================= */
-
-.authContainer{
+.authCard{
 
   width:100%;
 
-  max-width:430px;
+  max-width:470px;
+
+  padding:
+    38px;
+
+  border-radius:
+    28px;
 
   background:
     rgba(
-      13,
-      27,
-      42,
-      .96
+      9,
+      20,
+      34,
+      .78
     );
 
   border:
-
     1px solid
-
     rgba(
-      0,
       255,
       255,
-      .20
+      255,
+      .09
     );
 
-  border-radius:24px;
+  backdrop-filter:
+    blur(25px);
 
-  padding:30px 24px;
+  -webkit-backdrop-filter:
+    blur(25px);
 
   box-shadow:
 
-    0 20px 60px
+    0 35px 100px
+    rgba(0,0,0,.45),
 
-    rgba(
-      0,
-      0,
-      0,
-      .45
-    );
+    inset 0 1px 0
+    rgba(255,255,255,.05);
 
 }
 
 
-/* =========================================
-   LOGO / ICON
-========================================= */
+.portalMark{
 
-.portalIcon{
+  width:
+    58px;
 
-  width:70px;
-
-  height:70px;
-
-  margin:
-
-    0 auto 18px;
+  height:
+    58px;
 
   display:flex;
 
@@ -123,201 +467,354 @@ body{
 
   justify-content:center;
 
-  border-radius:20px;
+  margin-bottom:
+    25px;
+
+  border-radius:
+    17px;
 
   background:
-
-    rgba(
-      0,
-      255,
-      255,
-      .10
+    linear-gradient(
+      135deg,
+      rgba(0,255,255,.18),
+      rgba(0,100,255,.12)
     );
 
   border:
-
     1px solid
+    rgba(0,255,255,.3);
 
-    rgba(
-      0,
-      255,
-      255,
-      .25
-    );
+  color:
+    #00ffff;
 
-  font-size:32px;
+  font-size:
+    25px;
+
+  font-weight:
+    900;
 
 }
 
-
-/* =========================================
-   TITLE
-========================================= */
 
 .authHeader{
 
-  text-align:center;
+  margin-bottom:
+    28px;
 
-  margin-bottom:25px;
+}
+
+
+.authHeader h2{
+
+  font-size:
+    27px;
+
+  font-weight:
+    900;
+
+  margin-bottom:
+    9px;
 
 }
 
-.authHeader h1{
-
-  margin:0;
-
-  color:#00ffff;
-
-  font-size:24px;
-
-  font-weight:900;
-
-}
 
 .authHeader p{
 
-  margin:
+  color:
+    #8fa3b7;
 
-    8px 0 0;
+  font-size:
+    13px;
 
-  color:#9fb1c2;
-
-  font-size:13px;
-
-  line-height:1.5;
+  line-height:
+    1.6;
 
 }
 
 
-/* =========================================
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.message{
+
+  display:none;
+
+  padding:
+    13px
+    15px;
+
+  margin-bottom:
+    18px;
+
+  border-radius:
+    12px;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.5;
+
+}
+
+
+.errorMessage{
+
+  color:
+    #ff9c9c;
+
+  background:
+    rgba(255,0,0,.07);
+
+  border:
+    1px solid
+    rgba(255,0,0,.18);
+
+}
+
+
+.successMessage{
+
+  color:
+    #65ffb0;
+
+  background:
+    rgba(0,255,136,.07);
+
+  border:
+    1px solid
+    rgba(0,255,136,.18);
+
+}
+
+
+/* =====================================================
    FORM
-========================================= */
+===================================================== */
 
 .formGroup{
 
-  margin-bottom:15px;
+  margin-bottom:
+    17px;
 
 }
+
 
 .formGroup label{
 
   display:block;
 
-  margin-bottom:7px;
+  margin-bottom:
+    8px;
 
-  color:#b9c9d8;
+  color:
+    #9fb1c1;
 
-  font-size:12px;
+  font-size:
+    11px;
 
-  font-weight:700;
+  font-weight:
+    800;
+
+  letter-spacing:
+    1px;
 
 }
+
+
+.inputWrapper{
+
+  position:relative;
+
+}
+
 
 .formInput{
 
   width:100%;
 
-  padding:14px 15px;
+  height:
+    52px;
+
+  padding:
+    0
+    15px;
 
   border:
-
     1px solid
+    rgba(255,255,255,.09);
 
-    rgba(
-      255,
-      255,
-      255,
-      .10
-    );
-
-  border-radius:12px;
+  border-radius:
+    13px;
 
   outline:none;
 
-  background:#07111f;
+  background:
+    rgba(2,8,18,.72);
 
-  color:#ffffff;
+  color:
+    #ffffff;
 
-  font-size:14px;
+  font-size:
+    14px;
+
+  transition:
+    .25s;
 
 }
+
 
 .formInput:focus{
 
-  border-color:#00ffff;
+  border-color:
+    rgba(0,255,255,.65);
 
   box-shadow:
-
-    0 0 0 3px
-
-    rgba(
-      0,
-      255,
-      255,
-      .10
-    );
+    0 0 0 4px
+    rgba(0,255,255,.07);
 
 }
 
 
-/* =========================================
-   BUTTON
-========================================= */
+.passwordInput{
+
+  padding-right:
+    55px;
+
+}
+
+
+.passwordToggle{
+
+  position:absolute;
+
+  right:0;
+
+  top:0;
+
+  height:100%;
+
+  width:52px;
+
+  border:none;
+
+  background:none;
+
+  color:#7890a5;
+
+  cursor:pointer;
+
+  font-size:11px;
+
+  font-weight:800;
+
+}
+
+
+/* =====================================================
+   PRIMARY BUTTON
+===================================================== */
 
 .primaryButton{
 
   width:100%;
 
-  padding:15px;
+  height:
+    54px;
 
-  margin-top:5px;
+  margin-top:
+    7px;
 
   border:none;
 
-  border-radius:12px;
+  border-radius:
+    14px;
 
-  background:#00ffff;
+  background:
+    linear-gradient(
+      135deg,
+      #00ffff,
+      #00c8ff
+    );
 
-  color:#001015;
+  color:
+    #001018;
 
-  font-size:14px;
+  font-size:
+    13px;
 
-  font-weight:900;
+  font-weight:
+    900;
+
+  letter-spacing:
+    .6px;
 
   cursor:pointer;
 
+  transition:
+    .25s;
+
+  box-shadow:
+    0 12px 30px
+    rgba(0,220,255,.16);
+
 }
+
+
+.primaryButton:hover{
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 18px 35px
+    rgba(0,220,255,.25);
+
+}
+
 
 .primaryButton:active{
 
-  transform:scale(.98);
+  transform:
+    scale(.98);
 
 }
+
 
 .primaryButton:disabled{
 
-  opacity:.6;
+  opacity:
+    .55;
 
-  cursor:not-allowed;
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
 
 }
 
 
-/* =========================================
+/* =====================================================
    SWITCH
-========================================= */
+===================================================== */
 
 .switchText{
 
   text-align:center;
 
-  margin-top:20px;
+  margin-top:
+    25px;
 
-  color:#8fa3b8;
+  color:
+    #71869a;
 
-  font-size:13px;
+  font-size:
+    13px;
 
 }
+
 
 .switchButton{
 
@@ -325,95 +822,61 @@ body{
 
   background:none;
 
-  color:#00ffff;
+  color:
+    #00ffff;
 
-  font-weight:900;
+  font-weight:
+    900;
 
   cursor:pointer;
 
-  padding:0;
+  margin-left:
+    5px;
 
 }
 
 
-/* =========================================
-   MESSAGE
-========================================= */
+.switchButton:hover{
 
-.message{
+  text-decoration:
+    underline;
 
-  display:none;
+}
 
-  margin-bottom:15px;
 
-  padding:12px;
+/* =====================================================
+   SECURITY NOTE
+===================================================== */
 
-  border-radius:10px;
+.securityNote{
+
+  margin-top:
+    25px;
+
+  padding-top:
+    20px;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.06);
 
   text-align:center;
 
-  font-size:13px;
+  color:
+    #53687a;
 
-  line-height:1.4;
+  font-size:
+    10px;
 
-}
-
-.errorMessage{
-
-  color:#ff8585;
-
-  background:
-
-    rgba(
-      255,
-      0,
-      0,
-      .08
-    );
-
-  border:
-
-    1px solid
-
-    rgba(
-      255,
-      0,
-      0,
-      .20
-    );
-
-}
-
-.successMessage{
-
-  color:#00ff88;
-
-  background:
-
-    rgba(
-      0,
-      255,
-      136,
-      .08
-    );
-
-  border:
-
-    1px solid
-
-    rgba(
-      0,
-      255,
-      136,
-      .20
-    );
+  line-height:
+    1.6;
 
 }
 
 
-/* =========================================
-   REGISTER FORM HIDDEN
-========================================= */
+/* =====================================================
+   REGISTER
+===================================================== */
 
 #registerForm{
 
@@ -422,29 +885,137 @@ body{
 }
 
 
-/* =========================================
+/* =====================================================
    MOBILE
-========================================= */
+===================================================== */
 
-@media(max-width:480px){
+@media(max-width:900px){
 
-  body{
+  .portal{
 
-    padding:15px;
-
-  }
-
-  .authContainer{
-
-    padding:25px 18px;
-
-    border-radius:20px;
+    grid-template-columns:
+      1fr;
 
   }
 
-  .authHeader h1{
 
-    font-size:21px;
+  .brandSide{
+
+    min-height:
+      auto;
+
+    padding:
+      45px
+      25px
+      20px;
+
+    text-align:center;
+
+    align-items:center;
+
+  }
+
+
+  .brandContent{
+
+    max-width:
+      600px;
+
+  }
+
+
+  .brandLine{
+
+    margin-left:auto;
+
+    margin-right:auto;
+
+  }
+
+
+  .brandSide h1{
+
+    font-size:
+      42px;
+
+  }
+
+
+  .brandDescription{
+
+    font-size:
+      14px;
+
+  }
+
+
+  .featureList{
+
+    justify-content:
+      center;
+
+  }
+
+
+  .brandFooter{
+
+    display:none;
+
+  }
+
+
+  .authSide{
+
+    min-height:
+      auto;
+
+    padding:
+      20px
+      18px
+      50px;
+
+  }
+
+}
+
+
+@media(max-width:500px){
+
+  .brandSide{
+
+    padding-top:
+      35px;
+
+  }
+
+
+  .brandSide h1{
+
+    font-size:
+      34px;
+
+    letter-spacing:
+      -1.5px;
+
+  }
+
+
+  .authCard{
+
+    padding:
+      28px
+      20px;
+
+    border-radius:
+      22px;
+
+  }
+
+
+  .authHeader h2{
+
+    font-size:
+      23px;
 
   }
 
@@ -458,290 +1029,414 @@ body{
 <body>
 
 
-<div class="authContainer">
+<div class="background">
+
+  <div class="gridOverlay"></div>
+
+</div>
 
 
-  <!-- =====================================
-       ICON
-  ====================================== -->
 
-  <div class="portalIcon">
+<main class="portal">
 
-    ✈️🚌
+
+<!-- =================================================
+     BRAND AREA
+================================================== -->
+
+<section class="brandSide">
+
+  <div class="brandContent">
+
+    <div class="brandLine"></div>
+
+    <h1>
+
+      COMPANY<br>
+
+      <span>CONTROL</span>
+
+      PORTAL
+
+    </h1>
+
+
+    <p class="brandDescription">
+
+      A secure command center designed for
+      transport companies to manage customer
+      seat requests, availability, and booking
+      operations from one intelligent dashboard.
+
+    </p>
+
+
+    <div class="featureList">
+
+      <div class="feature">
+        SECURE ACCESS
+      </div>
+
+      <div class="feature">
+        REAL-TIME REQUESTS
+      </div>
+
+      <div class="feature">
+        SEAT MANAGEMENT
+      </div>
+
+      <div class="feature">
+        FLIGHT & BUS
+      </div>
+
+    </div>
 
   </div>
 
 
-  <!-- =====================================
-       LOGIN FORM
-  ====================================== -->
+  <div class="brandFooter">
 
-  <div id="loginForm">
+    IN-CHARGE ACCESS SYSTEM
 
+  </div>
 
-    <div class="authHeader">
-
-      <h1>
-        IN-CHARGE PORTAL
-      </h1>
-
-      <p>
-        Sign in to manage your company's
-        flight and bus seat requests.
-      </p>
-
-    </div>
+</section>
 
 
-    <div
-      id="loginMessage"
-      class="message errorMessage"
-    ></div>
+
+<!-- =================================================
+     AUTH AREA
+================================================== -->
+
+<section class="authSide">
 
 
-    <div class="formGroup">
-
-      <label>
-        COMPANY EMAIL
-      </label>
-
-      <input
-        id="email"
-        class="formInput"
-        type="email"
-        placeholder="Enter company email"
-        autocomplete="email"
-      >
-
-    </div>
+<div class="authCard">
 
 
-    <div class="formGroup">
+<div class="portalMark">
+  IC
+</div>
 
-      <label>
-        PASSWORD
-      </label>
 
-      <input
-        id="password"
-        class="formInput"
-        type="password"
-        placeholder="Enter password"
-        autocomplete="current-password"
-      >
 
-    </div>
+<!-- =================================================
+     LOGIN
+================================================== -->
+
+<div id="loginForm">
+
+
+<div class="authHeader">
+
+  <h2>
+    Welcome back
+  </h2>
+
+  <p>
+    Sign in to your company control center
+    and manage incoming customer requests.
+  </p>
+
+</div>
+
+
+<div
+  id="loginMessage"
+  class="message errorMessage"
+></div>
+
+
+<div class="formGroup">
+
+  <label>
+    COMPANY EMAIL
+  </label>
+
+  <input
+    id="email"
+    class="formInput"
+    type="email"
+    placeholder="name@company.com"
+    autocomplete="email"
+  >
+
+</div>
+
+
+<div class="formGroup">
+
+  <label>
+    PASSWORD
+  </label>
+
+
+  <div class="inputWrapper">
+
+    <input
+      id="password"
+      class="formInput passwordInput"
+      type="password"
+      placeholder="Enter your password"
+      autocomplete="current-password"
+    >
 
 
     <button
-      id="loginButton"
-      class="primaryButton"
       type="button"
-      onclick="loginCompany()"
+      class="passwordToggle"
+      onclick="togglePassword('password',this)"
     >
 
-      LOGIN TO DASHBOARD
+      SHOW
 
     </button>
 
-
-    <div class="switchText">
-
-      New in-charge?
-
-      <button
-        class="switchButton"
-        type="button"
-        onclick="showRegister()"
-      >
-
-        CREATE ACCOUNT
-
-      </button>
-
-    </div>
-
-
   </div>
 
+</div>
 
 
-  <!-- =====================================
-       REGISTER FORM
-  ====================================== -->
+<button
+  id="loginButton"
+  class="primaryButton"
+  type="button"
+  onclick="loginCompany()"
+>
 
-  <div id="registerForm">
+  SIGN IN TO CONTROL CENTER
 
-
-    <div class="authHeader">
-
-      <h1>
-        CREATE ACCOUNT
-      </h1>
-
-      <p>
-        Register your in-charge account
-        to access your company's dashboard.
-      </p>
-
-    </div>
+</button>
 
 
-    <div
-      id="registerMessage"
-      class="message errorMessage"
-    ></div>
+<div class="switchText">
+
+  New in-charge?
+
+  <button
+    class="switchButton"
+    type="button"
+    onclick="showRegister()"
+  >
+
+    CREATE ACCOUNT
+
+  </button>
+
+</div>
 
 
-    <div class="formGroup">
+<div class="securityNote">
 
-      <label>
-        FULL NAME
-      </label>
+  Your account is protected by secure
+  authentication powered by Supabase.
 
-      <input
-        id="registerName"
-        class="formInput"
-        type="text"
-        placeholder="Enter your full name"
-        autocomplete="name"
-      >
-
-    </div>
-
-
-    <div class="formGroup">
-
-      <label>
-        COMPANY EMAIL
-      </label>
-
-      <input
-        id="registerEmail"
-        class="formInput"
-        type="email"
-        placeholder="Enter company email"
-        autocomplete="email"
-      >
-
-    </div>
-
-
-    <div class="formGroup">
-
-      <label>
-        PASSWORD
-      </label>
-
-      <input
-        id="registerPassword"
-        class="formInput"
-        type="password"
-        placeholder="Create a password"
-        autocomplete="new-password"
-      >
-
-    </div>
-
-
-    <div class="formGroup">
-
-      <label>
-        CONFIRM PASSWORD
-      </label>
-
-      <input
-        id="registerConfirmPassword"
-        class="formInput"
-        type="password"
-        placeholder="Confirm your password"
-        autocomplete="new-password"
-      >
-
-    </div>
-
-
-    <button
-      id="registerButton"
-      class="primaryButton"
-      type="button"
-      onclick="registerCompany()"
-    >
-
-      CREATE ACCOUNT
-
-    </button>
-
-
-    <div class="switchText">
-
-      Already have an account?
-
-      <button
-        class="switchButton"
-        type="button"
-        onclick="showLogin()"
-      >
-
-        LOGIN
-
-      </button>
-
-    </div>
-
-
-  </div>
+</div>
 
 
 </div>
 
 
 
+<!-- =================================================
+     REGISTER
+================================================== -->
+
+<div id="registerForm">
+
+
+<div class="authHeader">
+
+  <h2>
+    Create your account
+  </h2>
+
+  <p>
+    Create an in-charge account to access
+    your company's secure control center.
+  </p>
+
+</div>
+
+
+<div
+  id="registerMessage"
+  class="message errorMessage"
+></div>
+
+
+<div class="formGroup">
+
+  <label>
+    FULL NAME
+  </label>
+
+  <input
+    id="registerName"
+    class="formInput"
+    type="text"
+    placeholder="Enter your full name"
+    autocomplete="name"
+  >
+
+</div>
+
+
+<div class="formGroup">
+
+  <label>
+    EMAIL ADDRESS
+  </label>
+
+  <input
+    id="registerEmail"
+    class="formInput"
+    type="email"
+    placeholder="name@company.com"
+    autocomplete="email"
+  >
+
+</div>
+
+
+<div class="formGroup">
+
+  <label>
+    CREATE PASSWORD
+  </label>
+
+
+  <div class="inputWrapper">
+
+    <input
+      id="registerPassword"
+      class="formInput passwordInput"
+      type="password"
+      placeholder="Create a secure password"
+      autocomplete="new-password"
+    >
+
+
+    <button
+      type="button"
+      class="passwordToggle"
+      onclick="togglePassword('registerPassword',this)"
+    >
+
+      SHOW
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="formGroup">
+
+  <label>
+    CONFIRM PASSWORD
+  </label>
+
+
+  <div class="inputWrapper">
+
+    <input
+      id="registerConfirmPassword"
+      class="formInput passwordInput"
+      type="password"
+      placeholder="Confirm your password"
+      autocomplete="new-password"
+    >
+
+
+    <button
+      type="button"
+      class="passwordToggle"
+      onclick="togglePassword('registerConfirmPassword',this)"
+    >
+
+      SHOW
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<button
+  id="registerButton"
+  class="primaryButton"
+  type="button"
+  onclick="registerCompany()"
+>
+
+  CREATE IN-CHARGE ACCOUNT
+
+</button>
+
+
+<div class="switchText">
+
+  Already registered?
+
+  <button
+    class="switchButton"
+    type="button"
+    onclick="showLogin()"
+  >
+
+    SIGN IN
+
+  </button>
+
+</div>
+
+
+<div class="securityNote">
+
+  Account credentials are securely handled
+  through Supabase authentication.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+</main>
+
+
+
 <script>
 
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-// =========================================
-// SUPABASE CONNECTION
-// =========================================
+const SUPABASE_URL =
+"https://xbemkmvvbkxknuduthsg.supabase.co";
 
-const SUPABASE_URL = "https://xbemkmvvbkxknuduthsg.supabase.co";
 
-    const SUPABASE_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZ2Ymt4a251ZHV0aHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI";
+const SUPABASE_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXAiLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI";
 
 
 const client =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 
-
-// =========================================
-// SHOW REGISTER
-// =========================================
-
-function showRegister(){
-
-  document.getElementById(
-    "loginForm"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "registerForm"
-  ).style.display =
-    "block";
-
-}
-
-
-
-// =========================================
-// SHOW LOGIN
-// =========================================
+/* =====================================================
+   SHOW LOGIN
+===================================================== */
 
 function showLogin(){
 
@@ -756,13 +1451,72 @@ function showLogin(){
   ).style.display =
     "block";
 
+
 }
 
 
+/* =====================================================
+   SHOW REGISTER
+===================================================== */
 
-// =========================================
-// LOGIN
-// =========================================
+function showRegister(){
+
+  document.getElementById(
+    "loginForm"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "registerForm"
+  ).style.display =
+    "block";
+
+
+}
+
+
+/* =====================================================
+   PASSWORD VISIBILITY
+===================================================== */
+
+function togglePassword(
+  inputId,
+  button
+){
+
+  const input =
+    document.getElementById(
+      inputId
+    );
+
+
+  if(
+    input.type === "password"
+  ){
+
+    input.type =
+      "text";
+
+    button.textContent =
+      "HIDE";
+
+  }else{
+
+    input.type =
+      "password";
+
+    button.textContent =
+      "SHOW";
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
 
 async function loginCompany(){
 
@@ -779,13 +1533,13 @@ async function loginCompany(){
 
 
   if(
-    email === "" ||
-    password === ""
+    !email ||
+    !password
   ){
 
     showMessage(
       "loginMessage",
-      "Please enter your company email and password."
+      "Please enter your email and password."
     );
 
     return;
@@ -804,11 +1558,10 @@ async function loginCompany(){
 
 
   button.textContent =
-    "LOGGING IN...";
+    "AUTHENTICATING...";
 
 
   try{
-
 
     const {
       data,
@@ -838,7 +1591,7 @@ async function loginCompany(){
 
 
     console.log(
-      "Company login successful:",
+      "LOGIN SUCCESS:",
       data.user
     );
 
@@ -860,17 +1613,16 @@ async function loginCompany(){
       false;
 
     button.textContent =
-      "LOGIN TO DASHBOARD";
+      "SIGN IN TO CONTROL CENTER";
 
   }
 
 }
 
 
-
-// =========================================
-// REGISTER
-// =========================================
+/* =====================================================
+   REGISTER
+===================================================== */
 
 async function registerCompany(){
 
@@ -899,29 +1651,15 @@ async function registerCompany(){
 
 
   if(
-    name === "" ||
-    email === "" ||
-    password === "" ||
-    confirmPassword === ""
+    !name ||
+    !email ||
+    !password ||
+    !confirmPassword
   ){
 
     showMessage(
       "registerMessage",
-      "Please complete all fields."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    password !== confirmPassword
-  ){
-
-    showMessage(
-      "registerMessage",
-      "Passwords do not match."
+      "Please complete all required fields."
     );
 
     return;
@@ -935,7 +1673,21 @@ async function registerCompany(){
 
     showMessage(
       "registerMessage",
-      "Password must contain at least 6 characters."
+      "Your password must contain at least 6 characters."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    password !== confirmPassword
+  ){
+
+    showMessage(
+      "registerMessage",
+      "The passwords do not match."
     );
 
     return;
@@ -958,7 +1710,6 @@ async function registerCompany(){
 
 
   try{
-
 
     const {
       data,
@@ -998,12 +1749,20 @@ async function registerCompany(){
     }
 
 
-    alert(
-      "Account created successfully. You can now log in."
+    showMessageSuccess(
+      "registerMessage",
+      "Account created successfully. You can now sign in."
     );
 
 
-    showLogin();
+    setTimeout(
+      function(){
+
+        showLogin();
+
+      },
+      1800
+    );
 
 
   }catch(error){
@@ -1019,17 +1778,16 @@ async function registerCompany(){
       false;
 
     button.textContent =
-      "CREATE ACCOUNT";
+      "CREATE IN-CHARGE ACCOUNT";
 
   }
 
 }
 
 
-
-// =========================================
-// MESSAGE
-// =========================================
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
 
 function showMessage(
   elementId,
@@ -1040,6 +1798,39 @@ function showMessage(
     document.getElementById(
       elementId
     );
+
+
+  element.className =
+    "message errorMessage";
+
+
+  element.textContent =
+    message;
+
+
+  element.style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   SUCCESS MESSAGE
+===================================================== */
+
+function showMessageSuccess(
+  elementId,
+  message
+){
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  element.className =
+    "message successMessage";
 
 
   element.textContent =
