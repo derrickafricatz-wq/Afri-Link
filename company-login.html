@@ -1420,6 +1420,18 @@ body{
 
 <script>
 
+ // =====================================================
+// GET COMPANY ID FROM REGISTRATION LINK
+// =====================================================
+
+const urlParams =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const COMPANY_ID =
+  urlParams.get("company"); 
+
 /* =====================================================
    SUPABASE
 ===================================================== */
