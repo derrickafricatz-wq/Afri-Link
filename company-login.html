@@ -1429,6 +1429,151 @@ body{
 
 </div>
 
+
+<!-- =================================================
+     COMPANY REGISTRATION
+================================================== -->
+
+<div id="companyRegisterForm">
+
+
+  <div class="authHeader">
+
+    <h2>
+      Register Your Company
+    </h2>
+
+    <p>
+      Create your company's profile and
+      start managing transport operations
+      through the Company Control Portal.
+    </p>
+
+  </div>
+
+
+  <div
+    id="companyRegisterMessage"
+    class="message errorMessage"
+  ></div>
+
+
+  <div class="formGroup">
+
+    <label>
+      COMPANY NAME
+    </label>
+
+    <input
+      id="newCompanyName"
+      class="formInput"
+      type="text"
+      placeholder="Enter your company name"
+    >
+
+  </div>
+
+
+  <div class="formGroup">
+
+    <label>
+      COMPANY EMAIL
+    </label>
+
+    <input
+      id="newCompanyEmail"
+      class="formInput"
+      type="email"
+      placeholder="company@example.com"
+    >
+
+  </div>
+
+
+  <div class="formGroup">
+
+    <label>
+      WHATSAPP NUMBER
+    </label>
+
+    <input
+      id="newCompanyWhatsapp"
+      class="formInput"
+      type="tel"
+      placeholder="Enter WhatsApp number"
+    >
+
+  </div>
+
+
+  <div class="formGroup">
+
+    <label>
+      SERVICE TYPE
+    </label>
+
+    <select
+      id="newCompanyServiceType"
+      class="formInput"
+    >
+
+      <option value="">
+        Select service type
+      </option>
+
+      <option value="bus">
+        Bus Company
+      </option>
+
+      <option value="flight">
+        Flight Company
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <button
+    id="companyRegisterButton"
+    class="primaryButton"
+    type="button"
+    onclick="registerNewCompany()"
+  >
+
+    REGISTER COMPANY
+
+  </button>
+
+
+  <div class="switchText">
+
+    Already have an account?
+
+    <button
+      class="switchButton"
+      type="button"
+      onclick="showLogin()"
+    >
+
+      SIGN IN
+
+    </button>
+
+  </div>
+
+
+  <div class="securityNote">
+
+    Company information is securely stored
+    in the Company Control Portal.
+
+  </div>
+
+
+</div>
+
+
 </section>
 
 </main>
