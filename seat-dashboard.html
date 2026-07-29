@@ -1641,7 +1641,52 @@ async function startDashboard(){
   );
 
   // ---------------------------------------
-// FIND COMPANY RECORD
+// FIND IN-CHARGE ACCOUNT
+// ---------------------------------------
+
+const {
+  data: inChargeAccount,
+  error: inChargeError
+} = await client
+  .from("in_charge_accounts")
+  .select("*")
+  .eq(
+    "auth_id",
+    user.id
+  )
+  .single();
+
+
+if(inChargeError || !inChargeAccount){
+
+  console.error(
+    "In-charge account not found:",
+    inChargeError
+  );
+
+  alert(
+    "Your login is valid, but your in-charge account was not found."
+  );
+
+  return;
+
+}
+
+
+console.log(
+  "Logged-in in-charge:",
+  inChargeAccount
+);
+
+
+console.log(
+  "Company ID:",
+  inChargeAccount.company_id
+);
+
+
+// ---------------------------------------
+// FIND COMPANY USING COMPANY ID
 // ---------------------------------------
 
 const {
@@ -1651,10 +1696,44 @@ const {
   .from("companies")
   .select("*")
   .eq(
-    "auth_id",
-    user.id
+    "id",
+    inChargeAccount.company_id
   )
   .single();
+
+
+if(companyError || !company){
+
+  console.error(
+    "Company record not found:",
+    companyError
+  );
+
+  alert(
+    "Your in-charge account is not connected to a valid company."
+  );
+
+  return;
+
+}
+
+
+console.log(
+  "Logged-in company:",
+  company
+);
+
+
+console.log(
+  "Company ID:",
+  company.id
+);
+
+
+console.log(
+  "Company Name:",
+  company.company_name
+);
 
 
 if(companyError || !company){
