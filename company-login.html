@@ -2241,6 +2241,208 @@ if(!registrationCompany){
 }
 
   // =====================================================
+// REGISTER NEW COMPANY
+// =====================================================
+
+async function registerNewCompany(){
+
+  const companyName =
+    document.getElementById(
+      "newCompanyName"
+    ).value.trim();
+
+
+  const companyEmail =
+    document.getElementById(
+      "newCompanyEmail"
+    ).value.trim()
+    .toLowerCase();
+
+
+  const companyWhatsapp =
+    document.getElementById(
+      "newCompanyWhatsapp"
+    ).value.trim();
+
+
+  const serviceType =
+    document.getElementById(
+      "newCompanyServiceType"
+    ).value;
+
+
+  // =========================================
+  // VALIDATE COMPANY FORM
+  // =========================================
+
+  if(
+    !companyName ||
+    !companyEmail ||
+    !companyWhatsapp ||
+    !serviceType
+  ){
+
+    showMessage(
+      "companyRegisterMessage",
+      "Please complete all company information."
+    );
+
+    return;
+
+  }
+
+
+  // =========================================
+  // GET REGISTER BUTTON
+  // =========================================
+
+  const button =
+    document.getElementById(
+      "companyRegisterButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "REGISTERING COMPANY...";
+
+
+  try{
+
+    // =======================================
+    // CREATE COMPANY RECORD
+    // =======================================
+
+    const {
+      data: company,
+      error
+    } =
+    await client
+
+      .from("companies")
+
+      .insert([{
+
+        company_name:
+          companyName,
+
+        email:
+          companyEmail,
+
+        whatsapp:
+          companyWhatsapp,
+
+        service_type:
+          serviceType
+
+      }])
+
+      .select()
+
+      .single();
+
+
+    // =======================================
+    // HANDLE DATABASE ERROR
+    // =======================================
+
+    if(error){
+
+      console.error(
+        "COMPANY REGISTRATION ERROR:",
+        error
+      );
+
+
+      showMessage(
+        "companyRegisterMessage",
+        error.message
+      );
+
+
+      return;
+
+    }
+
+
+    // =======================================
+    // SUCCESS
+    // =======================================
+
+    console.log(
+      "NEW COMPANY CREATED:",
+      company
+    );
+
+
+    // =======================================
+    // CREATE COMPANY-SPECIFIC LINK
+    // =======================================
+
+    const registrationLink =
+      window.location.origin +
+      window.location.pathname +
+      "?company=" +
+      company.id;
+
+
+    // =======================================
+    // SHOW SUCCESS
+    // =======================================
+
+    showMessageSuccess(
+      "companyRegisterMessage",
+      "Company registered successfully."
+    );
+
+
+    // =======================================
+    // WAIT THEN OPEN COMPANY PORTAL
+    // =======================================
+
+    setTimeout(
+      function(){
+
+        window.location.href =
+          registrationLink;
+
+      },
+      1500
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "COMPANY REGISTRATION ERROR:",
+      error
+    );
+
+
+    showMessage(
+      "companyRegisterMessage",
+      error.message ||
+      "Unable to register the company."
+    );
+
+
+  }finally{
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "REGISTER COMPANY";
+
+  }
+
+}
+
+  // =====================================================
 // START COMPANY VERIFICATION
 // =====================================================
 
