@@ -1448,6 +1448,81 @@ supabase.createClient(
   SUPABASE_KEY
 );
 
+  // =====================================================
+// LOAD REGISTRATION COMPANY
+// =====================================================
+
+async function loadRegistrationCompany(){
+
+  // -----------------------------------------------
+  // CHECK COMPANY ID
+  // -----------------------------------------------
+
+  if(!COMPANY_ID){
+
+    console.error(
+      "No company ID found in registration link."
+    );
+
+    return false;
+
+  }
+
+
+  // -----------------------------------------------
+  // FIND COMPANY
+  // -----------------------------------------------
+
+  const {
+    data,
+    error
+  } =
+  await client
+    .from("companies")
+    .select(
+      "id, company_name, email, whatsapp"
+    )
+    .eq(
+      "id",
+      COMPANY_ID
+    )
+    .single();
+
+
+  // -----------------------------------------------
+  // HANDLE ERROR
+  // -----------------------------------------------
+
+  if(error || !data){
+
+    console.error(
+      "Company verification failed:",
+      error
+    );
+
+    return false;
+
+  }
+
+
+  // -----------------------------------------------
+  // SAVE COMPANY
+  // -----------------------------------------------
+
+  registrationCompany =
+    data;
+
+
+  console.log(
+    "Registration company:",
+    registrationCompany
+  );
+
+
+  return true;
+
+}
+
 
 /* =====================================================
    SHOW LOGIN
@@ -1917,6 +1992,12 @@ async function registerCompany(){
   }
 
 }
+
+  // =====================================================
+// START COMPANY VERIFICATION
+// =====================================================
+
+loadRegistrationCompany();
 
 
 </script>
