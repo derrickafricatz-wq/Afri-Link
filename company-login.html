@@ -1803,6 +1803,33 @@ async function registerCompany(){
   button.textContent =
     "CREATING ACCOUNT...";
 
+  // =======================================
+// CHECK COMPANY REGISTRATION
+// =======================================
+
+if(!COMPANY_ID){
+
+  showMessage(
+    "registerMessage",
+    "This registration link is not connected to a company."
+  );
+
+  return;
+
+}
+
+
+if(!registrationCompany){
+
+  showMessage(
+    "registerMessage",
+    "Unable to verify the company. Please use the correct company registration link."
+  );
+
+  return;
+
+}
+
 
   try{
 
