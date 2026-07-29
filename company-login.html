@@ -1439,6 +1439,31 @@ const COMPANY_ID =
 
 let registrationCompany = null;
 
+  function updateCompanyDisplay(){
+
+  if(!registrationCompany){
+
+    return;
+
+  }
+
+  const companyName =
+    registrationCompany.company_name;
+
+  const companyElement =
+    document.getElementById(
+      "portalCompanyName"
+    );
+
+  if(companyElement){
+
+    companyElement.textContent =
+      companyName;
+
+  }
+
+}
+
 /* =====================================================
    SUPABASE
 ===================================================== */
