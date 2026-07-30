@@ -2650,23 +2650,28 @@ async function registerNewCompany(){
       .single();
 
 
-    if(error){
+   if(error){
 
-      console.error(
-        "COMPANY REGISTRATION ERROR:",
-        error
-      );
+  console.error(
+    "COMPANY REGISTRATION ERROR:",
+    error
+  );
 
+  alert(
+    "MESSAGE: " + error.message +
+    "\n\nCODE: " + error.code +
+    "\n\nDETAILS: " + error.details +
+    "\n\nHINT: " + error.hint
+  );
 
-      showMessage(
-        "companyRegisterMessage",
-        error.message
-      );
+  showMessage(
+    "companyRegisterMessage",
+    error.message
+  );
 
+  return;
 
-      return;
-
-    }
+} 
 
 
     console.log(
