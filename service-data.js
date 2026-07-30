@@ -38,11 +38,11 @@ const serviceDatabase = {
     }  
   },
 
-  "BM COACH": {
+  "Ready": {
 
     serviceType: "bus",
     
-    companyName: "BM COACH",
+    companyName: "Ready",
     paymentAccountName: "FLY WITH US",
 
     bannerMessages: [
