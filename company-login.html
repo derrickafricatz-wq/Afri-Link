@@ -2553,7 +2553,6 @@ async function registerCompany(){
 
 }
 
-
 /* =====================================================
    REGISTER NEW COMPANY
 ===================================================== */
@@ -2621,15 +2620,19 @@ async function registerNewCompany(){
 
   try{
 
+    /* =========================================
+       STEP 1
+       INSERT COMPANY
+    ========================================= */
+
     const {
-      data: company,
       error
     } =
     await client
 
       .from("companies")
 
-      .insert([{
+      .insert({
 
         company_name:
           companyName,
@@ -2643,60 +2646,68 @@ async function registerNewCompany(){
         service_type:
           serviceType
 
-      }]);
+      });
 
 
-   if(error){
+    /* =========================================
+       HANDLE INSERT ERROR
+    ========================================= */
 
-  console.error(
-    "COMPANY REGISTRATION ERROR:",
-    error
-  );
+    if(error){
 
-  alert(
-    "MESSAGE: " + error.message +
-    "\n\nCODE: " + error.code +
-    "\n\nDETAILS: " + error.details +
-    "\n\nHINT: " + error.hint
-  );
+      console.error(
+        "COMPANY REGISTRATION ERROR:",
+        error
+      );
 
-  showMessage(
-    "companyRegisterMessage",
-    error.message
-  );
+      alert(
+        "MESSAGE: " + error.message +
+        "\n\nCODE: " + error.code +
+        "\n\nDETAILS: " + error.details +
+        "\n\nHINT: " + error.hint
+      );
 
-  return;
+      showMessage(
+        "companyRegisterMessage",
+        error.message
+      );
 
-} 
+      return;
 
+    }
+
+
+    /* =========================================
+       COMPANY INSERT SUCCESS
+    ========================================= */
 
     console.log(
-      "NEW COMPANY CREATED:",
-      company
+      "COMPANY INSERT SUCCESSFUL."
     );
 
 
-    const registrationLink =
-      window.location.origin +
-      window.location.pathname +
-      "?company=" +
-      company.id;
-
+    /* =========================================
+       SHOW SUCCESS
+    ========================================= */
 
     showMessageSuccess(
-  "companyRegisterMessage",
-  "Company registered successfully. Your company profile is ready. Next, create the first In-Charge account."
-);
+      "companyRegisterMessage",
+      "Company registered successfully. Your company profile is ready."
+    );
 
 
-    setTimeout(
-      function(){
+    /* =========================================
+       STOP HERE FOR NOW
+       
+       We are NOT using company.id because
+       public INSERT does not return the row.
+       
+       First we confirm registration works.
+    ========================================= */
 
-        window.location.href =
-          registrationLink;
 
-      },
-      1500
+    alert(
+      "Company registered successfully!"
     );
 
 
@@ -2727,7 +2738,6 @@ async function registerNewCompany(){
   }
 
 }
-
 
 /* =====================================================
    START
