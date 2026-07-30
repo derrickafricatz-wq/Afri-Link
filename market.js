@@ -34,18 +34,32 @@ const marketAds = [
 },
 
   {
-  company: "Ready",
+  company: "Lux American",
   phone: "+255746644223",
   whatsapp: "255742097868",
-  location: ",Tanzania",
+  location: "New York City",
 
   categories: ["Transport"],
-  service: "Transportation",
 
   expiresAt: "2026-12-22 23:59",
 
   images: [
-    "images/pr.jpg"
+    "images/l1.jpg"
+  ]
+},
+
+  {
+  company: "Lux Shanghai",
+  phone: "+255746644223",
+  whatsapp: "255742097868",
+  location: "Shanghai City",
+
+  categories: ["Transport"],
+
+  expiresAt: "2026-12-22 23:59",
+
+  images: [
+    "images/l2.jpg"
   ]
 },
 
