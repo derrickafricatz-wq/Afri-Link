@@ -8,13 +8,20 @@ const bookingDetailsDatabase = {
     Payment: Mobile Money & Bank Transfer
   `,
 
-  "BM COACH": `
-Airline: Bm Coach
+  "Lux American": `
+Psv: Lux American
 Service Type: Passenger 
 Booking Type: Domestic & Regional 
-Travel: Tanzania & Selected Regional Destinations
+Travel: Shanghai & Selected Regional Destinations
 Services:Booking & Passenger Travel
-Payment: Mobile Money & Bank Transfer
+`,
+
+    "Lux Shanghai": `
+Psv: Lux Shanghai
+Service Type: Passenger 
+Booking Type: Domestic & Regional 
+Travel: New York & Selected Regional Destinations
+Services:Booking & Passenger Travel
 `
 
 };
