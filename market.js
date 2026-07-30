@@ -34,7 +34,7 @@ const marketAds = [
 },
 
   {
-  company: "BM COACH",
+  company: "Ready",
   phone: "+255746644223",
   whatsapp: "255742097868",
   location: ",Tanzania",
