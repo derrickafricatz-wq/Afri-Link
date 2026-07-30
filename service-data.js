@@ -38,17 +38,17 @@ const serviceDatabase = {
     }  
   },
 
-  "Ready": {
+  "Lux American": {
 
     serviceType: "bus",
     
-    companyName: "Ready",
-    paymentAccountName: "FLY WITH US",
+    companyName: "Lux American",
+    paymentAccountName: "American Travel",
 
     bannerMessages: [
-      "Welcome On Sky Bord.",
-      "This Is Precision Air, Way To Kigali",
-      "Smoother Flight. Happy Life"
+      "Lux American| Let's Travel Destinations.",
+      "This Is Lux American, Way To Shanghai",
+      "Proud To Serve You. Enjoy"
     ],
 
       paymentAccounts: {
@@ -74,6 +74,44 @@ const serviceDatabase = {
       }
 
     }  
-  }
+  },
+
+   "Lux Shanghai": {
+
+    serviceType: "bus",
+    
+    companyName: "Lux Shanghai",
+    paymentAccountName: "Chinese Travel",
+
+    bannerMessages: [
+      "Lux Shanghai| Let's Travel Destinations.",
+      "This Is Lux Shanghai, Way To New York",
+      "Proud To Serve You. Enjoy"
+    ],
+
+      paymentAccounts: {
+
+      mpesa: {
+        number: "07XXXXXXXX"
+      },
+
+      airtel: {
+        number: "07"
+      },
+
+      mixx: {
+        number: "08"
+      },
+
+      nmb: {
+        accountNumber: "06"
+      },
+
+      crdb: {
+        accountNumber: "09"
+      }
+
+    }  
+  } 
   
 };
