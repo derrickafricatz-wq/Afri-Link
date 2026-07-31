@@ -2622,10 +2622,11 @@ async function registerNewCompany(){
 
     /* =========================================
        STEP 1
-       INSERT COMPANY
+       CREATE COMPANY AND RETURN NEW ROW
     ========================================= */
 
     const {
+      data: newCompany,
       error
     } =
     await client
@@ -2646,11 +2647,18 @@ async function registerNewCompany(){
         service_type:
           serviceType
 
-      });
+      })
+
+      .select(
+        "id, company_name, email, whatsapp, service_type"
+      )
+
+      .single();
 
 
     /* =========================================
-       HANDLE INSERT ERROR
+       STEP 2
+       HANDLE ERROR
     ========================================= */
 
     if(error){
@@ -2660,17 +2668,12 @@ async function registerNewCompany(){
         error
       );
 
-      alert(
-        "MESSAGE: " + error.message +
-        "\n\nCODE: " + error.code +
-        "\n\nDETAILS: " + error.details +
-        "\n\nHINT: " + error.hint
-      );
 
       showMessage(
         "companyRegisterMessage",
         error.message
       );
+
 
       return;
 
@@ -2678,15 +2681,24 @@ async function registerNewCompany(){
 
 
     /* =========================================
-       COMPANY INSERT SUCCESS
+       STEP 3
+       SAVE NEW COMPANY IN MEMORY
     ========================================= */
 
-    console.log(
-      "COMPANY INSERT SUCCESSFUL."
-    );
+    registrationCompany =
+      newCompany;
 
 
     /* =========================================
+       STEP 4
+       UPDATE COMPANY NAME ON LEFT SIDE
+    ========================================= */
+
+    updateCompanyDisplay();
+
+
+    /* =========================================
+       STEP 5
        SHOW SUCCESS
     ========================================= */
 
@@ -2696,18 +2708,34 @@ async function registerNewCompany(){
     );
 
 
+    console.log(
+      "NEW COMPANY CREATED:",
+      registrationCompany
+    );
+
+
     /* =========================================
-       STOP HERE FOR NOW
-       
-       We are NOT using company.id because
-       public INSERT does not return the row.
-       
-       First we confirm registration works.
+       STEP 6
+       UPDATE URL WITH COMPANY ID
     ========================================= */
 
+    const registrationLink =
+      window.location.origin +
+      window.location.pathname +
+      "?company=" +
+      newCompany.id;
 
-    alert(
-      "Company registered successfully!"
+
+    window.history.replaceState(
+      {},
+      "",
+      registrationLink
+    );
+
+
+    console.log(
+      "COMPANY REGISTRATION LINK:",
+      registrationLink
     );
 
 
