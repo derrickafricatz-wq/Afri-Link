@@ -2587,6 +2587,10 @@ async function registerNewCompany(){
     ).value;
 
 
+  /* =========================================
+     VALIDATION
+  ========================================= */
+
   if(
     !companyName ||
     !companyEmail ||
@@ -2610,19 +2614,32 @@ async function registerNewCompany(){
     );
 
 
-  button.disabled =
-    true;
+  if(button){
 
+    button.disabled =
+      true;
 
-  button.textContent =
-    "REGISTERING COMPANY...";
+    button.textContent =
+      "REGISTERING COMPANY...";
+
+  }
 
 
   try{
 
+    console.log(
+      "REGISTERING NEW COMPANY:",
+      {
+        companyName,
+        companyEmail,
+        companyWhatsapp,
+        serviceType
+      }
+    );
+
+
     /* =========================================
-       STEP 1
-       CREATE COMPANY AND RETURN NEW ROW
+       INSERT COMPANY AND RETURN NEW ROW
     ========================================= */
 
     const {
@@ -2657,8 +2674,7 @@ async function registerNewCompany(){
 
 
     /* =========================================
-       STEP 2
-       HANDLE ERROR
+       HANDLE DATABASE ERROR
     ========================================= */
 
     if(error){
@@ -2671,7 +2687,22 @@ async function registerNewCompany(){
 
       showMessage(
         "companyRegisterMessage",
+
+        "Company registration failed: " +
         error.message
+      );
+
+
+      alert(
+        "COMPANY REGISTRATION FAILED\n\n" +
+        "Message: " +
+        error.message +
+        "\n\nCode: " +
+        (error.code || "N/A") +
+        "\n\nDetails: " +
+        (error.details || "N/A") +
+        "\n\nHint: " +
+        (error.hint || "N/A")
       );
 
 
@@ -2681,31 +2712,37 @@ async function registerNewCompany(){
 
 
     /* =========================================
-       STEP 3
-       SAVE NEW COMPANY IN MEMORY
+       VERIFY NEW COMPANY WAS RETURNED
+    ========================================= */
+
+    if(
+      !newCompany ||
+      !newCompany.id
+    ){
+
+      console.error(
+        "Company was inserted but no company ID was returned."
+      );
+
+
+      showMessage(
+        "companyRegisterMessage",
+
+        "Company may have been registered, but the company ID was not returned. Please refresh and check your company records."
+      );
+
+
+      return;
+
+    }
+
+
+    /* =========================================
+       SAVE NEW COMPANY LOCALLY
     ========================================= */
 
     registrationCompany =
       newCompany;
-
-
-    /* =========================================
-       STEP 4
-       UPDATE COMPANY NAME ON LEFT SIDE
-    ========================================= */
-
-    updateCompanyDisplay();
-
-
-    /* =========================================
-       STEP 5
-       SHOW SUCCESS
-    ========================================= */
-
-    showMessageSuccess(
-      "companyRegisterMessage",
-      "Company registered successfully. Your company profile is ready."
-    );
 
 
     console.log(
@@ -2715,58 +2752,145 @@ async function registerNewCompany(){
 
 
     /* =========================================
-       STEP 6
-       UPDATE URL WITH COMPANY ID
+       UPDATE COMPANY NAME ON TOP
     ========================================= */
 
-    const registrationLink =
-      window.location.origin +
+    updateCompanyDisplay();
+
+
+    /* =========================================
+       UPDATE URL WITH COMPANY ID
+       
+       Example:
+       company-control.html?company=UUID
+    ========================================= */
+
+    const newUrl =
       window.location.pathname +
       "?company=" +
-      newCompany.id;
+      encodeURIComponent(
+        newCompany.id
+      );
 
 
     window.history.replaceState(
       {},
       "",
-      registrationLink
+      newUrl
     );
 
 
+    /* =========================================
+       SHOW SUCCESS MESSAGE
+    ========================================= */
+
+    showMessageSuccess(
+
+      "companyRegisterMessage",
+
+      "Company registered successfully. Your company profile is ready."
+
+    );
+
+
+    /* =========================================
+       CLEAR REGISTRATION FORM
+    ========================================= */
+
+    document.getElementById(
+      "newCompanyName"
+    ).value =
+      "";
+
+
+    document.getElementById(
+      "newCompanyEmail"
+    ).value =
+      "";
+
+
+    document.getElementById(
+      "newCompanyWhatsapp"
+    ).value =
+      "";
+
+
+    document.getElementById(
+      "newCompanyServiceType"
+    ).value =
+      "";
+
+
+    /* =========================================
+       LOG SUCCESS
+    ========================================= */
+
     console.log(
-      "COMPANY REGISTRATION LINK:",
-      registrationLink
+      "COMPANY REGISTRATION COMPLETE"
+    );
+
+    console.log(
+      "Company ID:",
+      newCompany.id
+    );
+
+    console.log(
+      "Company Name:",
+      newCompany.company_name
+    );
+
+    console.log(
+      "Company Email:",
+      newCompany.email
+    );
+
+    console.log(
+      "Company Service:",
+      newCompany.service_type
     );
 
 
   }catch(error){
 
     console.error(
-      "COMPANY REGISTRATION ERROR:",
+      "UNEXPECTED COMPANY REGISTRATION ERROR:",
       error
     );
 
 
     showMessage(
       "companyRegisterMessage",
+
       error.message ||
       "Unable to register the company."
     );
 
 
+    alert(
+      "UNEXPECTED ERROR\n\n" +
+      (
+        error.message ||
+        "Unable to register the company."
+      )
+    );
+
+
   }finally{
 
-    button.disabled =
-      false;
+    if(button){
 
+      button.disabled =
+        false;
 
-    button.textContent =
-      "REGISTER COMPANY";
+      button.textContent =
+        "REGISTER COMPANY";
+
+    }
 
   }
 
 }
-
+      
 /* =====================================================
    START
 ===================================================== */
