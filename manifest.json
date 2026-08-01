@@ -1,9 +1,9 @@
 {
   "name": "In His Words, We Walk In Perfection",
-  "short_name": "Voice Of God",
-  "description": "Where Holly Words Echo Through Every Heart.",
-  "start_url": "/Holly-Echo/",
-  "scope": "/Holly-Echo/",
+  "short_name": "Afri|Link",
+  "description": "Connecting Minds. Empowering Africa.",
+  "start_url": "/Afri-Link/",
+  "scope": "/Afri-Link/",
   "display": "standalone",
   "display_override": [
     "standalone",
@@ -41,7 +41,7 @@
     }
   ],
   "share_target": {
-    "action": "/Holly-Echo/",
+    "action": "/Afri-Link/",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded"
   },
