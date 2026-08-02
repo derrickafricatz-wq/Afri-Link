@@ -2875,6 +2875,9 @@ function updateBusFare(){
       document.getElementById("bookingPassengers")?.value
     ) || 1;
 
+  const travelClass =
+  document.getElementById("bookingTravelClass")?.value || "Standard";
+
   const fareDisplay =
     document.getElementById("busFareDisplay");
 
