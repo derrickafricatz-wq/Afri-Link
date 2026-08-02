@@ -1686,7 +1686,7 @@ ${dynamicBookingInfo}
 Notes:
 ${note || "None"}
 
-Sent from Voice of God App.`;
+Sent from Afri|Link App.`;
 
 window.open(
 
@@ -1898,10 +1898,13 @@ console.log(
       travelDate,
 
     passengers:
-      Number(passengers),
+  Number(passengers),
 
-    status:
-      "pending"
+travel_class:
+  travelClass,
+
+status:
+  "pending"
 
   };
 
