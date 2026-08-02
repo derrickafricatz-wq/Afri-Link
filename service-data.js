@@ -115,6 +115,38 @@ const serviceDatabase = {
     companyName: "Lux Shanghai",
     paymentAccountName: "Chinese Travel",
 
+     routes: [
+  {
+    departure: "Arusha",
+    destination: "Dar es Salaam",
+    fares: {
+      Standard: 35000,
+      Business: 50000,
+      VIP: 70000
+    }
+  },
+
+  {
+    departure: "Arusha",
+    destination: "Moshi",
+    fares: {
+      Standard: 10000,
+      Business: 15000,
+      VIP: 25000
+    }
+  },
+
+  {
+    departure: "Dar es Salaam",
+    destination: "Arusha",
+    fares: {
+      Standard: 35000,
+      Business: 50000,
+      VIP: 70000
+    }
+  }
+],
+
     bannerMessages: [
       "Lux Shanghai| Let's Travel Destinations.",
       "This Is Lux Shanghai, Way To New York",
