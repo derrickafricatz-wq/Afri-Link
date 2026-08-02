@@ -2935,7 +2935,7 @@ function updateBusFare(){
   }
 
   const fare =
-    route.fares?.Standard;
+    route.fares?.[travelClass];
 
   if(!fare){
 
