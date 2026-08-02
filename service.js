@@ -2363,6 +2363,9 @@ style="
  document.getElementById("bookingDestination")
   ?.addEventListener("input", updateBusFare); 
 
+  document.getElementById("bookingPassengers")
+  ?.addEventListener("input", updateBusFare);
+
 }
 
 function copyPaymentNumber(number){
