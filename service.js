@@ -1709,6 +1709,49 @@ style="
   box-sizing:border-box;
   ">
 
+  
+<div
+  id="busFareDisplay"
+  style="
+    display:none;
+    margin-top:12px;
+    padding:16px;
+    border-radius:12px;
+    background:rgba(0,255,136,.08);
+    border:1px solid rgba(0,255,136,.35);
+    text-align:center;
+  "
+>
+  <div style="
+    font-size:12px;
+    color:#00ff88;
+    font-weight:900;
+    letter-spacing:1px;
+  ">
+    YOUR BUS FARE
+  </div>
+
+  <div
+    id="busFareAmount"
+    style="
+      margin-top:8px;
+      font-size:24px;
+      font-weight:900;
+      color:#ffffff;
+    "
+  >
+    TZS 0
+  </div>
+
+  <div
+    id="busFareRoute"
+    style="
+      margin-top:6px;
+      font-size:13px;
+      color:#aaa;
+    "
+  ></div>
+</div>
 
 <!-- =========================================
      SUBMIT SEAT REQUEST
