@@ -2354,7 +2354,11 @@ style="
 
     `;
 
-  }
+    }
+
+
+  document.getElementById("bookingDeparture")
+    ?.addEventListener("input", updateBusFare);
 
 }
 
