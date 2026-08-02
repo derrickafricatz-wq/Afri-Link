@@ -45,6 +45,38 @@ const serviceDatabase = {
     companyName: "Lux American",
     paymentAccountName: "American Travel",
 
+    routes: [
+  {
+    departure: "Arusha",
+    destination: "Dar es Salaam",
+    fares: {
+      Standard: 35000,
+      Business: 50000,
+      VIP: 70000
+    }
+  },
+
+  {
+    departure: "Arusha",
+    destination: "Moshi",
+    fares: {
+      Standard: 10000,
+      Business: 15000,
+      VIP: 25000
+    }
+  },
+
+  {
+    departure: "Dar es Salaam",
+    destination: "Arusha",
+    fares: {
+      Standard: 35000,
+      Business: 50000,
+      VIP: 70000
+    }
+  }
+],
+
     bannerMessages: [
       "Lux American| Let's Travel Destinations.",
       "This Is Lux American, Way To Shanghai",
