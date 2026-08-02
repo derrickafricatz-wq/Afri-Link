@@ -1789,6 +1789,9 @@ async function submitSeatRequest(){
     document.getElementById("bookingPassengers")
     ?.value || "";
 
+  
+const travelClass =
+  document.getElementById("bookingTravelClass")?.value || "Standard";
 
   // =========================
   // CHECK REQUIRED INFORMATION
