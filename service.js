@@ -2821,3 +2821,103 @@ function handleBusReceiveParcelChoice(){
   }
 
 }
+
+function updateBusFare(){
+
+  const departure =
+    document.getElementById("bookingDeparture")?.value.trim();
+
+  const destination =
+    document.getElementById("bookingDestination")?.value.trim();
+
+  const passengers =
+    parseInt(
+      document.getElementById("bookingPassengers")?.value
+    ) || 1;
+
+  const fareDisplay =
+    document.getElementById("busFareDisplay");
+
+  const fareAmount =
+    document.getElementById("busFareAmount");
+
+  const fareRoute =
+    document.getElementById("busFareRoute");
+
+  if(
+    !departure ||
+    !destination ||
+    !fareDisplay ||
+    !fareAmount ||
+    !fareRoute
+  ){
+
+    if(fareDisplay){
+      fareDisplay.style.display = "none";
+    }
+
+    return;
+  }
+
+  const companyData =
+    serviceDatabase[activeService?.company];
+
+  const routes =
+    companyData?.routes || [];
+
+  const route =
+    routes.find(item =>
+
+      item.departure.toLowerCase() ===
+      departure.toLowerCase()
+
+      &&
+
+      item.destination.toLowerCase() ===
+      destination.toLowerCase()
+
+    );
+
+  if(!route){
+
+    fareDisplay.style.display = "block";
+
+    fareAmount.innerHTML =
+      "FARE NOT AVAILABLE";
+
+    fareRoute.innerHTML =
+      "This route is not currently available.";
+
+    return;
+  }
+
+  const fare =
+    route.fares?.Standard;
+
+  if(!fare){
+
+    fareDisplay.style.display = "block";
+
+    fareAmount.innerHTML =
+      "FARE NOT AVAILABLE";
+
+    fareRoute.innerHTML =
+      "Please contact the bus company.";
+
+    return;
+  }
+
+  const totalFare =
+    fare * passengers;
+
+  fareDisplay.style.display =
+    "block";
+
+  fareAmount.innerHTML =
+    "TZS " +
+    totalFare.toLocaleString();
+
+  fareRoute.innerHTML =
+    `${departure} → ${destination} • ${passengers} passenger(s)`;
+
+}
