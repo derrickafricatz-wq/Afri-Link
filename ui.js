@@ -1710,7 +1710,8 @@ async function submitSeatRequest(){
   // GET ACTIVE SERVICE
   // =========================
 
-  const serviceType = getActiveServiceType();
+  const serviceType =
+    getActiveServiceType();
 
 
   // =========================
@@ -1737,8 +1738,8 @@ async function submitSeatRequest(){
 
   const travelSelected =
     serviceType === "flight"
-    ? document.getElementById("flightTravelChoice")?.checked
-    : document.getElementById("busTravelChoice")?.checked;
+      ? document.getElementById("flightTravelChoice")?.checked
+      : document.getElementById("busTravelChoice")?.checked;
 
 
   if(!travelSelected){
@@ -1758,13 +1759,13 @@ async function submitSeatRequest(){
 
   const customerName =
     document.getElementById("customerName")
-    ?.value
-    .trim() || "";
+      ?.value
+      .trim() || "";
 
   const customerPhone =
     document.getElementById("customerPhone")
-    ?.value
-    .trim() || "";
+      ?.value
+      .trim() || "";
 
 
   // =========================
@@ -1773,25 +1774,26 @@ async function submitSeatRequest(){
 
   const departure =
     document.getElementById("bookingDeparture")
-    ?.value
-    .trim() || "";
+      ?.value
+      .trim() || "";
 
   const destination =
     document.getElementById("bookingDestination")
-    ?.value
-    .trim() || "";
+      ?.value
+      .trim() || "";
 
   const travelDate =
     document.getElementById("bookingTravelDate")
-    ?.value || "";
+      ?.value || "";
 
   const passengers =
     document.getElementById("bookingPassengers")
-    ?.value || "";
+      ?.value || "";
 
-  
-const travelClass =
-  document.getElementById("bookingTravelClass")?.value || "Standard";
+  const travelClass =
+    document.getElementById("bookingTravelClass")
+      ?.value || "Standard";
+
 
   // =========================
   // CHECK REQUIRED INFORMATION
@@ -1815,69 +1817,77 @@ const travelClass =
   }
 
 
-// =========================
-// GET COMPANY EMAIL
-// =========================
+  // =========================
+  // GET COMPANY NAME
+  // =========================
 
-const { data: companyData, error: companyError } =
-  await client
+  const companyName =
+    selectedCompany?.company ||
+    selectedCompany?.company_name ||
+    activeService?.company ||
+    "";
+
+
+  if(!companyName){
+
+    alert(
+      "Company information is missing. Please select the company again."
+    );
+
+    return;
+
+  }
+
+
+  // =========================
+  // GET COMPANY EMAIL
+  // =========================
+
+  const {
+    data: companyData,
+    error: companyError
+  } = await client
     .from("companies")
     .select("email")
     .ilike(
       "company_name",
-      selectedCompany?.company?.trim()
+      companyName.trim()
     )
     .maybeSingle();
 
-if(companyError){
 
-  console.error(
-    "COMPANY EMAIL ERROR:",
-    companyError
-  );
+  if(companyError){
 
-  alert(
-    "Unable to find company email:\n\n" +
-    companyError.message
-  );
+    console.error(
+      "COMPANY EMAIL ERROR:",
+      companyError
+    );
 
-  return;
+    alert(
+      "Unable to find company email:\n\n" +
+      companyError.message
+    );
 
-}
+    return;
 
-const companyEmail =
-  companyData?.email || "";
+  }
 
-alert(
-  "Company Name: " +
-  selectedCompany?.company_name +
-  "\n\nCompany Data: " +
-  JSON.stringify(companyData) +
-  "\n\nCompany Email: " +
-  companyEmail
-);
 
-console.log(
-  "COMPANY NAME:",
-  selectedCompany?.company_name
-);
+  const companyEmail =
+    companyData?.email || "";
 
-console.log(
-  "COMPANY EMAIL:",
-  companyEmail
-);
-  
-  
+
+  // =========================
+  // CREATE SEAT REQUEST
+  // =========================
 
   const seatRequest = {
 
-  company_name:
-  selectedCompany?.company ||
-  selectedCompany?.company_name ||
-  "",
+    company_name:
+      companyName,
 
-   company_email:
-  companyEmail,
+    company_email:
+      companyEmail,
 
     service_type:
       serviceType,
@@ -1898,82 +1908,51 @@ console.log(
       travelDate,
 
     passengers:
-  Number(passengers),
+      Number(passengers),
 
-travel_class:
-  travelClass,
+    travel_class:
+      travelClass,
 
-status:
-  "pending"
+    status:
+      "pending"
 
   };
 
 
   // =========================
   // SEND TO SUPABASE
-  // IMPORTANT:
-  // YOUR SUPABASE CLIENT IS "client"
   // =========================
 
-const {
-  data: {
-    session
-  }
-} = await client.auth.getSession();
-
-console.log(
-  "SUPABASE SESSION:",
-  session
-);
-
-console.log(
-  "SUPABASE ACCESS TOKEN:",
-  session?.access_token
-);
-  
-
-  const { data, error } = await client
-  .from("seat_requests")
-  .insert([seatRequest])
-  .select()
-  .single();
-
-  if(error){
-
-  console.error("SEAT REQUEST ERROR:", error);
-
-  alert(
-    "SUPABASE ERROR:\n\n" +
-    error.message
-  );
-
-  return;
-
-}
-
-alert(
-  "Seat request created successfully!\n\n" +
-  "Request ID: " +
-  data.id
-);
+  const {
+    data,
+    error
+  } = await client
+    .from("seat_requests")
+    .insert([seatRequest])
+    .select()
+    .single();
 
 
   // =========================
   // HANDLE ERROR
   // =========================
 
- if(error){
+  if(error){
 
-  console.error("SEAT REQUEST ERROR:", error);
+    console.error(
+      "SEAT REQUEST ERROR:",
+      error
+    );
 
-  alert(
-    "SUPABASE ERROR:\n\n" +
-    error.message
-  );
+    alert(
+      "Unable to submit seat request:\n\n" +
+      error.message
+    );
 
-  return;
+    return;
 
-} 
+  }
+
 
   // =========================
   // SUCCESS
@@ -1984,41 +1963,25 @@ alert(
     data
   );
 
+
+  // =========================
+  // SHOW PAY NOW
+  // =========================
+
+  showSeatRequestPayNow(data);
+
+
+  // =========================
+  // SUCCESS MESSAGE
+  // =========================
+
   alert(
-    "Your seat request has been submitted successfully. Please wait for the available seat update."
+    "Your seat request has been submitted successfully.\n\n" +
+    "Request ID: " +
+    data.id +
+    "\n\n" +
+    "You can now proceed with payment."
   );
-
-}
-
-function openCheckMySeat(){
-
-  const panel =
-    document.getElementById(
-      "checkMySeatPanel"
-    );
-
-  if(!panel){
-
-    console.error(
-      "Check My Seat panel was not found."
-    );
-
-    return;
-
-  }
-
-  if(
-    panel.style.display === "none" ||
-    panel.style.display === ""
-  ){
-
-    panel.style.display = "block";
-
-  }else{
-
-    panel.style.display = "none";
-
-  }
 
 }
 
