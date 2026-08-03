@@ -1938,6 +1938,25 @@ console.log(
   .select()
   .single();
 
+  if(error){
+
+  console.error("SEAT REQUEST ERROR:", error);
+
+  alert(
+    "SUPABASE ERROR:\n\n" +
+    error.message
+  );
+
+  return;
+
+}
+
+alert(
+  "Seat request created successfully!\n\n" +
+  "Request ID: " +
+  data.id
+);
+
 
   // =========================
   // HANDLE ERROR
