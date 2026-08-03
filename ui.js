@@ -1933,9 +1933,10 @@ console.log(
   
 
   const { data, error } = await client
-    .from("seat_requests")
-    .insert([seatRequest])
-    .select();
+  .from("seat_requests")
+  .insert([seatRequest])
+  .select()
+  .single();
 
 
   // =========================
