@@ -39,9 +39,6 @@ const APP_SHELL = [
 
    "./images/s1.png",
    "./images/derr.png",
-   "./images/o1.png",
-   "./images/m1.jpg",
-   "./images/1.png",
 
   /* BOOK COVERS */
   "./images/er1.jpg",
