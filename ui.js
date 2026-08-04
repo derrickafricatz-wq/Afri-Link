@@ -1700,18 +1700,13 @@ closeOrderPage();
 
 }
 
-// ============================================
-// SUBMIT SEAT REQUEST
-// ============================================
-
 async function submitSeatRequest(){
 
   // =========================
   // GET ACTIVE SERVICE
   // =========================
 
-  const serviceType =
-    getActiveServiceType();
+  const serviceType = getActiveServiceType();
 
 
   // =========================
@@ -1738,8 +1733,8 @@ async function submitSeatRequest(){
 
   const travelSelected =
     serviceType === "flight"
-      ? document.getElementById("flightTravelChoice")?.checked
-      : document.getElementById("busTravelChoice")?.checked;
+    ? document.getElementById("flightTravelChoice")?.checked
+    : document.getElementById("busTravelChoice")?.checked;
 
 
   if(!travelSelected){
@@ -1759,13 +1754,13 @@ async function submitSeatRequest(){
 
   const customerName =
     document.getElementById("customerName")
-      ?.value
-      .trim() || "";
+    ?.value
+    .trim() || "";
 
   const customerPhone =
     document.getElementById("customerPhone")
-      ?.value
-      .trim() || "";
+    ?.value
+    .trim() || "";
 
 
   // =========================
@@ -1774,26 +1769,25 @@ async function submitSeatRequest(){
 
   const departure =
     document.getElementById("bookingDeparture")
-      ?.value
-      .trim() || "";
+    ?.value
+    .trim() || "";
 
   const destination =
     document.getElementById("bookingDestination")
-      ?.value
-      .trim() || "";
+    ?.value
+    .trim() || "";
 
   const travelDate =
     document.getElementById("bookingTravelDate")
-      ?.value || "";
+    ?.value || "";
 
   const passengers =
     document.getElementById("bookingPassengers")
-      ?.value || "";
+    ?.value || "";
 
-  const travelClass =
-    document.getElementById("bookingTravelClass")
-      ?.value || "Standard";
-
+  
+const travelClass =
+  document.getElementById("bookingTravelClass")?.value || "Standard";
 
   // =========================
   // CHECK REQUIRED INFORMATION
@@ -1817,77 +1811,69 @@ async function submitSeatRequest(){
   }
 
 
-  // =========================
-  // GET COMPANY NAME
-  // =========================
+// =========================
+// GET COMPANY EMAIL
+// =========================
 
-  const companyName =
-    selectedCompany?.company ||
-    selectedCompany?.company_name ||
-    activeService?.company ||
-    "";
-
-
-  if(!companyName){
-
-    alert(
-      "Company information is missing. Please select the company again."
-    );
-
-    return;
-
-  }
-
-
-  // =========================
-  // GET COMPANY EMAIL
-  // =========================
-
-  const {
-    data: companyData,
-    error: companyError
-  } = await client
+const { data: companyData, error: companyError } =
+  await client
     .from("companies")
     .select("email")
     .ilike(
       "company_name",
-      companyName.trim()
+      selectedCompany?.company?.trim()
     )
     .maybeSingle();
 
+if(companyError){
 
-  if(companyError){
+  console.error(
+    "COMPANY EMAIL ERROR:",
+    companyError
+  );
 
-    console.error(
-      "COMPANY EMAIL ERROR:",
-      companyError
-    );
+  alert(
+    "Unable to find company email:\n\n" +
+    companyError.message
+  );
 
-    alert(
-      "Unable to find company email:\n\n" +
-      companyError.message
-    );
+  return;
 
-    return;
+}
 
-  }
+const companyEmail =
+  companyData?.email || "";
 
+alert(
+  "Company Name: " +
+  selectedCompany?.company_name +
+  "\n\nCompany Data: " +
+  JSON.stringify(companyData) +
+  "\n\nCompany Email: " +
+  companyEmail
+);
 
-  const companyEmail =
-    companyData?.email || "";
+console.log(
+  "COMPANY NAME:",
+  selectedCompany?.company_name
+);
 
-
-  // =========================
-  // CREATE SEAT REQUEST
-  // =========================
+console.log(
+  "COMPANY EMAIL:",
+  companyEmail
+);
+  
+  
 
   const seatRequest = {
 
-    company_name:
-      companyName,
+  company_name:
+  selectedCompany?.company ||
+  selectedCompany?.company_name ||
+  "",
 
-    company_email:
-      companyEmail,
+   company_email:
+  companyEmail,
 
     service_type:
       serviceType,
@@ -1908,51 +1894,82 @@ async function submitSeatRequest(){
       travelDate,
 
     passengers:
-      Number(passengers),
+  Number(passengers),
 
-    travel_class:
-      travelClass,
+travel_class:
+  travelClass,
 
-    status:
-      "pending"
+status:
+  "pending"
 
   };
 
 
   // =========================
   // SEND TO SUPABASE
+  // IMPORTANT:
+  // YOUR SUPABASE CLIENT IS "client"
   // =========================
 
-  const {
-    data,
-    error
-  } = await client
-    .from("seat_requests")
-    .insert([seatRequest])
-    .select()
-    .single();
+const {
+  data: {
+    session
+  }
+} = await client.auth.getSession();
+
+console.log(
+  "SUPABASE SESSION:",
+  session
+);
+
+console.log(
+  "SUPABASE ACCESS TOKEN:",
+  session?.access_token
+);
+  
+
+  const { data, error } = await client
+  .from("seat_requests")
+  .insert([seatRequest])
+  .select()
+  .single();
+
+  if(error){
+
+  console.error("SEAT REQUEST ERROR:", error);
+
+  alert(
+    "SUPABASE ERROR:\n\n" +
+    error.message
+  );
+
+  return;
+
+}
+
+alert(
+  "Seat request created successfully!\n\n" +
+  "Request ID: " +
+  data.id
+);
 
 
   // =========================
   // HANDLE ERROR
   // =========================
 
-  if(error){
+ if(error){
 
-    console.error(
-      "SEAT REQUEST ERROR:",
-      error
-    );
+  console.error("SEAT REQUEST ERROR:", error);
 
-    alert(
-      "Unable to submit seat request:\n\n" +
-      error.message
-    );
+  alert(
+    "SUPABASE ERROR:\n\n" +
+    error.message
+  );
 
-    return;
+  return;
 
-  }
-
+} 
 
   // =========================
   // SUCCESS
@@ -1963,27 +1980,12 @@ async function submitSeatRequest(){
     data
   );
 
-
-  // =========================
-  // SHOW PAY NOW
-  // =========================
-
-  showSeatRequestPayNow(data);
-
-
-  // =========================
-  // SUCCESS MESSAGE
-  // =========================
-
   alert(
-    "Your seat request has been submitted successfully.\n\n" +
-    "Request ID: " +
-    data.id +
-    "\n\n" +
-    "You can now proceed with payment."
+    "Your seat request has been submitted successfully. Please wait for the available seat update."
   );
 
 }
+
 
 // =========================================
 // CHECK MY SEAT - SEARCH SUPABASE
