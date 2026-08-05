@@ -2836,8 +2836,9 @@ const response = await fetch(
     method: "POST",
     mode: "cors",
     headers: {
-      "Content-Type": "application/json"
-    },
+  "Content-Type": "application/json",
+  "Authorization": "Bearer YOUR_ANON_KEY"
+    }
     body: JSON.stringify({
       request_id: request.id,
       amount: amount,
