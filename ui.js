@@ -2846,9 +2846,9 @@ async function payForSeatRequest(request){
 
     const result = await response.json();
 
-    console.log(result);
+    console.log("BLMPAY RESPONSE:", result);
 
-    alert(result.message);
+    alert(JSON.stringify(result, null, 2));
 
   }catch(err){
 
