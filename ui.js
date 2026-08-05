@@ -2867,9 +2867,9 @@ async function payForSeatRequest(request){
 
   }catch(err){
 
-    console.error(err);
+    console.error("PAY ERROR:", err);
 
-    alert("Unable to start payment.");
+    alert(err.message);
 
   }
 
