@@ -2766,6 +2766,7 @@ async function confirmSelectedSeats(){
 
 }
 
+
 function showSeatRequestPayNow(request){
 
   const totalFare =
@@ -2796,6 +2797,7 @@ Press OK to continue to payment.`
 
 }
 
+
 async function payForSeatRequest(request){
 
   try{
@@ -2822,57 +2824,86 @@ async function payForSeatRequest(request){
         .value
         .trim();
 
-    alert(
-  "SENDING PAYMENT DATA:\n\n" +
-  "Request ID: " + request.id +
-  "\nAmount: " + amount +
-  "\nPhone: " + phone +
-  "\nName: " + customerName
-);
+    const payload = {
 
-const response = await fetch(
-  "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
-  {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
       request_id: String(request.id),
+
       amount: Number(amount),
+
       phone_number: String(phone),
+
       customer_name: String(customerName)
-    })
+
+    };
+
+    alert(
+      "Sending payment...\n\n" +
+      JSON.stringify(payload, null, 2)
+    );
+
+    const response = await fetch(
+      "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
+      {
+        method: "POST",
+
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json"
+        },
+
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const text = await response.text();
+
+    let result = {};
+
+    try{
+
+      result = JSON.parse(text);
+
+    }catch{
+
+      result = {
+        raw:text
+      };
+
+    }
+
+    alert(
+      "HTTP Status: " +
+      response.status
+    );
+
+    if(!response.ok){
+
+      alert(
+        JSON.stringify(result,null,2)
+      );
+
+      return;
+
+    }
+
+    console.log(result);
+
+    alert(
+      "Payment Request Created Successfully!\n\n" +
+      JSON.stringify(result,null,2)
+    );
+
   }
-);
+  catch(err){
 
-    const result = await response.json();
+    console.error(err);
 
-    console.log("HTTP STATUS:", response.status);
-
-  if (!response.ok) {
-
-  alert(
-    "HTTP ERROR: " +
-    response.status +
-    "\n\n" +
-    JSON.stringify(result, null, 2)
-  );
-
-  return;
-
-}
-
-    console.log("BLMPAY RESPONSE:", result);
-
-    alert(JSON.stringify(result, null, 2));
-
-  }catch(err){
-
-    console.error("PAY ERROR:", err);
-
-    alert(err.message);
+    alert(
+      "FETCH ERROR\n\n" +
+      err.name +
+      "\n\n" +
+      err.message
+    );
 
   }
 
