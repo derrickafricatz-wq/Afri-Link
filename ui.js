@@ -2836,15 +2836,14 @@ const response = await fetch(
     method: "POST",
     mode: "cors",
     headers: {
-  "Content-Type": "application/json",
-  "Authorization": "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZ2Ymt4a251ZHV0aHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI"
+      "Content-Type": "application/json"
     }
     body: JSON.stringify({
-      request_id: request.id,
-      amount: amount,
-      phone_number: phone,
-      customer_name: customerName
-    })
+  request_id: String(request.id),
+  amount: Number(amount),
+  phone_number: String(phone),
+  customer_name: String(customerName)
+})
   }
 );
 
