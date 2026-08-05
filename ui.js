@@ -2822,7 +2822,15 @@ async function payForSeatRequest(request){
         .value
         .trim();
 
-    const response = await fetch(
+    alert(
+  "SENDING PAYMENT DATA:\n\n" +
+  "Request ID: " + request.id +
+  "\nAmount: " + amount +
+  "\nPhone: " + phone +
+  "\nName: " + customerName
+);
+
+const response = await fetch(
   "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
   {
     method: "POST",
