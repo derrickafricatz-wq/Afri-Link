@@ -2837,7 +2837,7 @@ const response = await fetch(
     mode: "cors",
     headers: {
   "Content-Type": "application/json",
-  "Authorization": "Bearer YOUR_ANON_KEY"
+  "Authorization": "Bearer eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiZW1rbXZ2Ymt4a251ZHV0aHNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0OTUyOTgsImV4cCI6MjA5NTA3MTI5OH0.tKtlJ89jdPyeFSAaQs02Vet3SOl2LVatl4psSG9RxPI"
     }
     body: JSON.stringify({
       request_id: request.id,
