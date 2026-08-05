@@ -2795,3 +2795,67 @@ Press OK to continue to payment.`
   payForSeatRequest(request);
 
 }
+
+async function payForSeatRequest(request){
+
+  try{
+
+    const amount =
+      parseInt(
+        document
+          .getElementById("busFareAmount")
+          .innerText
+          .replace("TZS","")
+          .replace(/,/g,"")
+          .trim()
+      );
+
+    const phone =
+      document
+        .getElementById("customerPhone")
+        .value
+        .trim();
+
+    const customerName =
+      document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+    const response = await fetch(
+      "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+
+          request_id:request.id,
+
+          amount:amount,
+
+          phone_number:phone,
+
+          customer_name:customerName
+
+        })
+
+      }
+    );
+
+    const result = await response.json();
+
+    console.log(result);
+
+    alert(result.message);
+
+  }catch(err){
+
+    console.error(err);
+
+    alert("Unable to start payment.");
+
+  }
+
+}
