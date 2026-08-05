@@ -2837,13 +2837,13 @@ const response = await fetch(
     mode: "cors",
     headers: {
       "Content-Type": "application/json"
-    }
+    },
     body: JSON.stringify({
-  request_id: String(request.id),
-  amount: Number(amount),
-  phone_number: String(phone),
-  customer_name: String(customerName)
-})
+      request_id: String(request.id),
+      amount: Number(amount),
+      phone_number: String(phone),
+      customer_name: String(customerName)
+    })
   }
 );
 
