@@ -2765,3 +2765,33 @@ async function confirmSelectedSeats(){
   }
 
 }
+
+function showSeatRequestPayNow(request){
+
+  const totalFare =
+    document.getElementById("busFareAmount")?.innerText ||
+    "TZS 0";
+
+  const phone =
+    document.getElementById("customerPhone")?.value || "";
+
+  const proceed = confirm(
+`Seat Request Submitted Successfully!
+
+Request ID:
+${request.id}
+
+Amount:
+${totalFare}
+
+Phone:
+${phone}
+
+Press OK to continue to payment.`
+  );
+
+  if(!proceed) return;
+
+  payForSeatRequest(request);
+
+}
