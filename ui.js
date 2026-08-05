@@ -2770,11 +2770,18 @@ async function confirmSelectedSeats(){
 function showSeatRequestPayNow(request){
 
   const totalFare =
-    document.getElementById("busFareAmount")?.innerText ||
-    "TZS 0";
+    document.getElementById("busFareAmount")?.innerText || "TZS 0";
 
   const phone =
-    document.getElementById("customerPhone")?.value || "";
+    document.getElementById("customerPhone")?.value?.trim() || "";
+
+  if(!request?.id){
+
+    alert("Invalid seat request. Please try again.");
+
+    return;
+
+  }
 
   const proceed = confirm(
 `Seat Request Submitted Successfully!
@@ -2798,66 +2805,87 @@ Press OK to continue to payment.`
 }
 
 
+
 async function payForSeatRequest(request){
+
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+
+    controller.abort();
+
+  },30000);
 
   try{
 
-    const amount =
-      parseInt(
-        document
-          .getElementById("busFareAmount")
-          .innerText
-          .replace("TZS","")
-          .replace(/,/g,"")
-          .trim()
-      );
+    const amount = Number(
+
+      document
+        .getElementById("busFareAmount")
+        ?.innerText
+        ?.replace("TZS","")
+        ?.replace(/,/g,"")
+        ?.trim()
+
+    );
 
     const phone =
+
       document
         .getElementById("customerPhone")
-        .value
-        .trim();
+        ?.value
+        ?.trim();
 
     const customerName =
+
       document
         .getElementById("customerName")
-        .value
-        .trim();
+        ?.value
+        ?.trim();
 
     const payload = {
 
       request_id: String(request.id),
 
-      amount: Number(amount),
+      amount: amount,
 
-      phone_number: String(phone),
+      phone_number: phone,
 
-      customer_name: String(customerName)
+      customer_name: customerName
 
     };
 
-    alert(
-      "Sending payment...\n\n" +
-      JSON.stringify(payload, null, 2)
-    );
+    console.log("PAYMENT PAYLOAD:",payload);
 
     const response = await fetch(
+
       "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
+
       {
-        method: "POST",
+
+        method:"POST",
 
         headers:{
+
           "Content-Type":"application/json",
+
           "Accept":"application/json"
+
         },
 
-        body: JSON.stringify(payload)
+        body:JSON.stringify(payload),
+
+        signal:controller.signal
+
       }
+
     );
+
+    clearTimeout(timeout);
 
     const text = await response.text();
 
-    let result = {};
+    let result;
 
     try{
 
@@ -2866,43 +2894,71 @@ async function payForSeatRequest(request){
     }catch{
 
       result = {
+
         raw:text
+
       };
 
     }
 
-    alert(
-      "HTTP Status: " +
-      response.status
-    );
+    console.log("HTTP STATUS:",response.status);
+
+    console.log("PAYMENT RESPONSE:",result);
 
     if(!response.ok){
 
       alert(
+
+        "Payment Error\n\n" +
+
+        "HTTP Status: " +
+
+        response.status +
+
+        "\n\n" +
+
         JSON.stringify(result,null,2)
+
       );
 
       return;
 
     }
 
-    console.log(result);
-
     alert(
-      "Payment Request Created Successfully!\n\n" +
+
+      "Payment Request Sent Successfully!\n\n" +
+
       JSON.stringify(result,null,2)
+
     );
 
   }
+
   catch(err){
 
-    console.error(err);
+    clearTimeout(timeout);
+
+    console.error("PAYMENT ERROR:",err);
+
+    if(err.name === "AbortError"){
+
+      alert(
+
+        "Connection timed out.\nPlease check your internet connection and try again."
+
+      );
+
+      return;
+
+    }
 
     alert(
-      "FETCH ERROR\n\n" +
-      err.name +
-      "\n\n" +
+
+      "Network Error\n\n" +
+
       err.message
+
     );
 
   }
