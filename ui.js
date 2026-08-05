@@ -2823,26 +2823,21 @@ async function payForSeatRequest(request){
         .trim();
 
     const response = await fetch(
-      "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-
-          request_id:request.id,
-
-          amount:amount,
-
-          phone_number:phone,
-
-          customer_name:customerName
-
-        })
-
-      }
-    );
+  "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
+  {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      request_id: request.id,
+      amount: amount,
+      phone_number: phone,
+      customer_name: customerName
+    })
+  }
+);
 
     const result = await response.json();
 
