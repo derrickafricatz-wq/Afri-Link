@@ -1947,11 +1947,7 @@ console.log(
 
 }
 
-alert(
-  "Seat request created successfully!\n\n" +
-  "Request ID: " +
-  data.id
-);
+showSeatRequestPayNow(data);
 
 
   // =========================
