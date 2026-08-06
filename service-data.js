@@ -50,7 +50,7 @@ const serviceDatabase = {
     departure: "Arusha",
     destination: "Dar es Salaam",
     fares: {
-      Standard: 35000,
+      Standard: 1000,
       Business: 50000,
       VIP: 70000
     }
