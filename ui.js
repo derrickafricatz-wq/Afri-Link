@@ -2410,8 +2410,6 @@ seatButton
 
 }
 
-}
-
 
         seatButton.dataset.seat =
           seat;
