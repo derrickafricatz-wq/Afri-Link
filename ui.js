@@ -2339,11 +2339,19 @@ color:#00ffff;
 font-size:18px;
 font-weight:900;
 margin-bottom:15px;
+text-align:center;
 ">
 BUS SEAT MAP
 </div>
+
+<div id="busSeatsGrid"
+style="
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+">
+</div>
 `;
-}
 
 
     // =====================================
