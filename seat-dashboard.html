@@ -968,6 +968,30 @@ async function loadSeatRequests(showLoading = false){
 
             </button>
 
+            <button
+
+  type="button"
+
+  class="updateSeatButton"
+
+  style="
+    margin-top:10px;
+    background:#00c853;
+    color:white;
+  "
+
+  onclick="
+    openSeatMap(
+      '${request.id}'
+    )
+  "
+
+>
+
+  OPEN SEAT MAP
+
+</button>
+
           </div>
 
         `;
@@ -1827,9 +1851,20 @@ console.log(
     "Dashboard is ready."
   );
 
+} 
+
+// =========================================
+// OPEN SEAT MAP
+// =========================================
+
+function openSeatMap(requestId){
+
+  alert(
+    "Seat Map for Request:\n\n" +
+    requestId
+  );
+
 }
-
-
 
 // =========================================
 // RUN DASHBOARD
