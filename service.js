@@ -2019,24 +2019,35 @@ style="
 
 
   <button
-    type="button"
-    id="confirmSelectedSeatsButton"
-    onclick="confirmSelectedSeats()"
-    style="
-      width:100%;
-      margin-top:15px;
-      padding:14px;
-      border:none;
-      border-radius:12px;
-      background:#00ff88;
-      color:#000000;
-      font-size:15px;
-      font-weight:900;
-      cursor:pointer;
-    "
-  >
-    CONFIRM SELECTED SEATS
-  </button>
+type="button"
+id="confirmSelectedSeatsButton"
+onclick="confirmSelectedSeats()"
+style="
+width:100%;
+margin-top:15px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#00ff88;
+color:#000000;
+font-size:15px;
+font-weight:900;
+cursor:pointer;
+"
+>
+CONFIRM SELECTED SEATS
+</button>
+
+<div id="busSeatChartContainer"
+style="
+display:none;
+margin-top:20px;
+padding:15px;
+border-radius:15px;
+background:rgba(0,0,0,0.35);
+border:1px solid rgba(0,255,255,0.3);
+">
+</div>
 
 </div>
 
