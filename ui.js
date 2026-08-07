@@ -2805,7 +2805,6 @@ Press OK to continue to payment.`
 }
 
 
-
 async function payForSeatRequest(request){
 
   const controller = new AbortController();
@@ -2826,3 +2825,141 @@ async function payForSeatRequest(request){
         ?.replace("TZS","")
         ?.replace(/,/g,"")
         ?.trim()
+
+    );
+
+    const phone =
+
+      document
+        .getElementById("customerPhone")
+        ?.value
+        ?.trim();
+
+    const customerName =
+
+      document
+        .getElementById("customerName")
+        ?.value
+        ?.trim();
+
+    const payload = {
+
+      request_id: String(request.id),
+
+      amount: amount,
+
+      phone_number: phone,
+
+      customer_name: customerName
+
+    };
+
+    console.log("PAYMENT PAYLOAD:",payload);
+
+    const response = await fetch(
+
+      "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
+
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Content-Type":"application/json",
+
+          "Accept":"application/json"
+
+        },
+
+        body:JSON.stringify(payload),
+
+        signal:controller.signal
+
+      }
+
+    );
+
+    clearTimeout(timeout);
+
+    const text = await response.text();
+
+    let result;
+
+    try{
+
+      result = JSON.parse(text);
+
+    }catch{
+
+      result = {
+
+        raw:text
+
+      };
+
+    }
+
+    console.log("HTTP STATUS:",response.status);
+
+    console.log("PAYMENT RESPONSE:",result);
+
+    if(!response.ok){
+
+      alert(
+
+        "Payment Error\n\n" +
+
+        "HTTP Status: " +
+
+        response.status +
+
+        "\n\n" +
+
+        JSON.stringify(result,null,2)
+
+      );
+
+      return;
+
+    }
+
+    alert(
+
+      "Payment Request Sent Successfully!\n\n" +
+
+      JSON.stringify(result,null,2)
+
+    );
+
+  }
+
+  catch(err){
+
+    clearTimeout(timeout);
+
+    console.error("PAYMENT ERROR:",err);
+
+    if(err.name === "AbortError"){
+
+      alert(
+
+        "Connection timed out.\nPlease check your internet connection and try again."
+
+      );
+
+      return;
+
+    }
+
+    alert(
+
+      "Network Error\n\n" +
+
+      err.message
+
+    );
+
+  }
+
+}
