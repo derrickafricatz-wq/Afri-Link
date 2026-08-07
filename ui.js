@@ -2383,9 +2383,18 @@ document.getElementById(
 
 if(busSeatChartContainer){
 
-busSeatChartContainer.appendChild(
+const busSeatsGrid =
+document.getElementById(
+"busSeatsGrid"
+);
+
+if(busSeatsGrid){
+
+busSeatsGrid.appendChild(
 seatButton
 );
+
+}
 
 }
 
