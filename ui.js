@@ -2375,11 +2375,6 @@ gap:10px;
 
         // ADD SEAT INTO BUS CHART
 
-const busSeatChartContainer =
-document.getElementById(
-"busSeatChartContainer"
-);
-
 if(busSeatChartContainer){
 
 const busSeatsGrid =
