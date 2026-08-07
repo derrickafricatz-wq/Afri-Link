@@ -2323,6 +2323,28 @@ async function checkMySeat(){
     availableSeatsContainer.innerHTML =
       "";
 
+    const busSeatChartContainer =
+document.getElementById(
+"busSeatChartContainer"
+);
+
+if(busSeatChartContainer){
+
+busSeatChartContainer.style.display =
+"block";
+
+busSeatChartContainer.innerHTML = `
+<div style="
+color:#00ffff;
+font-size:18px;
+font-weight:900;
+margin-bottom:15px;
+">
+BUS SEAT MAP
+</div>
+`;
+}
+
 
     // =====================================
     // CREATE SEAT BUTTONS
