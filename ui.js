@@ -2366,6 +2366,21 @@ BUS SEAT MAP
         seatButton.textContent =
           "SEAT " + seat;
 
+        // ADD SEAT INTO BUS CHART
+
+const busSeatChartContainer =
+document.getElementById(
+"busSeatChartContainer"
+);
+
+if(busSeatChartContainer){
+
+busSeatChartContainer.appendChild(
+seatButton
+);
+
+}
+
 
         seatButton.dataset.seat =
           seat;
@@ -2398,11 +2413,6 @@ BUS SEAT MAP
 
           };
 
-
-        availableSeatsContainer
-          .appendChild(
-            seatButton
-          );
 
       }
     );
