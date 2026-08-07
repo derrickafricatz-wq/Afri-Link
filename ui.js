@@ -2390,6 +2390,20 @@ document.getElementById(
 
 if(busSeatsGrid){
 
+// Insert aisle after every 2 seats
+if(
+busSeatsGrid.children.length % 4 === 2
+){
+
+const aisle =
+document.createElement("div");
+
+aisle.style.width = "20px";
+
+busSeatsGrid.appendChild(aisle);
+
+}
+
 busSeatsGrid.appendChild(
 seatButton
 );
