@@ -2323,35 +2323,6 @@ async function checkMySeat(){
     availableSeatsContainer.innerHTML =
       "";
 
-    const busSeatChartContainer =
-document.getElementById(
-"busSeatChartContainer"
-);
-
-if(busSeatChartContainer){
-
-busSeatChartContainer.style.display =
-"block";
-
-<div style="
-color:#00ffff;
-font-size:18px;
-font-weight:900;
-margin-bottom:15px;
-text-align:center;
-">
-BUS SEAT MAP
-</div>
-
-<div id="busSeatsGrid"
-style="
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:10px;
-">
-</div>
-`;
-
 
     // =====================================
     // CREATE SEAT BUTTONS
@@ -2372,37 +2343,6 @@ gap:10px;
 
         seatButton.textContent =
           "SEAT " + seat;
-
-        // ADD SEAT INTO BUS CHART
-
-if(busSeatChartContainer){
-
-const busSeatsGrid =
-document.getElementById(
-"busSeatsGrid"
-);
-
-if(busSeatsGrid){
-
-// Insert aisle after every 2 seats
-if(
-busSeatsGrid.children.length % 4 === 2
-){
-
-const aisle =
-document.createElement("div");
-
-aisle.style.width = "20px";
-
-busSeatsGrid.appendChild(aisle);
-
-}
-
-busSeatsGrid.appendChild(
-seatButton
-);
-
-}
 
 
         seatButton.dataset.seat =
@@ -2436,6 +2376,11 @@ seatButton
 
           };
 
+
+        availableSeatsContainer
+          .appendChild(
+            seatButton
+          );
 
       }
     );
@@ -2881,141 +2826,3 @@ async function payForSeatRequest(request){
         ?.replace("TZS","")
         ?.replace(/,/g,"")
         ?.trim()
-
-    );
-
-    const phone =
-
-      document
-        .getElementById("customerPhone")
-        ?.value
-        ?.trim();
-
-    const customerName =
-
-      document
-        .getElementById("customerName")
-        ?.value
-        ?.trim();
-
-    const payload = {
-
-      request_id: String(request.id),
-
-      amount: amount,
-
-      phone_number: phone,
-
-      customer_name: customerName
-
-    };
-
-    console.log("PAYMENT PAYLOAD:",payload);
-
-    const response = await fetch(
-
-      "https://xbemkmvvbkxknuduthsg.supabase.co/functions/v1/create-blmpay-payment",
-
-      {
-
-        method:"POST",
-
-        headers:{
-
-          "Content-Type":"application/json",
-
-          "Accept":"application/json"
-
-        },
-
-        body:JSON.stringify(payload),
-
-        signal:controller.signal
-
-      }
-
-    );
-
-    clearTimeout(timeout);
-
-    const text = await response.text();
-
-    let result;
-
-    try{
-
-      result = JSON.parse(text);
-
-    }catch{
-
-      result = {
-
-        raw:text
-
-      };
-
-    }
-
-    console.log("HTTP STATUS:",response.status);
-
-    console.log("PAYMENT RESPONSE:",result);
-
-    if(!response.ok){
-
-      alert(
-
-        "Payment Error\n\n" +
-
-        "HTTP Status: " +
-
-        response.status +
-
-        "\n\n" +
-
-        JSON.stringify(result,null,2)
-
-      );
-
-      return;
-
-    }
-
-    alert(
-
-      "Payment Request Sent Successfully!\n\n" +
-
-      JSON.stringify(result,null,2)
-
-    );
-
-  }
-
-  catch(err){
-
-    clearTimeout(timeout);
-
-    console.error("PAYMENT ERROR:",err);
-
-    if(err.name === "AbortError"){
-
-      alert(
-
-        "Connection timed out.\nPlease check your internet connection and try again."
-
-      );
-
-      return;
-
-    }
-
-    alert(
-
-      "Network Error\n\n" +
-
-      err.message
-
-    );
-
-  }
-
-}
