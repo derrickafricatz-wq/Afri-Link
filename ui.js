@@ -2333,7 +2333,6 @@ if(busSeatChartContainer){
 busSeatChartContainer.style.display =
 "block";
 
-busSeatChartContainer.innerHTML = `
 <div style="
 color:#00ffff;
 font-size:18px;
