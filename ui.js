@@ -898,6 +898,17 @@ Preparing your booking details...
 
 </div>
 
+<div id="busSeatChartContainer"
+style="
+display:none;
+margin-top:20px;
+padding:15px;
+border-radius:15px;
+background:rgba(0,0,0,0.35);
+border:1px solid rgba(0,255,255,0.3);
+">
+</div>
+
 <div
 id="dynamicBookingFields"
 style="
