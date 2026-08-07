@@ -1784,31 +1784,6 @@ style="
 </div>
 
 <!-- =========================================
-     SUBMIT SEAT REQUEST
-========================================= -->
-
-<button
-  type="button"
-  id="submitSeatRequestButton"
-  onclick="submitSeatRequest()"
-  style="
-    width:100%;
-    margin-top:12px;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#00ff88;
-    color:#000000;
-    font-size:15px;
-    font-weight:900;
-    cursor:pointer;
-  "
->
-  SUBMIT SEAT REQUEST
-</button>
-
-
-<!-- =========================================
      CHECK MY SEAT
 ========================================= -->
 
@@ -2041,6 +2016,26 @@ style="
 </div>
 
 </div>
+
+<button
+  type="button"
+  id="submitSeatRequestButton"
+  onclick="submitSeatRequest()"
+  style="
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00ff88;
+    color:#000000;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+  "
+>
+  SUBMIT SEAT REQUEST
+</button>
 
 
         <!-- =========================
