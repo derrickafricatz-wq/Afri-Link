@@ -1709,36 +1709,30 @@ style="
   box-sizing:border-box;
   ">
 
- <select
-  id="bookingTravelClass"
-  style="
-    width:100%;
-    padding:14px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    box-sizing:border-box;
-  "
->
+<select
+id="bookingTravelClass"
+style="
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+box-sizing:border-box;
+">
 
-  <option value="">
-    Select Seat / Travel Class
-  </option>
+<option value="Standard">
+Standard
+</option>
 
-  <option value="Standard">
-    Standard
-  </option>
+<option value="Premium">
+Premium
+</option>
 
-  <option value="Business">
-    Business
-  </option>
+<option value="VIP">
+VIP
+</option>
 
-  <option value="VIP">
-    VIP
-  </option>
-
-</select> 
-
+</select>
   
 <div
   id="busFareDisplay"
