@@ -2347,7 +2347,7 @@ BUS SEAT MAP
 <div id="busSeatsGrid"
 style="
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(5,1fr);
 gap:10px;
 ">
 </div>
