@@ -3087,3 +3087,120 @@ async function waitForSeatPayment(requestId){
     3000
   );
 }
+
+// =========================================
+// SHOW PRINT / DOWNLOAD TICKET BUTTONS
+// =========================================
+function showTicketButtons(requestId){
+
+  // =======================================
+  // FIND TICKET AREA
+  // =======================================
+  let ticketArea =
+    document.getElementById("paymentTicketArea");
+
+  // =======================================
+  // CREATE TICKET AREA IF IT DOES NOT EXIST
+  // =======================================
+  if(!ticketArea){
+
+    ticketArea =
+      document.createElement("div");
+
+    ticketArea.id =
+      "paymentTicketArea";
+
+    ticketArea.style.cssText = `
+      margin-top:20px;
+      padding:20px;
+      border-radius:15px;
+      background:#111;
+      border:2px solid #00ff88;
+      text-align:center;
+    `;
+
+    // Put it inside the booking/payment area
+    const paymentContent =
+      document.getElementById("paymentContent");
+
+    if(paymentContent){
+
+      paymentContent.appendChild(
+        ticketArea
+      );
+
+    }else{
+
+      document.body.appendChild(
+        ticketArea
+      );
+
+    }
+  }
+
+  // =======================================
+  // SHOW BUTTONS
+  // =======================================
+  ticketArea.innerHTML = `
+
+    <div style="
+      color:#00ff88;
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:15px;
+    ">
+      PAYMENT CONFIRMED
+    </div>
+
+    <div style="
+      color:#ffffff;
+      font-size:14px;
+      margin-bottom:15px;
+    ">
+      Your ticket is ready.
+    </div>
+
+    <button
+      type="button"
+      onclick="printSeatTicket('${requestId}')"
+      style="
+        width:100%;
+        padding:14px;
+        margin-bottom:10px;
+        border:none;
+        border-radius:10px;
+        background:#00ff88;
+        color:#000;
+        font-size:15px;
+        font-weight:900;
+        cursor:pointer;
+      "
+    >
+      PRINTTICKET
+    </button>
+
+    <button
+      type="button"
+      onclick="downloadSeatTicket('${requestId}')"
+      style="
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:10px;
+        background:#00ffff;
+        color:#000;
+        font-size:15px;
+        font-weight:900;
+        cursor:pointer;
+      "
+    >
+      GOTTICKET
+    </button>
+
+  `;
+
+  ticketArea.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
