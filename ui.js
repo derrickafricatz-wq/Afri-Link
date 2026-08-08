@@ -2932,6 +2932,11 @@ async function payForSeatRequest(request){
 
     );
 
+    // =========================================
+   // WAIT FOR BLMPAY PAYMENT COMPLETION
+  // =========================================
+  await waitForSeatPayment(request.id);
+
   }
 
   catch(err){
