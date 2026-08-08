@@ -3021,20 +3021,25 @@ async function waitForSeatPayment(requestId){
     // PAYMENT COMPLETED
     // =====================================
     if(
-      data?.payment_status === "paid"
-    ){
+  data?.payment_status === "paid"
+  ){
 
-      console.log(
-        "PAYMENT CONFIRMED!",
-        data
-      );
+  console.log(
+    "PAYMENT CONFIRMED!",
+    data
+  );
 
-      alert(
-        "Payment completed successfully!"
-      );
+  alert(
+    "Payment completed successfully!"
+  );
 
-      return true;
-    }
+  // =====================================
+  // SHOW TICKET BUTTONS
+  // =====================================
+  showTicketButtons(requestId);
+
+  return true;
+}
 
     // =====================================
     // STOP AFTER MAXIMUM ATTEMPTS
