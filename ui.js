@@ -2998,7 +2998,7 @@ async function waitForSeatPayment(requestId){
       error
     } = await client
       .from("seat_requests")
-      .select("payment_status, payment_reference, paid_at")
+      .select("*")
       .eq("id", requestId)
       .maybeSingle();
 
