@@ -3400,3 +3400,101 @@ function showTicketButtons(request){
   });
 
 }
+
+// =========================================
+// PRINT BUS TICKET
+// =========================================
+function printSeatTicket(){
+
+  const ticket =
+    document.getElementById("seatTicket");
+
+  if(!ticket){
+
+    alert(
+      "Ticket is not available to print."
+    );
+
+    return;
+  }
+
+  const printWindow =
+    window.open(
+      "",
+      "_blank",
+      "width=800,height=900"
+    );
+
+  if(!printWindow){
+
+    alert(
+      "Please allow pop-ups in your browser to print the ticket."
+    );
+
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+      <title>Afri|Link Bus Ticket</title>
+
+      <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1"
+      >
+
+      <style>
+
+        body{
+          margin:0;
+          padding:20px;
+          background:#ffffff;
+          font-family:Arial,sans-serif;
+        }
+
+        .ticket{
+          max-width:500px;
+          margin:auto;
+        }
+
+        @media print{
+
+          body{
+            padding:0;
+          }
+
+          .ticket{
+            width:100%;
+          }
+
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <div class="ticket">
+        ${ticket.innerHTML}
+      </div>
+
+    </body>
+
+    </html>
+  `);
+
+  printWindow.document.close();
+
+  printWindow.focus();
+
+  setTimeout(() => {
+
+    printWindow.print();
+
+  },500);
+
+}
