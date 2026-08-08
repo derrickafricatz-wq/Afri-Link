@@ -3089,18 +3089,30 @@ async function waitForSeatPayment(requestId){
 }
 
 // =========================================
-// SHOW PRINT / DOWNLOAD TICKET BUTTONS
+// SHOW PRINT / DOWNLOAD TICKET
 // =========================================
-function showTicketButtons(requestId){
+function showTicketButtons(request){
+
+  if(!request?.id){
+
+    console.error(
+      "Invalid ticket request:",
+      request
+    );
+
+    return;
+  }
 
   // =======================================
-  // FIND TICKET AREA
+  // GET TICKET AREA
   // =======================================
   let ticketArea =
-    document.getElementById("paymentTicketArea");
+    document.getElementById(
+      "paymentTicketArea"
+    );
 
   // =======================================
-  // CREATE TICKET AREA IF IT DOES NOT EXIST
+  // CREATE TICKET AREA IF NEEDED
   // =======================================
   if(!ticketArea){
 
@@ -3116,12 +3128,13 @@ function showTicketButtons(requestId){
       border-radius:15px;
       background:#111;
       border:2px solid #00ff88;
-      text-align:center;
+      color:#ffffff;
     `;
 
-    // Put it inside the booking/payment area
     const paymentContent =
-      document.getElementById("paymentContent");
+      document.getElementById(
+        "paymentContent"
+      );
 
     if(paymentContent){
 
@@ -3139,68 +3152,251 @@ function showTicketButtons(requestId){
   }
 
   // =======================================
-  // SHOW BUTTONS
+  // PREPARE TICKET DATA
+  // =======================================
+
+  const company =
+    request.company_name ||
+    "Bus Company";
+
+  const passenger =
+    request.customer_name ||
+    "";
+
+  const phone =
+    request.customer_phone ||
+    "";
+
+  const from =
+    request.departure ||
+    "";
+
+  const to =
+    request.destination ||
+    "";
+
+  const travelDate =
+    request.travel_date ||
+    "";
+
+  const passengers =
+    Number(request.passengers) || 1;
+
+  const travelClass =
+    request.travel_class ||
+    "Standard";
+
+  const seats =
+    request.selected_seat ||
+    "Not assigned";
+
+  const amount =
+    Number(request.amount) || 0;
+
+  const paymentReference =
+    request.payment_reference ||
+    request.payment_external_id ||
+    request.id;
+
+  // =======================================
+  // FORMAT FARE
+  // =======================================
+  const formattedAmount =
+    amount.toLocaleString("en-US");
+
+  // =======================================
+  // CREATE TICKET
   // =======================================
   ticketArea.innerHTML = `
 
-    <div style="
-      color:#00ff88;
-      font-size:18px;
-      font-weight:900;
-      margin-bottom:15px;
-    ">
-      PAYMENT CONFIRMED
+    <div
+      id="seatTicket"
+      style="
+        background:#ffffff;
+        color:#111111;
+        border-radius:15px;
+        padding:20px;
+        max-width:500px;
+        margin:0 auto;
+      "
+    >
+
+      <div style="
+        text-align:center;
+        border-bottom:2px solid #111;
+        padding-bottom:15px;
+        margin-bottom:15px;
+      ">
+
+        <div style="
+          font-size:24px;
+          font-weight:900;
+        ">
+          Afri|Link
+        </div>
+
+        <div style="
+          font-size:18px;
+          font-weight:900;
+          margin-top:5px;
+        ">
+          BUS TICKET
+        </div>
+
+        <div style="
+          color:#00a65a;
+          font-weight:900;
+          margin-top:8px;
+        ">
+          PAYMENT CONFIRMED
+        </div>
+
+      </div>
+
+      <div style="
+        font-size:14px;
+        line-height:1.8;
+      ">
+
+        <div>
+          <strong>Company:</strong>
+          ${company}
+        </div>
+
+        <div>
+          <strong>Passenger:</strong>
+          ${passenger}
+        </div>
+
+        <div>
+          <strong>Phone:</strong>
+          ${phone}
+        </div>
+
+        <hr>
+
+        <div>
+          <strong>From:</strong>
+          ${from}
+        </div>
+
+        <div>
+          <strong>To:</strong>
+          ${to}
+        </div>
+
+        <div>
+          <strong>Travel Date:</strong>
+          ${travelDate}
+        </div>
+
+        <div>
+          <strong>Passengers:</strong>
+          ${passengers}
+        </div>
+
+        <div>
+          <strong>Travel Class:</strong>
+          ${travelClass}
+        </div>
+
+        <div>
+          <strong>Seat:</strong>
+          ${seats}
+        </div>
+
+        <hr>
+
+        <div style="
+          font-size:18px;
+          font-weight:900;
+        ">
+          <strong>Fare:</strong>
+          TZS ${formattedAmount}
+        </div>
+
+        <div>
+          <strong>Payment:</strong>
+          PAID
+        </div>
+
+        <div style="
+          word-break:break-all;
+        ">
+          <strong>Payment Reference:</strong>
+          ${paymentReference}
+        </div>
+
+        <div>
+          <strong>Ticket ID:</strong>
+          ${request.id}
+        </div>
+
+      </div>
+
+      <div style="
+        margin-top:18px;
+        padding-top:15px;
+        border-top:1px dashed #777;
+        text-align:center;
+        font-size:12px;
+      ">
+        Thank you for booking with Afri|Link.
+      </div>
+
     </div>
 
     <div style="
-      color:#ffffff;
-      font-size:14px;
-      margin-bottom:15px;
+      margin-top:15px;
     ">
-      Your ticket is ready.
+
+      <button
+        type="button"
+        onclick="printSeatTicket()"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:none;
+          border-radius:10px;
+          background:#00ff88;
+          color:#000;
+          font-size:15px;
+          font-weight:900;
+          cursor:pointer;
+        "
+      >
+        PRINTTICKET
+      </button>
+
+      <button
+        type="button"
+        onclick="downloadSeatTicket()"
+        style="
+          width:100%;
+          padding:14px;
+          border:none;
+          border-radius:10px;
+          background:#00ffff;
+          color:#000;
+          font-size:15px;
+          font-weight:900;
+          cursor:pointer;
+        "
+      >
+        GETTICKET
+      </button>
+
     </div>
-
-    <button
-      type="button"
-      onclick="printSeatTicket('${requestId}')"
-      style="
-        width:100%;
-        padding:14px;
-        margin-bottom:10px;
-        border:none;
-        border-radius:10px;
-        background:#00ff88;
-        color:#000;
-        font-size:15px;
-        font-weight:900;
-        cursor:pointer;
-      "
-    >
-      PRINTTICKET
-    </button>
-
-    <button
-      type="button"
-      onclick="downloadSeatTicket('${requestId}')"
-      style="
-        width:100%;
-        padding:14px;
-        border:none;
-        border-radius:10px;
-        background:#00ffff;
-        color:#000;
-        font-size:15px;
-        font-weight:900;
-        cursor:pointer;
-      "
-    >
-      GOTTICKET
-    </button>
 
   `;
 
+  // =======================================
+  // SCROLL TO TICKET
+  // =======================================
   ticketArea.scrollIntoView({
     behavior:"smooth",
     block:"center"
   });
+
 }
