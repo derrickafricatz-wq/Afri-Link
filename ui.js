@@ -3036,7 +3036,7 @@ async function waitForSeatPayment(requestId){
   // =====================================
   // SHOW TICKET BUTTONS
   // =====================================
-  showTicketButtons(requestId);
+  showTicketButtons(data);
 
   return true;
 }
