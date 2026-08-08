@@ -2968,3 +2968,117 @@ async function payForSeatRequest(request){
   }
 
 }
+
+// =========================================
+// WAIT FOR SEAT PAYMENT TO BECOME PAID
+// =========================================
+async function waitForSeatPayment(requestId){
+
+  console.log(
+    "Waiting for payment completion:",
+    requestId
+  );
+
+  const maxAttempts = 60;
+
+  let attempts = 0;
+
+  const checkPayment = async () => {
+
+    attempts++;
+
+    console.log(
+      "Checking payment status...",
+      attempts,
+      requestId
+    );
+
+    const {
+      data,
+      error
+    } = await client
+      .from("seat_requests")
+      .select("payment_status, payment_reference, paid_at")
+      .eq("id", requestId)
+      .maybeSingle();
+
+    if(error){
+
+      console.error(
+        "PAYMENT STATUS CHECK ERROR:",
+        error
+      );
+
+      return false;
+    }
+
+    console.log(
+      "CURRENT PAYMENT STATUS:",
+      data?.payment_status
+    );
+
+    // =====================================
+    // PAYMENT COMPLETED
+    // =====================================
+    if(
+      data?.payment_status === "paid"
+    ){
+
+      console.log(
+        "PAYMENT CONFIRMED!",
+        data
+      );
+
+      alert(
+        "Payment completed successfully!"
+      );
+
+      return true;
+    }
+
+    // =====================================
+    // STOP AFTER MAXIMUM ATTEMPTS
+    // =====================================
+    if(
+      attempts >= maxAttempts
+    ){
+
+      alert(
+        "We could not confirm your payment yet.\n\n" +
+        "Please check your booking again shortly."
+      );
+
+      return true;
+    }
+
+    return false;
+  };
+
+  // =====================================
+  // CHECK IMMEDIATELY
+  // =====================================
+  if(
+    await checkPayment()
+  ){
+    return;
+  }
+
+  // =====================================
+  // CHECK EVERY 3 SECONDS
+  // =====================================
+  const interval = setInterval(
+    async () => {
+
+      const finished =
+        await checkPayment();
+
+      if(finished){
+
+        clearInterval(interval);
+
+      }
+
+    },
+    3000
+  );
+}
