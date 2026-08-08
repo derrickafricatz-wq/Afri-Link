@@ -3498,3 +3498,102 @@ function printSeatTicket(){
   },500);
 
 }
+
+// =========================================
+// DOWNLOAD BUS TICKET
+// =========================================
+function downloadSeatTicket(){
+
+  const ticket =
+    document.getElementById("seatTicket");
+
+  if(!ticket){
+
+    alert(
+      "Ticket is not available for download."
+    );
+
+    return;
+  }
+
+  const ticketHTML = `
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+
+      <meta charset="UTF-8">
+
+      <title>
+        Afri|Link Bus Ticket
+      </title>
+
+      <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1"
+      >
+
+      <style>
+
+        body{
+          margin:0;
+          padding:20px;
+          background:#ffffff;
+          font-family:Arial,sans-serif;
+        }
+
+        .ticket{
+          max-width:500px;
+          margin:auto;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <div class="ticket">
+        ${ticket.innerHTML}
+      </div>
+
+    </body>
+
+    </html>
+  `;
+
+  const blob =
+    new Blob(
+      [ticketHTML],
+      {
+        type:"text/html"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href =
+    url;
+
+  link.download =
+    "AfriLink-Bus-Ticket-" +
+    Date.now() +
+    ".html";
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  setTimeout(() => {
+
+    URL.revokeObjectURL(url);
+
+  },1000);
+
+}
