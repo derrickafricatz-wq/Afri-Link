@@ -1,4 +1,4 @@
-function renderBooks() {
+youfunction renderBooks() {
   const list = document.getElementById("bookList");
 
       const search =
@@ -3036,9 +3036,29 @@ async function waitForSeatPayment(requestId){
   // =====================================
   // SHOW TICKET BUTTONS
   // =====================================
+  try{
+
   showTicketButtons(data);
 
-  return true;
+  alert(
+    "TICKET FUNCTION FINISHED."
+  );
+
+}catch(ticketError){
+
+  console.error(
+    "TICKET ERROR:",
+    ticketError
+  );
+
+  alert(
+    "TICKET ERROR:\n\n" +
+    ticketError.message
+  );
+
+}
+
+return true;
 }
 
     // =====================================
