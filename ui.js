@@ -3420,10 +3420,12 @@ ticketArea.style.display = "block";
   // =======================================
   // SCROLL TO TICKET
   // =======================================
-  ticketArea.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
-  });
+  ticketArea.style.display = "block";
+
+ticketArea.scrollIntoView({
+  behavior:"smooth",
+  block:"center"
+});
 
 }
 
