@@ -3158,17 +3158,23 @@ function showTicketButtons(request){
 
     if(paymentContent){
 
-      paymentContent.appendChild(
-        ticketArea
-      );
+  // Make sure the parent payment area is visible
+  paymentContent.style.display = "block";
 
-    }else{
+  paymentContent.appendChild(
+    ticketArea
+  );
 
-      document.body.appendChild(
-        ticketArea
-      );
+}else{
 
-    }
+  document.body.appendChild(
+    ticketArea
+  );
+
+}
+
+// Make sure the ticket itself is visible
+ticketArea.style.display = "block";
   }
 
   // =======================================
