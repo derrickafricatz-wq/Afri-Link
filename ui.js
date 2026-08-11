@@ -540,7 +540,7 @@ const filtered = marketAds.filter(company => {
           </a>
 
           <button
-           onclick="orderNow(${index})"
+           onclick="orderNow(${originalIndex})"
            style="
            background:#00ffff;
            color:black;
