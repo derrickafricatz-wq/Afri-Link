@@ -490,7 +490,7 @@ const filtered = marketAds.filter(company => {
 
 });
 
-  filtered.forEach((company) => {
+  filtered.forEach((company, index) => {
 
   const originalIndex = marketAds.indexOf(company);
 
