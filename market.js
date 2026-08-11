@@ -72,7 +72,7 @@ const marketAds = [
   categories: ["Furniture", "Services"],
   service: "furniture",
 
-  expiresAt: "2026-10-09 00:02",
+  expiresAt: "2026-08-11 09:52",
 
   images: [
     "images/m1.jpg",
