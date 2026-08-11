@@ -490,7 +490,9 @@ const filtered = marketAds.filter(company => {
 
 });
 
-  filtered.forEach((company, index) => {
+  filtered.forEach((company) => {
+
+  const originalIndex = marketAds.indexOf(company);
 
     const imagesSafe = encodeURIComponent(JSON.stringify(company.images || []));
 
