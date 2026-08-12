@@ -176,6 +176,19 @@ const serviceDatabase = {
       }
 
     }  
-  } 
+  },
+
+  
+   "UMBWE GATE TOURS": {
+
+    serviceType: "tourism",
+    
+    companyName: "UMBWE GATE TOURS",
+
+    bannerMessages: [
+      "Umbwe Gate Tours.",
+      "One Destination at a Time.",
+      "Join Us Today| WWW.UMBWEGATETOURS.CO.TZ"
+    ]
   
 };
