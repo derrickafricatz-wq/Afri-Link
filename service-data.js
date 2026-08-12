@@ -190,5 +190,5 @@ const serviceDatabase = {
       "One Destination at a Time.",
       "Join Us Today| WWW.UMBWEGATETOURS.CO.TZ"
     ]
-  
+   }
 };
