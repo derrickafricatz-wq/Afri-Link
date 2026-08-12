@@ -7,12 +7,29 @@ const marketAds = [
   location: "Arusha, Tanzania",
 
   categories: ["Technology", "Services"],
-  service: "technology",
 
   expiresAt: "2026-10-22 00:59",  
 
   images: [
     "images/logo.png"
+  ]
+},
+
+  {
+  company: "UMBWE GATE TOURS",
+  phone: "+255754490909",
+  whatsapp: "255754490909",
+  location: "AICC Ngorongoro wing 5thFloor|Arusha, Tanzania",
+
+  categories: ["Tourism"],
+
+  expiresAt: "2026-10-22 00:59",  
+
+  images: [
+    "images/ha.jpg",
+    "images/hb.jpg",
+    "images/hc.jpg",
+    "images/hd.jpg"
   ]
 },
 
@@ -23,7 +40,6 @@ const marketAds = [
   location: "Dodoma, Tanzania",
 
   categories: ["Printing", "Events"],
-  service: "printing",
 
   expiresAt: "2026-10-22 23:59",
 
@@ -72,7 +88,7 @@ const marketAds = [
   categories: ["Furniture", "Services"],
   service: "furniture",
 
-  expiresAt: "2026-08-11 09:52",
+  expiresAt: "2026-10-11 09:52",
 
   images: [
     "images/m1.jpg",
