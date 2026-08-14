@@ -204,5 +204,18 @@ const serviceDatabase = {
       "Tranquility Reflected| A Haven of Peace Amidst Nature",
       "JOIN IN| NGARE-SERO-LODGE.CO.TZ"
     ]
-   }
+   },
+
+     "GLORY CHUPI CHUPI": {
+
+    serviceType: "",
+    
+    companyName: "GLORY CHUPI CHUPI",
+
+    bannerMessages: [
+      "GLORY CHUPI CHUPI",
+      "",
+      "JOIN IN| NGARE-SERO-LODGE.CO.TZ"
+    ]
+  }
 };
