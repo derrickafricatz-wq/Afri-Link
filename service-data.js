@@ -190,5 +190,19 @@ const serviceDatabase = {
       "One Destination at a Time.",
       "Join Us Today| WWW.UMBWEGATETOURS.CO.TZ"
     ]
+   },
+
+  
+   "NGARE|SERO MOUNTAIN LODGE": {
+
+    serviceType: "hotel",
+    
+    companyName: "NGARE|SERO MOUNTAIN LODGE",
+
+    bannerMessages: [
+      "NGARE|SERO MOUNTAIN LODGE",
+      "Tranquility Reflected| A Haven of Peace Amidst Nature",
+      "JOIN IN| NGARE-SERO-LODGE.CO.TZ"
+    ]
    }
 };
