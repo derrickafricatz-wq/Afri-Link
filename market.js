@@ -58,17 +58,30 @@ const marketAds = [
 
   {
   company: "GLORY CHUPI CHUPI",
-  phone: "+255746644223",
-  whatsapp: "255752434777",
-  location: "Dodoma, Tanzania",
+  phone: "+255754059023",
+  whatsapp: "255754059023",
+  location: "Yarazaq|Building. Near Bus Terminal|Arusha",
 
-  categories: ["Printing", "Events"],
+  categories: ["Fashion"],
 
   expiresAt: "2026-10-22 23:59",
 
   images: [
-    "images/o1.png",
-    "images/o2.jpg"
+    "images/ab.jpg",
+    "images/ac.jpg",
+    "images/ad.jpg",
+    "images/ae.jpg",
+    "images/af.jpg",
+    "images/ag.jpg",
+    "images/ah.jpg",
+    "images/ai.jpg",
+    "images/aj.jpg",
+    "images/ak.jpg",
+    "images/al.jpg",
+    "images/am.jpg",
+    "images/an.jpg",
+    "images/ao.jpg",
+    "images/ap.jpg"
   ]
 },
 
