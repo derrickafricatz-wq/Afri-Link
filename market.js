@@ -1,17 +1,24 @@
 const marketAds = [
 
 {
-  company: "deka africa",
-  phone: "+255742097868",
-  whatsapp: "255742097868",
-  location: "Arusha, Tanzania",
+  company: "NGARE|SERO MOUNTAIN LODGE",
+  phone: "+255782749010",
+  whatsapp: "255782749010",
+  location: "Leganga Road|Leganga Arumeru|0425",
 
-  categories: ["Technology", "Services"],
+  categories: ["Hotels"],
 
   expiresAt: "2026-10-22 00:59",  
 
   images: [
-    "images/logo.png"
+        "images/qa.jpg",
+        "images/qb.jpg",
+        "images/qc.jpg",
+        "images/qd.jpg",
+        "images/qe.jpg",
+        "images/qf.jpg",
+        "images/qg.jpg",
+        "images/qh.jpg"
   ]
 },
 
@@ -170,6 +177,7 @@ const marketCategories = [
   "Fashion",
   "Furniture",
   "Health",
+  "Hotels",
   "Education",
   "Transport",
   "Tourism",
