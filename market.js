@@ -57,6 +57,22 @@ const marketAds = [
 },
 
   {
+  company: "GLORY CHUPI CHUPI",
+  phone: "+255746644223",
+  whatsapp: "255752434777",
+  location: "Dodoma, Tanzania",
+
+  categories: ["Printing", "Events"],
+
+  expiresAt: "2026-10-22 23:59",
+
+  images: [
+    "images/o1.png",
+    "images/o2.jpg"
+  ]
+},
+
+  {
   company: "Lux American",
   phone: "+255746644223",
   whatsapp: "255742097868",
