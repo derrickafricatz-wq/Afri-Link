@@ -213,9 +213,11 @@ const serviceDatabase = {
     companyName: "GLORY CHUPI CHUPI",
 
     bannerMessages: [
-      "GLORY CHUPI CHUPI",
-      "",
-      "JOIN IN| NGARE-SERO-LODGE.CO.TZ"
+      
+      "GLORY CHUPI CHUPI — Comfort You Can Feel.",
+      "Wear Confidence. Wear Glory.",
+      "Soft • Stylish • Everyday Essential.",
+      "Your Perfect Fit Starts Here."
     ]
   }
 };
