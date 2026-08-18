@@ -219,5 +219,23 @@ const serviceDatabase = {
       "Soft • Stylish • Everyday Essential.",
       "Your Perfect Fit Starts Here."
     ]
+  },
+
+     "MOUNT MERU HOTEL": {
+
+    serviceType: "hotel",
+    
+    companyName: "MOUNT MERU HOTEL",
+
+    bannerMessages: [
+      
+      "Welcome to Timeless Luxury.",
+      "Every Stay, A Memorable Experience.",
+      "Where Arusha Begins in Comfort.",
+      "Exceptional Hospitality. Unforgettable Moments.",
+      "Mount Meru Hotel — The Pride of Arusha.",
+      "JOIN US TODAY| WWW.MOUNTMERUHOTEL.CO.TZ"
+      
+    ]
   }
 };
