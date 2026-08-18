@@ -1,5 +1,26 @@
 const marketAds = [
 
+  {
+  company: "MOUNT MERU HOTEL",
+  phone: "+2550272970256",
+  whatsapp: "",
+  location: "Sanawari Road| Arusha, Tanzania",
+
+  categories: ["Hotels"],
+
+  expiresAt: "2026-10-22 00:59",  
+
+  images: [
+        "images/ca.jpg",
+        "images/cb.jpg",
+        "images/cc.jpg",
+        "images/cd.jpg",
+        "images/ce.jpg",
+        "images/cf.jpg",
+        "images/cg.jpg"
+  ]
+},
+
 {
   company: "NGARE|SERO MOUNTAIN LODGE",
   phone: "+255782749010",
