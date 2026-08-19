@@ -75,6 +75,8 @@ const marketAds = [
     "images/ya.png",
     "images/yb.png",
     "images/yc.png"
+  ]
+},
 
 {
   company: "AFRIVIBE PRINTS|EVENTS",
