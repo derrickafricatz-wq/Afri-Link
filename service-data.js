@@ -237,5 +237,22 @@ const serviceDatabase = {
       "JOIN US TODAY| WWW.MOUNTMERUHOTEL.CO.TZ"
       
     ]
+  },
+
+  
+     "YUTONG SPARE PARTS DEALER": {
+
+    serviceType: "",
+    
+    companyName: "YUTONG SPARE PARTS DEALER",
+
+    bannerMessages: [
+      
+      "DRIVE FURTHER WITH YUTONG.",
+      "KEEP YOUR YUTONG MOVING.",
+      "YUTONG POWER. ROAD CONFIDENCE.",
+      "TRUST YUTONG. GO FURTHER.",
+      "YUTONG QUALITY. YOUR JOURNEY."
+    ]
   }
 };
