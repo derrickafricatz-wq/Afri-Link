@@ -61,6 +61,21 @@ const marketAds = [
   ]
 },
 
+ {
+  company: "YUTONG SPARE PARTS DEALER",
+  phone: "+255752332728",
+  whatsapp: "255752332728",
+  location: "Near Bus Terminal|Arusha",
+
+  categories: ["services"],
+
+  expiresAt: "2026-10-22 23:59",
+
+  images: [
+    "images/ya.png",
+    "images/yb.png",
+    "images/yc.png"
+
 {
   company: "AFRIVIBE PRINTS|EVENTS",
   phone: "+255746644223",
