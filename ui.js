@@ -505,18 +505,54 @@ const filtered = marketAds.filter(company => {
         margin-bottom:20px;
       ">
 
-        <img
-          class="marketBillboard"
-          src="${company.images?.[0] || ''}"
-          data-images="${imagesSafe}"
-          data-index="0"
-          style="
-            width:100%;
-            border-radius:10px;
-            opacity:1;
-            transition: opacity 1.2s ease-in-out;
-          "
-        >
+        <div
+  class="marketBillboardWrap"
+  style="
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    border-radius:10px;
+  "
+>
+
+  <img
+    class="marketBillboard"
+    src="${company.images?.[0] || ''}"
+    data-images="${imagesSafe}"
+    data-index="0"
+    style="
+      width:100%;
+      display:block;
+      border-radius:10px;
+      opacity:1;
+      transition:opacity 1.2s ease-in-out;
+    "
+  >
+
+  <div
+    class="marketBillboardBanner"
+    style="
+      position:absolute;
+      left:50%;
+      bottom:25px;
+      transform:translateX(-50%);
+      width:80%;
+      padding:14px 18px;
+      background:rgba(10,35,50,0.82);
+      color:#fff;
+      text-align:center;
+      font-size:clamp(16px,3vw,28px);
+      font-weight:800;
+      letter-spacing:1px;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,.35);
+      backdrop-filter:blur(4px);
+    "
+  >
+    ${company.banners?.[0] || ""}
+  </div>
+
+</div>
 
         <div style="
           display:flex;
