@@ -61,7 +61,7 @@ const marketAds = [
   ]
 },
 
- {
+{
   company: "YUTONG SPARE PARTS DEALER",
   phone: "+255752332728",
   whatsapp: "255752332728",
@@ -75,8 +75,14 @@ const marketAds = [
     "images/ya.png",
     "images/yb.png",
     "images/yc.png"
+  ],
+
+  banners: [
+    "YUTONG. KEEP MOVING FORWARD.",
+    "YUTONG. POWER YOUR JOURNEY.",
+    "YUTONG. PERFORMANCE YOU CAN TRUST."
   ]
-},
+}, 
 
 {
   company: "AFRIVIBE PRINTS|EVENTS",
