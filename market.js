@@ -67,7 +67,7 @@ const marketAds = [
   whatsapp: "255752332728",
   location: "Near Bus Terminal|Arusha",
 
-  categories: ["services"],
+  categories: ["Services"],
 
   expiresAt: "2026-10-22 23:59",
 
