@@ -529,28 +529,50 @@ const filtered = marketAds.filter(company => {
     "
   >
 
-  <div
-    class="marketBillboardBanner"
-    style="
-      position:absolute;
-      left:50%;
-      bottom:25px;
-      transform:translateX(-50%);
-      width:80%;
-      padding:14px 18px;
-      background:rgba(10,35,50,0.82);
-      color:#fff;
-      text-align:center;
-      font-size:clamp(16px,3vw,28px);
-      font-weight:800;
-      letter-spacing:1px;
-      border-radius:12px;
-      box-shadow:0 6px 20px rgba(0,0,0,.35);
-      backdrop-filter:blur(4px);
-    "
-  >
-    ${company.banners?.[0] || ""}
-  </div>
+  ${
+  company.banners?.[0]
+    ? `
+      <div
+        class="marketBillboardBanner"
+        style="
+          position:absolute;
+          left:50%;
+          top:50%;
+          transform:translate(-50%, -50%);
+          width:78%;
+          padding:14px 20px;
+
+          background:rgba(0,20,35,0.38);
+
+          border:1px solid rgba(0,255,255,0.45);
+          border-radius:14px;
+
+          color:#ffffff;
+          text-align:center;
+
+          font-size:clamp(16px,3.5vw,30px);
+          font-weight:900;
+          letter-spacing:1.5px;
+          line-height:1.25;
+
+          text-shadow:
+            0 2px 4px rgba(0,0,0,.9),
+            0 0 10px rgba(0,255,255,.35);
+
+          box-shadow:
+            0 8px 25px rgba(0,0,0,.25),
+            inset 0 0 15px rgba(0,255,255,.08);
+
+          backdrop-filter:blur(2px);
+
+          pointer-events:none;
+        "
+      >
+        ${company.banners[0]}
+      </div>
+    `
+    : ""
+}
 
 </div>
 
