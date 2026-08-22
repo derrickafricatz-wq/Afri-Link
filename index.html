@@ -1251,6 +1251,7 @@ padding:20px;
     let customerLandmark = "";
     let customerAccuracy = "";
 
+
 function startMarketBillboard() {
 
   if (marketInterval) clearInterval(marketInterval);
@@ -1273,27 +1274,65 @@ function startMarketBillboard() {
 
         index = (index + 1) % images.length;
 
+        // Find the banner belonging to this billboard
+        const wrapper = img.closest(".marketBillboardWrap");
+        const banner = wrapper?.querySelector(".marketBillboardBanner");
+
+        // Fade image out
         img.style.opacity = "0";
 
-       setTimeout(() => {
+        // Fade banner out too
+        if (banner) {
+          banner.style.opacity = "0";
+          banner.style.transform =
+            "translate(-50%, -40%) scale(.95)";
+        }
 
-       img.src = images[index];
+        setTimeout(() => {
 
-       img.style.opacity = "1";
+          // Change image
+          img.src = images[index];
 
-       img.dataset.index = index;
+          // Update image index
+          img.dataset.index = index;
 
-    }, 800);
+          // Get banner messages stored on this billboard
+          const banners = JSON.parse(
+            decodeURIComponent(
+              img.dataset.banners || "[]"
+            )
+          );
+
+          // Change banner text
+          if (banner && banners.length) {
+
+            banner.innerHTML = banners[index] || "";
+
+            // Bring banner back
+            banner.style.opacity = "1";
+            banner.style.transform =
+              "translate(-50%, -50%) scale(1)";
+          }
+
+          // Fade image back in
+          img.style.opacity = "1";
+
+        }, 800);
 
       } catch (e) {
-        console.log("Billboard error:", e);
+
+        console.log(
+          "Billboard error:",
+          e
+        );
+
       }
 
     });
 
   }, 5000);
 }
-
+    
     window.addEventListener("load", () => {
   const savedLicense = localStorage.getItem("activeLicense");
 
