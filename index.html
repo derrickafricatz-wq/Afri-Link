@@ -1250,7 +1250,7 @@ padding:20px;
     let customerLongitude = "";
     let customerLandmark = "";
     let customerAccuracy = "";
-
+    
 
 function startMarketBillboard() {
 
@@ -1258,63 +1258,93 @@ function startMarketBillboard() {
 
   marketInterval = setInterval(() => {
 
-    const billboards = document.querySelectorAll(".marketBillboard");
+    const billboards =
+      document.querySelectorAll(".marketBillboard");
 
     billboards.forEach(img => {
 
       try {
 
         const images = JSON.parse(
-          decodeURIComponent(img.dataset.images || "[]")
+          decodeURIComponent(
+            img.dataset.images || "[]"
+          )
+        );
+
+        const banners = JSON.parse(
+          decodeURIComponent(
+            img.dataset.banners || "[]"
+          )
         );
 
         if (!images.length) return;
 
-        let index = parseInt(img.dataset.index || "0");
+        let index =
+          parseInt(img.dataset.index || "0");
 
-        index = (index + 1) % images.length;
+        index =
+          (index + 1) % images.length;
 
-        // Find the banner belonging to this billboard
-        const wrapper = img.closest(".marketBillboardWrap");
-        const banner = wrapper?.querySelector(".marketBillboardBanner");
+        const wrapper =
+          img.closest(".marketBillboardWrap");
 
-        // Fade image out
+        const banner =
+          wrapper?.querySelector(
+            ".marketBillboardBanner"
+          );
+
+        /* FADE IMAGE OUT */
+
         img.style.opacity = "0";
 
-        // Fade banner out too
+        /* FADE BANNER OUT */
+
         if (banner) {
+
           banner.style.opacity = "0";
+
           banner.style.transform =
-            "translate(-50%, -40%) scale(.95)";
+            "translate(-50%, -42%) scale(.92)";
         }
 
         setTimeout(() => {
 
-          // Change image
+          /* CHANGE IMAGE */
+
           img.src = images[index];
 
-          // Update image index
           img.dataset.index = index;
 
-          // Get banner messages stored on this billboard
-          const banners = JSON.parse(
-            decodeURIComponent(
-              img.dataset.banners || "[]"
-            )
-          );
+          /*
+             CHANGE BANNER
+             ONLY IF THIS COMPANY
+             HAS BANNER DATA
+          */
 
-          // Change banner text
           if (banner && banners.length) {
 
-            banner.innerHTML = banners[index] || "";
+            const newText =
+              banners[index] || "";
 
-            // Bring banner back
-            banner.style.opacity = "1";
-            banner.style.transform =
-              "translate(-50%, -50%) scale(1)";
+            if (newText) {
+
+              banner.innerHTML = newText;
+
+              banner.style.opacity = "1";
+
+              banner.style.transform =
+                "translate(-50%, -50%) scale(1)";
+
+            } else {
+
+              banner.style.opacity = "0";
+
+            }
+
           }
 
-          // Fade image back in
+          /* IMAGE BACK IN */
+
           img.style.opacity = "1";
 
         }, 800);
@@ -1330,7 +1360,7 @@ function startMarketBillboard() {
 
     });
 
-  }, 5000);
+  }, 6000);
 }
     
     window.addEventListener("load", () => {
