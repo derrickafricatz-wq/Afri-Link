@@ -519,6 +519,7 @@ const filtered = marketAds.filter(company => {
     class="marketBillboard"
     src="${company.images?.[0] || ''}"
     data-images="${imagesSafe}"
+    data-banners="${encodeURIComponent(JSON.stringify(company.banners || []))}"
     data-index="0"
     style="
       width:100%;
