@@ -529,7 +529,7 @@ const filtered = marketAds.filter(company => {
     "
   >
 
-  ${
+ ${
   company.banners?.[0]
     ? `
       <div
@@ -539,40 +539,58 @@ const filtered = marketAds.filter(company => {
           left:50%;
           top:50%;
           transform:translate(-50%, -50%);
-          width:78%;
-          padding:14px 20px;
 
-          background:rgba(0,20,35,0.38);
+          width:82%;
+          padding:18px 22px;
 
-          border:1px solid rgba(0,255,255,0.45);
-          border-radius:14px;
+          background:rgba(0,15,30,0.30);
 
-          color:#ffffff;
+          border:1px solid rgba(0,255,255,0.35);
+          border-radius:16px;
+
           text-align:center;
 
-          font-size:clamp(16px,3.5vw,30px);
-          font-weight:900;
-          letter-spacing:1.5px;
-          line-height:1.25;
+          font-size:clamp(22px, 5vw, 42px);
+          font-weight:1000;
+
+          letter-spacing:2px;
+          line-height:1.15;
+
+          color:#ffffff;
 
           text-shadow:
-            0 2px 4px rgba(0,0,0,.9),
-            0 0 10px rgba(0,255,255,.35);
+            0 3px 6px rgba(0,0,0,.95),
+            0 0 12px rgba(0,255,255,.35);
 
           box-shadow:
-            0 8px 25px rgba(0,0,0,.25),
-            inset 0 0 15px rgba(0,255,255,.08);
+            0 10px 30px rgba(0,0,0,.25),
+            inset 0 0 20px rgba(0,255,255,.08);
 
           backdrop-filter:blur(2px);
 
           pointer-events:none;
         "
       >
-        ${company.banners[0]}
+        <span style="
+          color:#00ffff;
+          text-shadow:
+            0 0 8px rgba(0,255,255,.8),
+            0 3px 5px rgba(0,0,0,.9);
+        ">
+          ${company.banners[0].split(" ")[0]}
+        </span>
+
+        <span style="
+          color:#ffffff;
+          text-shadow:
+            0 3px 6px rgba(0,0,0,.95);
+        ">
+          ${company.banners[0].split(" ").slice(1).join(" ")}
+        </span>
       </div>
     `
     : ""
-}
+} 
 
 </div>
 
