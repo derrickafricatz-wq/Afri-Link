@@ -79,13 +79,14 @@ const marketAds = [
 
   banners: [
     "YUTONG. KEEP MOVING FORWARD.",
-    "YUTONG. POWER YOUR JOURNEY."
+    "YUTONG. POWER YOUR JOURNEY.",
+    "YUTONG. PERFORMANCE YOU CAN TRUST."
   ],
 
   bannerColors: [
   "blue",
   "yellow",
-  "green"
+  "red"
 ]
   
 }, 
