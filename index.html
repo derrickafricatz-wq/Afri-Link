@@ -789,6 +789,165 @@
   -webkit-tap-highlight-color: transparent;
 } 
 
+    /* ================================
+   AFRI|LINK ABOUT PANEL
+================================ */
+
+#afriAboutPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,0.45);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  z-index: 9999999;
+}
+
+#afriAboutBox {
+  width: 88%;
+  max-width: 520px;
+
+  padding: 30px 22px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  background: rgba(10,15,20,0.88);
+
+  border: 1px solid rgba(0,255,255,0.45);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.55),
+    0 0 25px rgba(0,255,255,0.18);
+
+  animation: afriAboutPop .45s ease-out;
+}
+
+#afriAboutBox h1 {
+  margin: 0 0 10px;
+
+  font-size: clamp(30px, 8vw, 48px);
+
+  font-weight: 1000;
+
+  letter-spacing: 2px;
+
+  background: linear-gradient(
+    90deg,
+    #00ffff,
+    #ffffff,
+    #00aaff,
+    #00ffff
+  );
+
+  background-size: 250% 100%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: afriAboutGlow 4s linear infinite;
+}
+
+#afriAboutBox h3 {
+  margin: 10px 0;
+
+  color: #ffffff;
+
+  font-size: 22px;
+}
+
+#afriAboutBox p {
+  color: rgba(255,255,255,0.85);
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+  margin: 15px auto 25px;
+
+  max-width: 430px;
+}
+
+#closeAfriAboutBtn {
+  padding: 12px 28px;
+
+  border: none;
+
+  border-radius: 30px;
+
+  background: linear-gradient(
+    145deg,
+    #00eaff,
+    #008cff
+  );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 #006b9c,
+    0 8px 18px rgba(0,220,255,0.35);
+
+  transition: .15s ease;
+}
+
+#closeAfriAboutBtn:active {
+  transform: translateY(4px);
+
+  box-shadow:
+    0 1px 0 #006b9c,
+    0 4px 8px rgba(0,220,255,0.25);
+}
+
+@keyframes afriAboutPop {
+
+  from {
+    opacity: 0;
+    transform: scale(.82) translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+}
+
+@keyframes afriAboutGlow {
+
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+
+    }
+
 </style>
 </head>
 
