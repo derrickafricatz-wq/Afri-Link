@@ -520,6 +520,7 @@ const filtered = marketAds.filter(company => {
     src="${company.images?.[0] || ''}"
     data-images="${imagesSafe}"
     data-banners="${encodeURIComponent(JSON.stringify(company.banners || []))}"
+    data-banner-colors="${encodeURIComponent(JSON.stringify(company.bannerColors || []))}"
     data-index="0"
     style="
       width:100%;
