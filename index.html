@@ -711,6 +711,84 @@
   box-shadow: inherit;
 }
 
+   /* ABOUT AFRI|LINK BUTTON */
+
+#aboutAfriLinkBtn {
+  position: fixed;
+
+  top: 125px;
+  left: 15px;
+
+  padding: 10px 16px;
+
+  border: 1px solid rgba(0,255,255,.6);
+  border-radius: 25px;
+
+  background: rgba(0,0,0,.55);
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  letter-spacing: .5px;
+
+  cursor: pointer;
+
+  z-index: 99999;
+
+  box-shadow:
+    0 4px 0 rgba(0,120,160,.8),
+    0 8px 18px rgba(0,0,0,.4),
+    0 0 12px rgba(0,255,255,.25);
+
+  backdrop-filter: blur(4px);
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition: transform .15s ease,
+              box-shadow .15s ease;
+}
+
+/* Gentle breathing */
+
+@keyframes aboutAfriBreathe {
+
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+}
+
+#aboutAfriLinkBtn {
+  animation: aboutAfriBreathe 2.8s ease-in-out infinite;
+}
+
+/* Press reaction */
+
+#aboutAfriLinkBtn:active {
+
+  transform: translateY(4px) scale(.97);
+
+  box-shadow:
+    0 1px 0 rgba(0,120,160,.8),
+    0 4px 8px rgba(0,0,0,.35);
+}
+
+/* Remove Android blue tap square */
+
+#aboutAfriLinkBtn:focus {
+  outline: none;
+}
+
+#aboutAfriLinkBtn {
+  -webkit-tap-highlight-color: transparent;
+} 
+
 </style>
 </head>
 
