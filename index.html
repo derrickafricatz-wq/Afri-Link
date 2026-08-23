@@ -1336,6 +1336,9 @@ function startMarketBillboard() {
 
               banner.innerHTML = newText;
 
+              banner.style.color =
+              bannerColors[index] || "white";
+
               banner.style.opacity = "1";
 
               banner.style.transform =
@@ -1366,7 +1369,7 @@ function startMarketBillboard() {
 
     });
 
-  }, 6000);
+  }, 5000);
 }
     
     window.addEventListener("load", () => {
