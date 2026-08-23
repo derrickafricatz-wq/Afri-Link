@@ -547,7 +547,7 @@ const filtered = marketAds.filter(company => {
 
           background:rgba(0,15,30,0.30);
 
-          border:1px solid rgba(0,255,255,0.35);
+          border:1px solid rgba(0,255,255,0.25);
           border-radius:16px;
 
           text-align:center;
@@ -558,42 +558,29 @@ const filtered = marketAds.filter(company => {
           letter-spacing:2px;
           line-height:1.15;
 
-          color:#ffffff;
+          color:${company.bannerColors?.[0] || "white"};
 
           text-shadow:
             0 3px 6px rgba(0,0,0,.95),
-            0 0 12px rgba(0,255,255,.35);
+            0 0 12px rgba(0,0,0,.45);
 
           box-shadow:
             0 10px 30px rgba(0,0,0,.25),
-            inset 0 0 20px rgba(0,255,255,.08);
+            inset 0 0 20px rgba(255,255,255,.05);
 
           backdrop-filter:blur(2px);
 
           pointer-events:none;
+
+          opacity:1;
         "
       >
-        <span style="
-          color:#00ffff;
-          text-shadow:
-            0 0 8px rgba(0,255,255,.8),
-            0 3px 5px rgba(0,0,0,.9);
-        ">
-          ${company.banners[0].split(" ")[0]}
-        </span>
-
-        <span style="
-          color:#ffffff;
-          text-shadow:
-            0 3px 6px rgba(0,0,0,.95);
-        ">
-          ${company.banners[0].split(" ").slice(1).join(" ")}
-        </span>
+        ${company.banners[0]}
       </div>
     `
     : ""
-} 
-
+ }
+ 
 </div>
 
         <div style="
