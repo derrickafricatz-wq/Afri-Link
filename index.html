@@ -2484,19 +2484,547 @@ function openAfriAbout() {
 
   if (!panel) return;
 
+  panel.innerHTML = `
+
+    <div style="
+      position:relative;
+
+      width:90%;
+      max-width:540px;
+      max-height:82vh;
+
+      overflow-y:auto;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(8,18,22,.98),
+          rgba(0,8,12,.97)
+        );
+
+      border:1px solid rgba(0,255,255,.45);
+      border-radius:24px;
+
+      padding:28px 22px;
+
+      box-sizing:border-box;
+
+      color:white;
+      text-align:center;
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.75),
+        0 0 35px rgba(0,255,255,.12),
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+      backdrop-filter:blur(18px);
+
+      animation:afriAboutPop .35s ease-out;
+    ">
+
+      <!-- TITLE -->
+
+      <div style="
+        font-size:34px;
+        font-weight:1000;
+        letter-spacing:1px;
+
+        background:
+          linear-gradient(
+            90deg,
+            #ffffff,
+            #00ffff,
+            #00aaff,
+            #ffffff
+          );
+
+        background-size:300% 100%;
+
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+
+        animation:afriAboutGradient 4s linear infinite;
+
+        margin-bottom:7px;
+      ">
+        AFRI|LINK
+      </div>
+
+
+      <!-- WELCOME -->
+
+      <div style="
+        font-size:17px;
+        font-weight:800;
+        color:#ffffff;
+
+        margin-bottom:12px;
+      ">
+        Welcome to Afri|Link
+      </div>
+
+
+      <div style="
+        font-size:13px;
+        line-height:1.7;
+
+        color:#d7e2e5;
+
+        margin-bottom:22px;
+      ">
+        One connected platform designed to bring
+        books, businesses, travel, services and
+        opportunities closer to you.
+      </div>
+
+
+      <!-- FEATURES -->
+
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+
+        text-align:left;
+      ">
+
+
+        <!-- BOOK STORE -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            BOOK STORE
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Discover books, unlock them and read directly
+            inside Afri|Link. Enjoy your available books
+            even when you are offline.
+          </div>
+
+        </div>
+
+
+        <!-- MARKET -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            AFRI|LINK MARKET
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Discover brands, businesses and services.
+            Customers can explore offers while businesses
+            can present and sell their products and services.
+          </div>
+
+        </div>
+
+
+        <!-- HOTELS -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            HOTELS & STAYS
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Explore participating hotels and accommodation
+            services and discover places that suit your journey.
+          </div>
+
+        </div>
+
+
+        <!-- TRANSPORT -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            TRANSPORT
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Find participating transport services,
+            check journeys, select available options
+            and make bookings through Afri|Link.
+          </div>
+
+        </div>
+
+
+        <!-- FLIGHTS -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            FLIGHT BOOKING
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Access participating flight services and
+            make travel arrangements from one convenient
+            platform.
+          </div>
+
+        </div>
+
+
+        <!-- MORE -->
+
+        <div style="
+          padding:15px;
+
+          border-radius:16px;
+
+          background:rgba(255,255,255,.045);
+
+          border:1px solid rgba(255,255,255,.08);
+
+          transition:.25s;
+        ">
+
+          <div style="
+            color:#00ffff;
+
+            font-weight:900;
+            font-size:15px;
+
+            letter-spacing:.4px;
+          ">
+            MORE TO EXPLORE
+          </div>
+
+          <div style="
+            color:#cbd5d8;
+
+            font-size:12px;
+            line-height:1.6;
+
+            margin-top:7px;
+          ">
+            Afri|Link continues to grow with more useful
+            African services, businesses and opportunities
+            being brought together.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MAIN MESSAGE -->
+
+      <div style="
+        margin-top:20px;
+
+        padding:16px;
+
+        border-radius:17px;
+
+        background:
+          linear-gradient(
+            135deg,
+            rgba(0,255,255,.08),
+            rgba(0,120,255,.05)
+          );
+
+        border:1px solid rgba(0,255,255,.22);
+
+        font-size:13px;
+        line-height:1.7;
+
+        color:#e9ffff;
+      ">
+
+        <strong style="
+          color:#00ffff;
+          font-size:14px;
+        ">
+          One platform. Many possibilities.
+        </strong>
+
+        <br>
+
+        Explore, discover, connect, book, read,
+        buy, sell and enjoy the growing Afri|Link
+        experience.
+
+      </div>
+
+
+      <!-- SUPPORT DESK -->
+
+      <div style="
+        margin-top:18px;
+
+        padding:18px;
+
+        border-radius:18px;
+
+        background:
+          linear-gradient(
+            135deg,
+            rgba(0,255,255,.07),
+            rgba(0,100,180,.06)
+          );
+
+        border:1px solid rgba(0,255,255,.28);
+
+        box-shadow:
+          inset 0 0 20px rgba(0,255,255,.035);
+      ">
+
+        <div style="
+          font-size:15px;
+
+          font-weight:1000;
+
+          color:#ffffff;
+
+          letter-spacing:.6px;
+        ">
+          CUSTOMER SUPPORT DESK
+        </div>
+
+
+        <div style="
+          margin-top:7px;
+
+          font-size:12px;
+
+          color:#bcd0d4;
+
+          line-height:1.5;
+        ">
+          For assistance, technical issues,
+          booking questions or other Afri|Link
+          support needs, contact us anytime.
+        </div>
+
+
+        <div style="
+          margin-top:10px;
+
+          font-size:18px;
+
+          font-weight:1000;
+
+          color:#00ffff;
+
+          letter-spacing:1px;
+        ">
+          24/7 SUPPORT
+        </div>
+
+
+        <div style="
+          margin-top:5px;
+
+          font-size:17px;
+
+          font-weight:900;
+
+          color:#ffffff;
+        ">
+          +255 742 097 868
+        </div>
+
+      </div>
+
+
+      <!-- FUTURE VOICE SECTION -->
+
+      <div style="
+        margin-top:15px;
+
+        padding:11px;
+
+        border-radius:14px;
+
+        border:1px dashed rgba(255,255,255,.15);
+
+        color:#718286;
+
+        font-size:11px;
+
+        line-height:1.5;
+      ">
+
+        Voice introduction will be available here soon.
+
+      </div>
+
+
+      <!-- CLOSE BUTTON -->
+
+      <button
+        onclick="closeAfriAbout()"
+        style="
+          margin-top:20px;
+
+          padding:12px 32px;
+
+          border:none;
+
+          border-radius:30px;
+
+          background:
+            linear-gradient(
+              145deg,
+              #00eaff,
+              #008cff
+            );
+
+          color:white;
+
+          font-size:14px;
+
+          font-weight:1000;
+
+          cursor:pointer;
+
+          box-shadow:
+            0 5px 0 #006b9c,
+            0 8px 18px rgba(0,220,255,.35);
+
+          transition:.15s;
+        "
+      >
+        CLOSE
+      </button>
+
+
+    </div>
+
+  `;
+
   panel.style.display = "flex";
-
-}
-
-function closeAfriAbout() {
-
-  const panel = document.getElementById("afriAboutPanel");
-
-  if (!panel) return;
-
-  panel.style.display = "none";
-
-}    
+}  
+    
 
     function openGuide() {
 
