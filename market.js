@@ -84,7 +84,7 @@ const marketAds = [
   ],
 
   bannerColors: [
-  "black",
+  "white",
   "yellow",
   "gray"
 ]
