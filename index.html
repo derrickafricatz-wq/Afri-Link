@@ -1277,6 +1277,12 @@ function startMarketBillboard() {
           )
         );
 
+        const bannerColors = JSON.parse(
+        decodeURIComponent(
+        img.dataset.bannerColors || "[]"
+       )
+     );
+
         if (!images.length) return;
 
         let index =
