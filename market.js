@@ -118,6 +118,7 @@ const marketAds = [
   expiresAt: "2026-10-22 23:59",
 
   images: [
+    "images/aa.png",
     "images/ab.jpg",
     "images/ac.jpg",
     "images/ad.jpg",
@@ -163,6 +164,35 @@ const marketAds = [
 
   images: [
     "images/l2.jpg"
+  ]
+},
+
+  {
+  company: "VYOMBO POINT ARUSHA",
+  phone: "+255764999868",
+  whatsapp: "255764999868",
+  location: "AIA Buildings|TASO Grounds. Njiro|Arusha",
+
+  categories: ["Home&decor"],
+
+  expiresAt: "2026-10-22 23:59",
+
+   images: [
+    "images/za.png",
+    "images/zb.png",
+    "images/zc.png",
+    "images/zd.png",
+    "images/ze.png",
+    "images/zf.png",
+    "images/zg.png",
+    "images/zh.png",
+    "images/zi.png",
+    "images/zj.png",
+    "images/zk.png",
+    "images/zl.png",
+    "images/zm.png",
+    "images/zn.png",
+    "images/zo.png"
   ]
 },
 
@@ -256,6 +286,7 @@ const marketCategories = [
   "Agro & Natural Foods",
   "Fashion",
   "Furniture",
+  "Home&decor",
   "Health",
   "Hotels",
   "Education",
