@@ -3525,11 +3525,46 @@ function closeGuide() {
 
     function closeMarket() {
 
-  document.getElementById("marketPanel").style.display = "none";
+  const marketPanel =
+    document.getElementById("marketPanel");
+
+  if (!marketPanel) return;
+
+
+  /*
+    STOP MARKET VOICE
+  */
+
+  const voice =
+    document.getElementById("afriLinkMarketVoice");
+
+  if (voice) {
+
+    voice.pause();
+    voice.currentTime = 0;
+
+    voice.remove();
+
+  }
+
+
+  /*
+    CLOSE MARKET
+  */
+
+  marketPanel.style.display = "none";
+
+
+  /*
+    STOP MARKET ROTATION
+  */
 
   if (marketInterval) {
+
     clearInterval(marketInterval);
+
     marketInterval = null;
+
   }
 
 }
