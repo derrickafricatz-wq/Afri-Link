@@ -2923,6 +2923,21 @@ function openAfriAbout() {
 
   if (!panel) return;
 
+  /*
+    STOP ANY PREVIOUS PLAYBACK
+  */
+  const oldAudio = document.getElementById("afriLinkVoice");
+
+  if (oldAudio) {
+    oldAudio.pause();
+    oldAudio.currentTime = 0;
+  }
+
+
+  /*
+    CREATE PANEL CONTENT
+  */
+
   panel.innerHTML = `
 
     <div style="
@@ -2961,8 +2976,6 @@ function openAfriAbout() {
       animation:afriAboutPop .35s ease-out;
     ">
 
-      <!-- TITLE -->
-
       <div style="
         font-size:34px;
         font-weight:1000;
@@ -2990,25 +3003,20 @@ function openAfriAbout() {
       </div>
 
 
-      <!-- WELCOME -->
-
       <div style="
         font-size:17px;
         font-weight:800;
         color:#ffffff;
-
         margin-bottom:12px;
       ">
-        Welcome to Afri|Link
+        Africa Connects, Discovers &amp; Explores
       </div>
 
 
       <div style="
         font-size:13px;
         line-height:1.7;
-
         color:#d7e2e5;
-
         margin-bottom:22px;
       ">
         One connected platform designed to bring
@@ -3017,37 +3025,25 @@ function openAfriAbout() {
       </div>
 
 
-      <!-- FEATURES -->
-
       <div style="
         display:grid;
         grid-template-columns:1fr 1fr;
         gap:10px;
-
         text-align:left;
       ">
 
 
-        <!-- BOOK STORE -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
             letter-spacing:.4px;
           ">
             BOOK STORE
@@ -3055,10 +3051,8 @@ function openAfriAbout() {
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Discover books, unlock them and read directly
@@ -3069,37 +3063,25 @@ function openAfriAbout() {
         </div>
 
 
-        <!-- MARKET -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
-            letter-spacing:.4px;
           ">
             AFRI|LINK MARKET
           </div>
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Discover brands, businesses and services.
@@ -3110,37 +3092,25 @@ function openAfriAbout() {
         </div>
 
 
-        <!-- HOTELS -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
-            letter-spacing:.4px;
           ">
-            HOTELS & STAYS
+            HOTELS &amp; STAYS
           </div>
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Explore participating hotels and accommodation
@@ -3150,37 +3120,25 @@ function openAfriAbout() {
         </div>
 
 
-        <!-- TRANSPORT -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
-            letter-spacing:.4px;
           ">
             TRANSPORT
           </div>
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Find participating transport services,
@@ -3191,37 +3149,25 @@ function openAfriAbout() {
         </div>
 
 
-        <!-- FLIGHTS -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
-            letter-spacing:.4px;
           ">
             FLIGHT BOOKING
           </div>
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Access participating flight services and
@@ -3232,37 +3178,25 @@ function openAfriAbout() {
         </div>
 
 
-        <!-- MORE -->
-
         <div style="
           padding:15px;
-
           border-radius:16px;
-
           background:rgba(255,255,255,.045);
-
           border:1px solid rgba(255,255,255,.08);
-
-          transition:.25s;
         ">
 
           <div style="
             color:#00ffff;
-
             font-weight:900;
             font-size:15px;
-
-            letter-spacing:.4px;
           ">
             MORE TO EXPLORE
           </div>
 
           <div style="
             color:#cbd5d8;
-
             font-size:12px;
             line-height:1.6;
-
             margin-top:7px;
           ">
             Afri|Link continues to grow with more useful
@@ -3275,13 +3209,9 @@ function openAfriAbout() {
       </div>
 
 
-      <!-- MAIN MESSAGE -->
-
       <div style="
         margin-top:20px;
-
         padding:16px;
-
         border-radius:17px;
 
         background:
@@ -3315,13 +3245,9 @@ function openAfriAbout() {
       </div>
 
 
-      <!-- SUPPORT DESK -->
-
       <div style="
         margin-top:18px;
-
         padding:18px;
-
         border-radius:18px;
 
         background:
@@ -3339,11 +3265,8 @@ function openAfriAbout() {
 
         <div style="
           font-size:15px;
-
           font-weight:1000;
-
           color:#ffffff;
-
           letter-spacing:.6px;
         ">
           CUSTOMER SUPPORT DESK
@@ -3352,11 +3275,8 @@ function openAfriAbout() {
 
         <div style="
           margin-top:7px;
-
           font-size:12px;
-
           color:#bcd0d4;
-
           line-height:1.5;
         ">
           For assistance, technical issues,
@@ -3367,13 +3287,9 @@ function openAfriAbout() {
 
         <div style="
           margin-top:10px;
-
           font-size:18px;
-
           font-weight:1000;
-
           color:#00ffff;
-
           letter-spacing:1px;
         ">
           24/7 SUPPORT
@@ -3382,11 +3298,8 @@ function openAfriAbout() {
 
         <div style="
           margin-top:5px;
-
           font-size:17px;
-
           font-weight:900;
-
           color:#ffffff;
         ">
           +255 742 097 868
@@ -3395,30 +3308,20 @@ function openAfriAbout() {
       </div>
 
 
-      <!-- FUTURE VOICE SECTION -->
+      <!--
+        HIDDEN AUDIO
+        Your file must be named:
+        afrilink.mp3
+      -->
 
-      <div style="
-        margin-top:15px;
+      <audio
+        id="afriLinkVoice"
+        preload="auto"
+        style="display:none;"
+      >
+        <source src="./afrilink.mp3" type="audio/mpeg">
+      </audio>
 
-        padding:11px;
-
-        border-radius:14px;
-
-        border:1px dashed rgba(255,255,255,.15);
-
-        color:#718286;
-
-        font-size:11px;
-
-        line-height:1.5;
-      ">
-
-        Voice introduction will be available here soon.
-
-      </div>
-
-
-      <!-- CLOSE BUTTON -->
 
       <button
         onclick="closeAfriAbout()"
@@ -3428,7 +3331,6 @@ function openAfriAbout() {
           padding:12px 32px;
 
           border:none;
-
           border-radius:30px;
 
           background:
@@ -3441,7 +3343,6 @@ function openAfriAbout() {
           color:white;
 
           font-size:14px;
-
           font-weight:1000;
 
           cursor:pointer;
@@ -3456,23 +3357,72 @@ function openAfriAbout() {
         CLOSE
       </button>
 
-
     </div>
 
   `;
 
+
+  /*
+    OPEN PANEL
+  */
+
   panel.style.display = "flex";
-}  
 
-  function closeAfriAbout() {
 
-  const panel = document.getElementById("afriAboutPanel");
+  /*
+    START AFRILINK VOICE
+  */
+
+  const voice = document.getElementById("afriLinkVoice");
+
+  if (voice) {
+
+    voice.currentTime = 0;
+
+    voice.play().catch(error => {
+
+      console.log(
+        "Afri|Link voice could not start:",
+        error
+      );
+
+    });
+
+  }
+
+}
+
+
+function closeAfriAbout() {
+
+  const panel =
+    document.getElementById("afriAboutPanel");
 
   if (!panel) return;
 
+
+  /*
+    STOP VOICE IMMEDIATELY
+  */
+
+  const voice =
+    document.getElementById("afriLinkVoice");
+
+  if (voice) {
+
+    voice.pause();
+    voice.currentTime = 0;
+
+  }
+
+
+  /*
+    CLOSE PANEL
+  */
+
   panel.style.display = "none";
 
-}  
+}
     
 
     function openGuide() {
