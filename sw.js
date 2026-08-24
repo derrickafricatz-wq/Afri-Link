@@ -1,6 +1,6 @@
 // Holly Echo - Offline Service Worker (FINAL CLEAN VERSION)
 
-const APP_VERSION = "1.0.21";
+const APP_VERSION = "1.0.22";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
 /* =========================
@@ -25,6 +25,7 @@ const APP_SHELL = [
   "./market.js",
   "./library.js",
   "./afrilink.mp3",
+  "./silence.mp3",
   "./offline.html",
   "./admin.html",
   "./author.html",
