@@ -2839,10 +2839,80 @@ window.location.href = "author.html";
 
   document.getElementById("openMarketBtn").onclick = function () {
 
-  document.getElementById("marketPanel").style.display = "block";
+  const marketPanel =
+    document.getElementById("marketPanel");
 
-renderMarket();
-startMarketRotations();
+  if (!marketPanel) return;
+
+
+  /*
+    OPEN AFRILINK MARKET
+  */
+
+  marketPanel.style.display = "block";
+
+
+  /*
+    STOP ANY PREVIOUS MARKET VOICE
+  */
+
+  const oldVoice =
+    document.getElementById("afriLinkMarketVoice");
+
+  if (oldVoice) {
+
+    oldVoice.pause();
+    oldVoice.currentTime = 0;
+
+  }
+
+
+  /*
+    RENDER MARKET
+  */
+
+  renderMarket();
+
+  startMarketRotations();
+
+
+  /*
+    CREATE MARKET VOICE
+  */
+
+  const voice =
+    document.createElement("audio");
+
+  voice.id = "afriLinkMarketVoice";
+
+  voice.preload = "auto";
+
+  voice.style.display = "none";
+
+  voice.innerHTML = `
+    <source
+      src="./silence.mp3"
+      type="audio/mpeg"
+    >
+  `;
+
+  marketPanel.appendChild(voice);
+
+
+  /*
+    START VOICE
+  */
+
+  voice.currentTime = 0;
+
+  voice.play().catch(error => {
+
+    console.log(
+      "Afri|Link Market voice could not start:",
+      error
+    );
+
+  });
 
 };
 
