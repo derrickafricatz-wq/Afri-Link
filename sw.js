@@ -1,7 +1,7 @@
 // Holly Echo - Offline Service Worker
 // ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.38";
+const APP_VERSION = "1.0.39";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
 
@@ -37,31 +37,34 @@ const APP_SHELL = [
   "./author.html",
   "./dashboard.html",
 
+
   /* ICONS */
-  "./ball.png",
-  "./icon-192.png",
+   "./ball.png",
+   "./icon-192.png",
   "./icon-512.png",
   "./icon-512-maskable.png",
 
   /* BACKGROUND */
-  "./images/s1.png",
-  "./images/derr.png",
+
+   "./images/s1.png",
 
   /* BOOK COVERS */
   "./images/er1.jpg",
   "./images/er2.jpg",
   "./images/b20.jpg",
   "./images/vg.jpg",
+   
 
-  /* BRAND LOGO */
+   /* BRAND LOGO*/
   "./images/logo.png",
   "./images/o1.png",
   "./images/o2.jpg",
   "./images/y1.png",
-  "./images/y2.png",
+  "./images/y2.jpg",
   "./images/1.png",
   "./images/2.jpg",
   "./images/3.jpg",
+   
   "./images/6.jpg",
   "./images/8.jpg",
   "./images/10.jpg",
@@ -70,105 +73,104 @@ const APP_SHELL = [
   "./images/15.jpg",
   "./images/21.jpg",
   "./images/23.jpg",
+   
   "./images/19.jpg",
   "./images/20.jpg",
   "./images/24.jpg",
-
   "./images/m1.jpg",
   "./images/m3.png",
   "./images/m11.png",
   "./images/m4.png",
   "./images/m10.jpg",
+   
   "./images/m5.jpg",
   "./images/m2.png",
   "./images/m9.jpg",
   "./images/m6.jpg",
   "./images/m7.jpg",
   "./images/m8.png",
-
-  "./images/s2.jpg",
-  "./images/s3.jpg",
-  "./images/s4.jpg",
-  "./images/s5.png",
-  "./images/s6.png",
-  "./images/s7.jpg",
-
-  "./images/l1.jpg",
-  "./images/l2.jpg",
-
-  "./images/ha.jpg",
-  "./images/hb.jpg",
-  "./images/hc.jpg",
-  "./images/hd.jpg",
-
-  "./images/qa.jpg",
-  "./images/qb.jpg",
-  "./images/qc.jpg",
-  "./images/qd.jpg",
-  "./images/qe.jpg",
-  "./images/qf.jpg",
-  "./images/qg.jpg",
+   "./images/s2.jpg",
+    "./images/s3.jpg",
+    "./images/s4.jpg",
+    "./images/s5.png",
+   
+    "./images/s6.png",
+    "./images/s7.png",
+    "./images/l1.jpg",
+   "./images/l2.jpg",
+    "./images/ha.jpg",
+   "./images/hb.jpg",
+    "./images/hc.jpg",
+   "./images/hd.jpg",
+   "./images/qa.jpg",
+   "./images/qb.jpg",
+   "./images/qc.jpg",
+   "./images/qd.jpg",
+   "./images/qe.jpg",
+   
+   "./images/qf.jpg",
+   "./images/qg.jpg",
   "./images/qh.jpg",
-
   "./images/aa.png",
-  "./images/ab.jpg",
+   "./images/ab.jpg",
   "./images/ac.jpg",
   "./images/ad.jpg",
   "./images/ae.jpg",
-  "./images/af.jpg",
-  "./images/ag.jpg",
-  "./images/ah.jpg",
+ "./images/af.jpg",
+ "./images/ag.jpg",
+ "./images/ah.jpg",
+   
   "./images/ai.jpg",
-  "./images/aj.jpg",
-  "./images/ak.jpg",
-  "./images/al.jpg",
-  "./images/am.jpg",
-  "./images/an.jpg",
+ "./images/aj.jpg",
+"./images/ak.jpg",
+ "./images/al.jpg",
+ "./images/am.jpg",
+ "./images/an.jpg",
   "./images/ao.jpg",
-  "./images/ap.jpg",
+ "./images/ap.jpg",
+"./images/ca.jpg",
+ "./images/cb.jpg",
+"./images/cc.jpg",
+"./images/cd.jpg",
+"./images/ce.jpg",
+   
+   "./images/cf.jpg",
+   "./images/cg.jpg",
+   "./images/ya.png",
+   "./images/yb.png",
+   "./images/yc.png",
+   "./images/za.png",
+    "./images/zb.png",
+    "./images/zc.png",
+    "./images/zd.png",
+    "./images/ze.png",
+    "./images/zf.png",
+    "./images/zg.png",
+   
+    "./images/zh.png",
+    "./images/zi.png",
+    "./images/zj.png",
+    "./images/zk.png",
+    "./images/zl.png",
+    "./images/zm.png",
+    "./images/zn.png",
+    "./images/zo.png",  
+   
+   
 
-  "./images/ca.jpg",
-  "./images/cb.jpg",
-  "./images/cc.jpg",
-  "./images/cd.jpg",
-  "./images/ce.jpg",
-  "./images/cf.jpg",
-  "./images/cg.jpg",
-
-  "./images/ya.png",
-  "./images/yb.png",
-  "./images/yc.png",
-
-  "./images/za.png",
-  "./images/zb.png",
-  "./images/zc.png",
-  "./images/zd.png",
-  "./images/ze.png",
-  "./images/zf.png",
-  "./images/zg.png",
-  "./images/zh.png",
-  "./images/zi.png",
-  "./images/zj.png",
-  "./images/zk.png",
-  "./images/zl.png",
-  "./images/zm.png",
-  "./images/zn.png",
-  "./images/zo.png",
-
-  /* SCREENSHOTS */
+  /* SCREENSHOTS*/
   "./screenshots/home 1.jpg",
   "./screenshots/home.jpg",
   "./screenshots/sponsor.jpg",
   "./screenshots/market.jpg",
   "./screenshots/bookstore.jpg",
   "./screenshots/reader.jpg",
-
-  /* BOOKS */
+   
+  /* BOOKS (PDF)*/
   "./books/voice of god.pdf",
   "./books/spiritual.pdf",
   "./books/wito wa kumtumikia mungu.pdf",
   "./books/siri za mafanikio ya maisha.pdf",
-
   "./banner.txt"
 
 ];
