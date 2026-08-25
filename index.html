@@ -2782,11 +2782,6 @@ startHeaderLoop();
     files += req.url + "\n";
   });
 
-  // FIX: show background on app start
-  document.getElementById("appBg").style.display = "block";
-
-  startBackgroundLoop();
-
      try {
 
   const res = await fetch("./banner.txt");
