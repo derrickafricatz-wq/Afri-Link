@@ -1,10 +1,13 @@
-// Holly Echo - Offline Service Worker (FINAL CLEAN VERSION)
+// Holly Echo - Offline Service Worker
+// ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.36";
+const APP_VERSION = "1.0.37";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
+
 /* =========================
-   FILES TO CACHE (APP SHELL)
+   FILES TO CACHE
+   APP SHELL
 ========================= */
 
 const APP_SHELL = [
@@ -24,37 +27,38 @@ const APP_SHELL = [
   "./ui.js",
   "./market.js",
   "./library.js",
+
+  /* VOICES */
   "./afrilink.mp3",
   "./silence.mp3",
+
   "./offline.html",
   "./admin.html",
   "./author.html",
   "./dashboard.html",
 
   /* ICONS */
-   "./ball.png",
-   "./icon-192.png",
+  "./ball.png",
+  "./icon-192.png",
   "./icon-512.png",
   "./icon-512-maskable.png",
 
   /* BACKGROUND */
-
-   "./images/s1.png",
-   "./images/derr.png",
+  "./images/s1.png",
+  "./images/derr.png",
 
   /* BOOK COVERS */
   "./images/er1.jpg",
   "./images/er2.jpg",
   "./images/b20.jpg",
   "./images/vg.jpg",
-   
 
-   /* BRAND LOGO*/
+  /* BRAND LOGO */
   "./images/logo.png",
   "./images/o1.png",
   "./images/o2.jpg",
   "./images/y1.png",
-  "./images/y2.jpg",
+  "./images/y2.png",
   "./images/1.png",
   "./images/2.jpg",
   "./images/3.jpg",
@@ -69,6 +73,7 @@ const APP_SHELL = [
   "./images/19.jpg",
   "./images/20.jpg",
   "./images/24.jpg",
+
   "./images/m1.jpg",
   "./images/m3.png",
   "./images/m11.png",
@@ -80,239 +85,472 @@ const APP_SHELL = [
   "./images/m6.jpg",
   "./images/m7.jpg",
   "./images/m8.png",
-   "./images/s2.jpg",
-    "./images/s3.jpg",
-    "./images/s4.jpg",
-    "./images/s5.png",
-    "./images/s6.png",
-    "./images/s7.png",
-    "./images/l1.jpg",
-   "./images/l2.jpg",
-    "./images/ha.jpg",
-   "./images/hb.jpg",
-    "./images/hc.jpg",
-   "./images/hd.jpg",
-   "./images/qa.jpg",
-   "./images/qb.jpg",
-   "./images/qc.jpg",
-   "./images/qd.jpg",
-   "./images/qe.jpg",
-   "./images/qf.jpg",
-   "./images/qg.jpg",
+
+  "./images/s2.jpg",
+  "./images/s3.jpg",
+  "./images/s4.jpg",
+  "./images/s5.png",
+  "./images/s6.jpg",
+  "./images/s7.jpg",
+
+  "./images/l1.jpg",
+  "./images/l2.jpg",
+
+  "./images/ha.jpg",
+  "./images/hb.jpg",
+  "./images/hc.jpg",
+  "./images/hd.jpg",
+
+  "./images/qa.jpg",
+  "./images/qb.jpg",
+  "./images/qc.jpg",
+  "./images/qd.jpg",
+  "./images/qe.jpg",
+  "./images/qf.jpg",
+  "./images/qg.jpg",
   "./images/qh.jpg",
+
   "./images/aa.png",
-   "./images/ab.jpg",
+  "./images/ab.jpg",
   "./images/ac.jpg",
   "./images/ad.jpg",
   "./images/ae.jpg",
- "./images/af.jpg",
- "./images/ag.jpg",
- "./images/ah.jpg",
+  "./images/af.jpg",
+  "./images/ag.jpg",
+  "./images/ah.jpg",
   "./images/ai.jpg",
- "./images/aj.jpg",
-"./images/ak.jpg",
- "./images/al.jpg",
- "./images/am.jpg",
- "./images/an.jpg",
+  "./images/aj.jpg",
+  "./images/ak.jpg",
+  "./images/al.jpg",
+  "./images/am.jpg",
+  "./images/an.jpg",
   "./images/ao.jpg",
- "./images/ap.jpg",
-"./images/ca.jpg",
- "./images/cb.jpg",
-"./images/cc.jpg",
-"./images/cd.jpg",
-"./images/ce.jpg",
-"./images/cf.jpg",
-"./images/cg.jpg",
- "./images/ya.png",
- "./images/yb.png",
- "./images/yc.png",
-   "./images/za.png",
-    "./images/zb.png",
-    "./images/zc.png",
-    "./images/zd.png",
-    "./images/ze.png",
-    "./images/zf.png",
-    "./images/zg.png",
-    "./images/zh.png",
-    "./images/zi.png",
-    "./images/zj.png",
-    "./images/zk.png",
-    "./images/zl.png",
-    "./images/zm.png",
-    "./images/zn.png",
-    "./images/zo.png",
-   
-   
-   
-   
+  "./images/ap.jpg",
 
-  /* SCREENSHOTS*/
+  "./images/ca.jpg",
+  "./images/cb.jpg",
+  "./images/cc.jpg",
+  "./images/cd.jpg",
+  "./images/ce.jpg",
+  "./images/cf.jpg",
+  "./images/cg.jpg",
+
+  "./images/ya.png",
+  "./images/yb.png",
+  "./images/yc.png",
+
+  "./images/za.png",
+  "./images/zb.png",
+  "./images/zc.png",
+  "./images/zd.png",
+  "./images/ze.png",
+  "./images/zf.png",
+  "./images/zg.png",
+  "./images/zh.png",
+  "./images/zi.png",
+  "./images/zj.png",
+  "./images/zk.png",
+  "./images/zl.png",
+  "./images/zm.png",
+  "./images/zn.png",
+  "./images/zo.png",
+
+  /* SCREENSHOTS */
   "./screenshots/home 1.jpg",
   "./screenshots/home.jpg",
   "./screenshots/sponsor.jpg",
   "./screenshots/market.jpg",
   "./screenshots/bookstore.jpg",
   "./screenshots/reader.jpg",
-   
-  /* BOOKS (PDF)*/
+
+  /* BOOKS */
   "./books/voice of god.pdf",
   "./books/spiritual.pdf",
   "./books/wito wa kumtumikia mungu.pdf",
   "./books/siri za mafanikio ya maisha.pdf",
+
   "./banner.txt"
 
 ];
 
+
 /* =========================
-   INSTALL EVENT
+   INSTALL
 ========================= */
 
 self.addEventListener("install", (event) => {
 
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching app shell...");
-      return cache.addAll(APP_SHELL);
-    })
+
+    caches.open(CACHE_NAME)
+
+      .then((cache) => {
+
+        console.log(
+          "Caching Afri|Link app shell..."
+        );
+
+        return cache.addAll(APP_SHELL);
+
+      })
+
   );
 
-  // Force new SW to activate immediately
+  /*
+    Activate the new service worker
+    immediately.
+  */
+
   self.skipWaiting();
+
 });
 
+
 /* =========================
-   ACTIVATE EVENT (FIXED + IMPORTANT)
+   ACTIVATE
 ========================= */
 
 self.addEventListener("activate", (event) => {
 
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+
+    caches.keys()
+
+      .then((keys) => {
+
+        return Promise.all(
+
+          keys.map((key) => {
+
+            if (key !== CACHE_NAME) {
+
+              console.log(
+                "Deleting old cache:",
+                key
+              );
+
+              return caches.delete(key);
+
+            }
+
+          })
+
+        );
+
+      })
+
   );
 
-  //  CRITICAL: take control immediately
+  /*
+    Take control of open pages
+    immediately.
+  */
+
   self.clients.claim();
+
 });
 
+
 /* =========================
-   FETCH STRATEGY (AFYA STYLE OFFLINE)
+   FETCH
 ========================= */
 
 self.addEventListener("fetch", (event) => {
 
-  if (event.request.method !== "GET") return;
+  /*
+    Only handle GET requests.
+  */
 
-  const requestUrl = event.request.url;
+  if (event.request.method !== "GET") {
+    return;
+  }
 
-// NEVER CACHE SUPABASE API REQUESTS
-if (requestUrl.includes("supabase.co")) {
-  event.respondWith(fetch(event.request));
-  return;
-}
 
- // VIDEO FIX
-if (
-  event.request.destination === "video" ||
-  requestUrl.endsWith(".mp4")
-) {
+  const requestUrl =
+    event.request.url;
+
+
+  /* =========================
+     NEVER CACHE SUPABASE
+  ========================= */
+
+  if (
+    requestUrl.includes("supabase.co")
+  ) {
+
+    event.respondWith(
+      fetch(event.request)
+    );
+
+    return;
+  }
+
+
+  /* =========================
+     NAVIGATION / HTML
+     ONLINE FIRST
+  ========================= */
+
+  /*
+    This is the important fix.
+
+    When a user opens the app:
+
+    ONLINE
+      ↓
+    Get newest index.html
+      ↓
+    Save newest version to cache
+
+    OFFLINE
+      ↓
+    Use cached page
+  */
+
+  if (event.request.mode === "navigate") {
+
+    event.respondWith(
+
+      fetch(event.request)
+
+        .then((response) => {
+
+          /*
+            Save the newest HTML page.
+          */
+
+          if (
+            response &&
+            response.status === 200
+          ) {
+
+            const clone =
+              response.clone();
+
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+
+                cache.put(
+                  event.request,
+                  clone
+                );
+
+              });
+
+          }
+
+          return response;
+
+        })
+
+        .catch(() => {
+
+          /*
+            If internet fails,
+            use the cached page.
+          */
+
+          return caches
+            .match(event.request)
+
+            .then((cachedPage) => {
+
+              if (cachedPage) {
+                return cachedPage;
+              }
+
+              /*
+                Final offline fallback.
+              */
+
+              return caches.match(
+                "./offline.html"
+              );
+
+            });
+
+        })
+
+    );
+
+    return;
+  }
+
+
+  /* =========================
+     VIDEO
+     CACHE FIRST
+  ========================= */
+
+  if (
+    event.request.destination === "video" ||
+    requestUrl.endsWith(".mp4")
+  ) {
+
+    event.respondWith(
+
+      caches.match(event.request)
+
+        .then((cached) => {
+
+          if (cached) {
+            return cached;
+          }
+
+          return fetch(event.request)
+
+            .then((response) => {
+
+              if (
+                response &&
+                response.status === 200
+              ) {
+
+                const clone =
+                  response.clone();
+
+                caches.open(CACHE_NAME)
+                  .then((cache) => {
+
+                    cache.put(
+                      event.request,
+                      clone
+                    );
+
+                  });
+
+              }
+
+              return response;
+
+            });
+
+        })
+
+    );
+
+    return;
+  }
+
+
+  /* =========================
+     EVERYTHING ELSE
+     CACHE FIRST
+  ========================= */
+
+  /*
+    Images
+    JavaScript
+    CSS
+    MP3
+    PDF
+    Fonts
+    Other resources
+  */
 
   event.respondWith(
 
-    caches.match(event.request).then((cached) => {
+    caches.match(event.request)
 
-      if (cached) {
-        return cached;
-      }
+      .then((cachedResponse) => {
 
-      return fetch(event.request).then((response) => {
+        /*
+          1. Use cache immediately
+        */
 
-        if (response && response.status === 200) {
+        if (cachedResponse) {
 
-          const clone = response.clone();
+          return cachedResponse;
 
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, clone);
+        }
+
+
+        /*
+          2. Not cached?
+             Get it from internet.
+        */
+
+        return fetch(event.request)
+
+          .then((response) => {
+
+            /*
+              Don't cache invalid responses.
+            */
+
+            if (
+              !response ||
+              response.status !== 200 ||
+              response.type === "opaque"
+            ) {
+
+              return response;
+
+            }
+
+
+            /*
+              Save successful resource.
+            */
+
+            const clone =
+              response.clone();
+
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+
+                cache.put(
+                  event.request,
+                  clone
+                );
+
+              });
+
+
+            return response;
+
+          })
+
+          .catch(() => {
+
+            /*
+              If the resource is unavailable
+              and was not cached, return nothing.
+            */
+
+            if (
+              requestUrl.includes(".pdf") ||
+              requestUrl.includes(".mp4") ||
+              requestUrl.includes(".mp3")
+            ) {
+
+              return caches.match(
+                event.request
+              );
+
+            }
+
           });
 
-        }
-
-        return response;
-
-      });
-
-    })
-
-  );
-
-  return;
-} 
-
-  event.respondWith(
-
-    caches.match(event.request).then((cachedResponse) => {
-
-      /* 1. CACHE FIRST (FAST OFFLINE LOAD) */
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      /* 2. NETWORK FALLBACK */
-      return fetch(event.request).then((response) => {
-
-        // ignore invalid responses
-        if (
-          !response ||
-          response.status !== 200 ||
-          response.type === "opaque"
-        ) {
-          return response;
-        }
-
-        const clone = response.clone();
-
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, clone);
-        });
-
-        return response;
-
-      }).catch(() => {
-
-        /* 3. OFFLINE PAGE FOR NAVIGATION */
-        if (event.request.mode === "navigate") {
-          return caches.match("./offline.html");
-        }
-
-        /* 4. FORCE OFFLINE SUPPORT FOR PDF + VIDEO */
-        if (
-          requestUrl.includes(".pdf") ||
-          requestUrl.includes(".mp4")
-        ) {
-          return caches.match(event.request);
-        }
-
-      });
-
-    })
+      })
 
   );
 
 });
 
+
+/* =========================
+   MESSAGE
+========================= */
+
 self.addEventListener("message", (event) => {
 
-if(event.data === "SKIP_WAITING"){
+  if (
+    event.data === "SKIP_WAITING"
+  ) {
 
-self.skipWaiting();
+    self.skipWaiting();
 
-}
+  }
 
 });
