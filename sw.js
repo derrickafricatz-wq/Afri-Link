@@ -1,7 +1,7 @@
 // Holly Echo - Offline Service Worker
 // ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.39";
+const APP_VERSION = "1.0.40";
 const CACHE_NAME = `voiceofgod-${APP_VERSION}`;
 
 
