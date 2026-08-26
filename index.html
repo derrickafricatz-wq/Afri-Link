@@ -13,7 +13,64 @@
 
   <style>
       body {
-  background: #071A21;
+  background:
+    /* soft natural light in the center */
+    radial-gradient(
+      ellipse at 50% 48%,
+      rgba(255,255,255,0.035) 0%,
+      rgba(255,255,255,0.015) 28%,
+      transparent 58%
+    ),
+
+    /* subtle road / connection paths */
+    linear-gradient(
+      28deg,
+      transparent 0%,
+      transparent 42%,
+      rgba(120,180,185,0.035) 42.2%,
+      transparent 42.5%,
+      transparent 100%
+    ),
+
+    linear-gradient(
+      -22deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(120,180,185,0.028) 55.2%,
+      transparent 55.5%,
+      transparent 100%
+    ),
+
+    /* very subtle landscape grid */
+    linear-gradient(
+      rgba(150,190,190,0.025) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(150,190,190,0.025) 1px,
+      transparent 1px
+    ),
+
+    /* original AfriLink background */
+    #071A21;
+
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    72px 72px,
+    72px 72px,
+    100% 100%;
+
+  background-position:
+    center,
+    center,
+    center,
+    center,
+    center,
+    center;
 
   color: white;
   font-family: Arial;
