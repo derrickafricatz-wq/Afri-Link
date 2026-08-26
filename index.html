@@ -2796,7 +2796,11 @@ setInterval(showBanner, 20000);
 });
 
   document.getElementById("openStoreBtn").onclick = function () {
+
+  document.getElementById("afriAboutPanel").style.display = "none";
+
   document.getElementById("storePanel").style.display = "block";
+
   renderBooks();
 };
 
@@ -2807,6 +2811,7 @@ window.location.href = "author.html";
 };   
 
   document.getElementById("openMarketBtn").onclick = function () {
+  document.getElementById("afriAboutPanel").style.display = "none";
 
   const marketPanel =
     document.getElementById("marketPanel");
