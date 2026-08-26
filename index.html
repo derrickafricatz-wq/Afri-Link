@@ -14,63 +14,22 @@
   <style>
       body {
   background:
-    /* soft natural light in the center */
     radial-gradient(
-      ellipse at 50% 48%,
-      rgba(255,255,255,0.035) 0%,
-      rgba(255,255,255,0.015) 28%,
-      transparent 58%
-    ),
-
-    /* subtle road / connection paths */
-    linear-gradient(
-      28deg,
-      transparent 0%,
-      transparent 42%,
-      rgba(120,180,185,0.035) 42.2%,
-      transparent 42.5%,
-      transparent 100%
+      ellipse at 50% 38%,
+      rgba(255,255,255,0.045) 0%,
+      rgba(255,255,255,0.018) 25%,
+      transparent 55%
     ),
 
     linear-gradient(
-      -22deg,
-      transparent 0%,
-      transparent 55%,
-      rgba(120,180,185,0.028) 55.2%,
-      transparent 55.5%,
-      transparent 100%
+      180deg,
+      rgba(255,255,255,0.018) 0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(0,0,0,0.16) 100%
     ),
 
-    /* very subtle landscape grid */
-    linear-gradient(
-      rgba(150,190,190,0.025) 1px,
-      transparent 1px
-    ),
-
-    linear-gradient(
-      90deg,
-      rgba(150,190,190,0.025) 1px,
-      transparent 1px
-    ),
-
-    /* original AfriLink background */
     #071A21;
-
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    72px 72px,
-    72px 72px,
-    100% 100%;
-
-  background-position:
-    center,
-    center,
-    center,
-    center,
-    center,
-    center;
 
   color: white;
   font-family: Arial;
@@ -78,7 +37,83 @@
   padding-top: 0;
   margin: 0;
   min-height: 100vh;
-      }
+
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+/* PREMIUM MARKETPLACE DEPTH */
+
+body::before {
+  content: "";
+  position: fixed;
+
+  top: 150px;
+  left: 0;
+  right: 0;
+  bottom: 70px;
+
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+
+    /* large AfriLink watermark */
+    radial-gradient(
+      ellipse at 50% 48%,
+      transparent 0%,
+      transparent 34%,
+      rgba(255,255,255,0.012) 35%,
+      transparent 55%
+    ),
+
+    /* soft display bands */
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 28%,
+      rgba(255,255,255,0.018) 28.2%,
+      transparent 28.5%,
+      transparent 51%,
+      rgba(255,255,255,0.015) 51.2%,
+      transparent 51.5%,
+      transparent 73%,
+      rgba(255,255,255,0.012) 73.2%,
+      transparent 73.5%
+    );
+
+  opacity: .9;
+}
+
+
+/* LARGE BRAND WATERMARK */
+
+body::after {
+  content: "AFRI|LINK";
+
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+  z-index: 0;
+
+  font-size: clamp(70px, 18vw, 170px);
+  font-weight: 900;
+  letter-spacing: 8px;
+
+  white-space: nowrap;
+
+  color: rgba(255,255,255,0.018);
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.015),
+    0 20px 50px rgba(0,0,0,0.15);
+}
     
     #scrollBannerWrapper {
   position: fixed;
