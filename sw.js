@@ -1,6 +1,6 @@
 // AfriLink - Lightweight Offline Service Worker
 
-const APP_VERSION = "1.1.5";
+const APP_VERSION = "1.1.7";
 const CACHE_NAME = `afrilink-${APP_VERSION}`;
 
 
