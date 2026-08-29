@@ -1,7 +1,7 @@
 // Afrilink - Offline Service Worker
 // ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.24";
+const APP_VERSION = "1.0.25";
 const CACHE_NAME = `afrilink-${APP_VERSION}`;
 
 
@@ -309,74 +309,104 @@ self.addEventListener("fetch", (event) => {
     Use cached page
   */
 
-  if (event.request.mode === "navigate") {
+ /* =========================
+   NAVIGATION / HTML
+   CACHE FIRST
+========================= */
 
-    event.respondWith(
+if (event.request.mode === "navigate") {
 
-      fetch(event.request)
+  event.respondWith(
 
-        .then((response) => {
+    caches.match(event.request)
 
-          /*
-            Save the newest HTML page.
-          */
+      .then((cachedPage) => {
 
-          if (
-            response &&
-            response.status === 200
-          ) {
+        /*
+          SHOW THE APP IMMEDIATELY
+          FROM CACHE
+        */
 
-            const clone =
-              response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-
-                cache.put(
-                  event.request,
-                  clone
-                );
-
-              });
-
-          }
-
-          return response;
-
-        })
-
-        .catch(() => {
+        if (cachedPage) {
 
           /*
-            If internet fails,
-            use the cached page.
+            Update the page quietly
+            in the background.
           */
 
-          return caches
-            .match(event.request)
+          fetch(event.request)
+            .then((response) => {
 
-            .then((cachedPage) => {
+              if (
+                response &&
+                response.status === 200
+              ) {
 
-              if (cachedPage) {
-                return cachedPage;
+                caches.open(CACHE_NAME)
+                  .then((cache) => {
+
+                    cache.put(
+                      event.request,
+                      response
+                    );
+
+                  });
+
               }
 
-              /*
-                Final offline fallback.
-              */
+            })
+            .catch(() => {});
 
-              return caches.match(
-                "./offline.html"
-              );
+          return cachedPage;
+        }
 
-            });
 
-        })
+        /*
+          FIRST OPEN / NO CACHE
+        */
 
-    );
+        return fetch(event.request)
 
-    return;
-  }
+          .then((response) => {
+
+            if (
+              response &&
+              response.status === 200
+            ) {
+
+              const clone =
+                response.clone();
+
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+
+                  cache.put(
+                    event.request,
+                    clone
+                  );
+
+                });
+
+            }
+
+            return response;
+
+          })
+
+          .catch(() => {
+
+            return caches.match(
+              "./offline.html"
+            );
+
+          });
+
+      })
+
+  );
+
+  return;
+} 
 
 
   /* =========================
