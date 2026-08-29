@@ -1,7 +1,7 @@
 // Afrilink - Offline Service Worker
 // ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.25";
+const APP_VERSION = "1.0.26";
 const CACHE_NAME = `afrilink-${APP_VERSION}`;
 
 
@@ -330,32 +330,48 @@ if (event.request.mode === "navigate") {
         if (cachedPage) {
 
           /*
-            Update the page quietly
-            in the background.
+            WAIT 3 SECONDS BEFORE
+            CHECKING FOR A NEW VERSION.
+
+            This gives the app time to
+            open smoothly first.
           */
 
-          fetch(event.request)
-            .then((response) => {
+          setTimeout(() => {
 
-              if (
-                response &&
-                response.status === 200
-              ) {
+            fetch(event.request)
 
-                caches.open(CACHE_NAME)
-                  .then((cache) => {
+              .then((response) => {
 
-                    cache.put(
-                      event.request,
-                      response
-                    );
+                if (
+                  response &&
+                  response.status === 200
+                ) {
 
-                  });
+                  caches.open(CACHE_NAME)
 
-              }
+                    .then((cache) => {
 
-            })
-            .catch(() => {});
+                      cache.put(
+                        event.request,
+                        response
+                      );
+
+                    });
+
+                }
+
+              })
+
+              .catch(() => {});
+
+          }, 3000);
+
+
+          /*
+            RETURN CACHED PAGE
+            IMMEDIATELY
+          */
 
           return cachedPage;
         }
@@ -378,6 +394,7 @@ if (event.request.mode === "navigate") {
                 response.clone();
 
               caches.open(CACHE_NAME)
+
                 .then((cache) => {
 
                   cache.put(
@@ -395,6 +412,10 @@ if (event.request.mode === "navigate") {
 
           .catch(() => {
 
+            /*
+              OFFLINE FALLBACK
+            */
+
             return caches.match(
               "./offline.html"
             );
@@ -406,7 +427,7 @@ if (event.request.mode === "navigate") {
   );
 
   return;
-} 
+}
 
 
   /* =========================
