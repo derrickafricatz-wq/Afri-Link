@@ -2210,37 +2210,6 @@ books.forEach(book => {
 });
 
 updateCart();
-
-window.addEventListener("load", async () => {
-
-  const offlineFiles = [
-
-  "./holly.pdf",
-  "./learn.pdf",
-
-  "./bg.jpg"
-
-];
-
-  for (const file of offlineFiles) {
-
-    try {
-
-      await fetch(file, {
-        cache: "reload"
-      });
-
-      console.log("Cached:", file);
-
-    } catch (e) {
-
-      console.log("Failed:", file);
-
-    }
-
-  }
-
-});
     
     function applyLimit() {
   const book = books.find(b => b.pdf === selectedPDF);
