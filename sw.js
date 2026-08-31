@@ -1,7 +1,7 @@
 // Afrilink - Offline Service Worker
 // ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
 
-const APP_VERSION = "1.0.27";
+const APP_VERSION = "1.0.28";
 const CACHE_NAME = `afrilink-${APP_VERSION}`;
 
 
