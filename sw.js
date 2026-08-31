@@ -9,7 +9,7 @@
    VERSION
 ============================================================ */
 
-const APP_VERSION = "1.0.28";
+const APP_VERSION = "1.0.29";
 
 const APP_CACHE = `afrilink-app-${APP_VERSION}`;
 
@@ -751,6 +751,56 @@ self.addEventListener("fetch", (event) => {
   );
 
 });
+
+/* =========================
+   AUDIO
+   NETWORK FIRST + OFFLINE CACHE
+========================= */
+
+if (
+  event.request.destination === "audio" ||
+  requestUrl.endsWith(".mp3")
+) {
+
+  event.respondWith(
+
+    fetch(event.request)
+
+      .then((response) => {
+
+        if (
+          response &&
+          response.status === 200
+        ) {
+
+          const clone = response.clone();
+
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+
+              cache.put(
+                event.request,
+                clone
+              );
+
+            });
+
+        }
+
+        return response;
+
+      })
+
+      .catch(() => {
+
+        return caches.match(event.request);
+
+      })
+
+  );
+
+  return;
+}
 
 
 /* ============================================================
