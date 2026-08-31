@@ -1,31 +1,14 @@
-// ============================================================
-// AFRI|LINK SERVICE WORKER
-// FAST CACHE-FIRST APP
-// PERMANENT OFFLINE FILE CACHE
-// ============================================================
+// Afrilink - Offline Service Worker
+// ONLINE-FIRST NAVIGATION + CACHE-FIRST RESOURCES
+
+const APP_VERSION = "1.0.27";
+const CACHE_NAME = `afrilink-${APP_VERSION}`;
 
 
-/* ============================================================
-   VERSION
-============================================================ */
-
-const APP_VERSION = "1.0.30";
-
-const APP_CACHE = `afrilink-app-${APP_VERSION}`;
-
-/*
-  IMPORTANT:
-  This cache does NOT contain the version number.
-
-  Therefore old offline files will NOT be deleted
-  when APP_VERSION changes.
-*/
-const OFFLINE_CACHE = "afrilink-offline-files";
-
-
-/* ============================================================
-   NORMAL APP FILES
-============================================================ */
+/* =========================
+   FILES TO CACHE
+   APP SHELL
+========================= */
 
 const APP_SHELL = [
 
@@ -33,12 +16,10 @@ const APP_SHELL = [
   "./index.html",
   "./manifest.json",
   "./sw.js",
-
   "./service.js",
   "./seat-dashboard.html",
   "./service-data.js",
   "./company-login.html",
-
   "./bg.js",
   "./books.js",
   "./bookings.js",
@@ -47,28 +28,34 @@ const APP_SHELL = [
   "./market.js",
   "./library.js",
 
-  /* PAGES */
+  /* VOICES */
+  "./afrilink.mp3",
+  "./silence.mp3",
+
   "./offline.html",
   "./admin.html",
   "./author.html",
   "./dashboard.html",
 
+
   /* ICONS */
-  "./ball.png",
-  "./icon-192.png",
+   "./ball.png",
+   "./icon-192.png",
   "./icon-512.png",
   "./icon-512-maskable.png",
 
   /* BACKGROUND */
-  "./images/s1.png",
+
+   "./images/s1.png",
 
   /* BOOK COVERS */
   "./images/er1.jpg",
   "./images/er2.jpg",
   "./images/b20.jpg",
   "./images/vg.jpg",
+   
 
-  /* BRAND / MARKET IMAGES */
+   /* BRAND LOGO*/
   "./images/logo.png",
   "./images/o1.png",
   "./images/o2.jpg",
@@ -77,7 +64,7 @@ const APP_SHELL = [
   "./images/1.png",
   "./images/2.jpg",
   "./images/3.jpg",
-  
+   
   "./images/6.jpg",
   "./images/8.jpg",
   "./images/10.jpg",
@@ -86,15 +73,16 @@ const APP_SHELL = [
   "./images/15.jpg",
   "./images/21.jpg",
   "./images/23.jpg",
+   
   "./images/19.jpg",
   "./images/20.jpg",
   "./images/24.jpg",
   "./images/m1.jpg",
   "./images/m3.png",
-  
   "./images/m11.png",
   "./images/m4.png",
   "./images/m10.jpg",
+   
   "./images/m5.jpg",
   "./images/m2.png",
   "./images/m9.jpg",
@@ -105,8 +93,8 @@ const APP_SHELL = [
     "./images/s3.jpg",
     "./images/s4.jpg",
     "./images/s5.png",
+   
     "./images/s6.png",
-    
     "./images/s7.png",
     "./images/l1.jpg",
    "./images/l2.jpg",
@@ -119,9 +107,9 @@ const APP_SHELL = [
    "./images/qc.jpg",
    "./images/qd.jpg",
    "./images/qe.jpg",
+   
    "./images/qf.jpg",
    "./images/qg.jpg",
-   
   "./images/qh.jpg",
   "./images/aa.png",
    "./images/ab.jpg",
@@ -131,13 +119,13 @@ const APP_SHELL = [
  "./images/af.jpg",
  "./images/ag.jpg",
  "./images/ah.jpg",
+   
   "./images/ai.jpg",
  "./images/aj.jpg",
 "./images/ak.jpg",
  "./images/al.jpg",
  "./images/am.jpg",
  "./images/an.jpg",
- 
   "./images/ao.jpg",
  "./images/ap.jpg",
 "./images/ca.jpg",
@@ -145,19 +133,20 @@ const APP_SHELL = [
 "./images/cc.jpg",
 "./images/cd.jpg",
 "./images/ce.jpg",
-"./images/cf.jpg",
-"./images/cg.jpg",
- "./images/ya.png",
- "./images/yb.png",
- "./images/yc.png",
+   
+   "./images/cf.jpg",
+   "./images/cg.jpg",
+   "./images/ya.png",
+   "./images/yb.png",
+   "./images/yc.png",
    "./images/za.png",
     "./images/zb.png",
     "./images/zc.png",
     "./images/zd.png",
     "./images/ze.png",
-    
     "./images/zf.png",
     "./images/zg.png",
+   
     "./images/zh.png",
     "./images/zi.png",
     "./images/zj.png",
@@ -165,159 +154,53 @@ const APP_SHELL = [
     "./images/zl.png",
     "./images/zm.png",
     "./images/zn.png",
-    "./images/zo.png",
-    
-    
-  /* SCREENSHOTS */
+    "./images/zo.png",  
+   
+   
+
+  /* SCREENSHOTS*/
   "./screenshots/home 1.jpg",
   "./screenshots/home.jpg",
   "./screenshots/sponsor.jpg",
   "./screenshots/market.jpg",
   "./screenshots/bookstore.jpg",
   "./screenshots/reader.jpg",
-
-  /* BANNER */
+   
+  /* BOOKS (PDF)*/
+  "./books/voice of god.pdf",
+  "./books/spiritual.pdf",
+  "./books/wito wa kumtumikia mungu.pdf",
+  "./books/siri za mafanikio ya maisha.pdf",
   "./banner.txt"
 
 ];
 
 
-/* ============================================================
-   PERMANENT OFFLINE FILES
-============================================================ */
-
-/*
-  THESE FILES ARE SEPARATE FROM THE APP VERSION CACHE.
-
-  They remain available when APP_VERSION changes.
-*/
-
-const OFFLINE_FILES = [
-
-  /* PDF BOOKS */
-  "./books/voice of god.pdf",
-  "./books/spiritual.pdf",
-  "./books/wito wa kumtumikia mungu.pdf",
-  "./books/siri za mafanikio ya maisha.pdf",
-
-  /* OFFLINE AUDIO */
-  "./afrilink.mp3",
-  "./silence.mp3"
-
-];
-
-
-/* ============================================================
+/* =========================
    INSTALL
-============================================================ */
+========================= */
 
 self.addEventListener("install", (event) => {
 
   event.waitUntil(
 
-    Promise.all([
+    caches.open(CACHE_NAME)
 
-      /*
-        Normal app cache
-      */
+      .then((cache) => {
 
-      caches.open(APP_CACHE)
-        .then((cache) => {
+        console.log(
+          "Caching Afri|Link app shell..."
+        );
 
-          console.log(
-            "Afri|Link: caching app shell..."
-          );
+        return cache.addAll(APP_SHELL);
 
-          return cache.addAll(APP_SHELL);
-
-        }),
-
-
-      /*
-        Permanent offline cache
-      */
-
-      caches.open(OFFLINE_CACHE)
-        .then(async (cache) => {
-
-          console.log(
-            "Afri|Link: checking permanent offline files..."
-          );
-
-          /*
-            Cache each file separately.
-
-            If one file fails, the entire service
-            worker installation does NOT fail.
-          */
-
-          for (const file of OFFLINE_FILES) {
-
-            try {
-
-              const existing =
-                await cache.match(file);
-
-              /*
-                If already stored, keep it.
-              */
-
-              if (existing) {
-
-                console.log(
-                  "Offline file already stored:",
-                  file
-                );
-
-                continue;
-
-              }
-
-
-              /*
-                Download the file.
-              */
-
-              const response =
-                await fetch(file);
-
-              if (
-                response &&
-                response.ok
-              ) {
-
-                await cache.put(
-                  file,
-                  response
-                );
-
-                console.log(
-                  "Offline file stored:",
-                  file
-                );
-
-              }
-
-            } catch (error) {
-
-              console.log(
-                "Offline file could not be stored:",
-                file
-              );
-
-            }
-
-          }
-
-        })
-
-    ])
+      })
 
   );
 
-
   /*
-    Activate immediately.
+    Activate the new service worker
+    immediately.
   */
 
   self.skipWaiting();
@@ -325,34 +208,26 @@ self.addEventListener("install", (event) => {
 });
 
 
-/* ============================================================
+/* =========================
    ACTIVATE
-============================================================ */
+========================= */
 
 self.addEventListener("activate", (event) => {
 
   event.waitUntil(
 
     caches.keys()
+
       .then((keys) => {
 
         return Promise.all(
 
           keys.map((key) => {
 
-            /*
-              Only delete OLD APP caches.
-
-              NEVER delete OFFLINE_CACHE.
-            */
-
-            if (
-              key.startsWith("afrilink-app-") &&
-              key !== APP_CACHE
-            ) {
+            if (key !== CACHE_NAME) {
 
               console.log(
-                "Deleting old app cache:",
+                "Deleting old cache:",
                 key
               );
 
@@ -368,9 +243,9 @@ self.addEventListener("activate", (event) => {
 
   );
 
-
   /*
-    Take control immediately.
+    Take control of open pages
+    immediately.
   */
 
   self.clients.claim();
@@ -378,14 +253,14 @@ self.addEventListener("activate", (event) => {
 });
 
 
-/* ============================================================
+/* =========================
    FETCH
-============================================================ */
+========================= */
 
 self.addEventListener("fetch", (event) => {
 
   /*
-    Only GET requests.
+    Only handle GET requests.
   */
 
   if (event.request.method !== "GET") {
@@ -397,52 +272,75 @@ self.addEventListener("fetch", (event) => {
     event.request.url;
 
 
-  /* ==========================================================
+  /* =========================
      NEVER CACHE SUPABASE
-  ========================================================== */
+  ========================= */
 
   if (
     requestUrl.includes("supabase.co")
   ) {
 
     event.respondWith(
-
       fetch(event.request)
-
     );
 
     return;
   }
 
 
-  /* ==========================================================
+  /* =========================
      NAVIGATION / HTML
-     CACHE FIRST
-  ========================================================== */
+     ONLINE FIRST
+  ========================= */
 
-  if (event.request.mode === "navigate") {
+  /*
+    This is the important fix.
 
-    event.respondWith(
+    When a user opens the app:
 
-      caches.match(event.request)
+    ONLINE
+      ↓
+    Get newest index.html
+      ↓
+    Save newest version to cache
 
-        .then((cachedPage) => {
+    OFFLINE
+      ↓
+    Use cached page
+  */
+
+ /* =========================
+   NAVIGATION / HTML
+   CACHE FIRST
+========================= */
+
+if (event.request.mode === "navigate") {
+
+  event.respondWith(
+
+    caches.match(event.request)
+
+      .then((cachedPage) => {
+
+        /*
+          SHOW THE APP IMMEDIATELY
+          FROM CACHE
+        */
+
+        if (cachedPage) {
 
           /*
-            APP OPENS IMMEDIATELY
-            FROM CACHE
+            WAIT 3 SECONDS BEFORE
+            CHECKING FOR A NEW VERSION.
+
+            This gives the app time to
+            open smoothly first.
           */
 
-          if (cachedPage) {
-
-            /*
-              Update quietly in background.
-
-              IMPORTANT:
-              This does NOT delay the page.
-            */
+          setTimeout(() => {
 
             fetch(event.request)
+
               .then((response) => {
 
                 if (
@@ -450,7 +348,8 @@ self.addEventListener("fetch", (event) => {
                   response.status === 200
                 ) {
 
-                  caches.open(APP_CACHE)
+                  caches.open(CACHE_NAME)
+
                     .then((cache) => {
 
                       cache.put(
@@ -463,150 +362,78 @@ self.addEventListener("fetch", (event) => {
                 }
 
               })
+
               .catch(() => {});
 
-
-            return cachedPage;
-
-          }
-
-
-          /* ==================================================
-             FIRST VISIT / NO CACHED PAGE
-          ================================================== */
-
-          return fetch(event.request)
-
-            .then((response) => {
-
-              if (
-                response &&
-                response.status === 200
-              ) {
-
-                const clone =
-                  response.clone();
-
-                caches.open(APP_CACHE)
-                  .then((cache) => {
-
-                    cache.put(
-                      event.request,
-                      clone
-                    );
-
-                  });
-
-              }
-
-              return response;
-
-            })
-
-            .catch(() => {
-
-              /*
-                Final offline page.
-              */
-
-              return caches.match(
-                "./offline.html"
-              );
-
-            });
-
-        })
-
-    );
-
-    return;
-  }
-
-
-  /* ==========================================================
-     PERMANENT OFFLINE FILES
-  ========================================================== */
-
-  /*
-    Check the permanent offline cache first.
-
-    This is especially important for PDFs and audio.
-  */
-
-  const isOfflineFile =
-    OFFLINE_FILES.some((file) =>
-      requestUrl.endsWith(
-        file.replace("./", "")
-      )
-    );
-
-
-  if (isOfflineFile) {
-
-    event.respondWith(
-
-      caches.open(OFFLINE_CACHE)
-
-        .then(async (cache) => {
-
-          const cached =
-            await cache.match(event.request);
-
-          if (cached) {
-
-            return cached;
-
-          }
+          }, 3000);
 
 
           /*
-            File is not stored yet.
-            Try internet.
+            RETURN CACHED PAGE
+            IMMEDIATELY
           */
 
-          try {
+          return cachedPage;
+        }
 
-            const response =
-              await fetch(event.request);
+
+        /*
+          FIRST OPEN / NO CACHE
+        */
+
+        return fetch(event.request)
+
+          .then((response) => {
 
             if (
               response &&
-              response.ok
+              response.status === 200
             ) {
 
-              await cache.put(
-                event.request,
-                response.clone()
-              );
+              const clone =
+                response.clone();
+
+              caches.open(CACHE_NAME)
+
+                .then((cache) => {
+
+                  cache.put(
+                    event.request,
+                    clone
+                  );
+
+                });
 
             }
 
             return response;
 
-          } catch (error) {
+          })
 
-            return new Response(
-              "Offline file is not available yet.",
-              {
-                status: 503,
-                statusText: "Offline"
-              }
+          .catch(() => {
+
+            /*
+              OFFLINE FALLBACK
+            */
+
+            return caches.match(
+              "./offline.html"
             );
 
-          }
+          });
 
-        })
+      })
 
-    );
+  );
 
-    return;
-  }
+  return;
+}
 
 
-  /* ==========================================================
+  /* =========================
      VIDEO
      CACHE FIRST
-  ========================================================== */
+  ========================= */
 
   if (
     event.request.destination === "video" ||
@@ -620,11 +447,8 @@ self.addEventListener("fetch", (event) => {
         .then((cached) => {
 
           if (cached) {
-
             return cached;
-
           }
-
 
           return fetch(event.request)
 
@@ -632,14 +456,13 @@ self.addEventListener("fetch", (event) => {
 
               if (
                 response &&
-                response.status === 200 &&
-                response.type !== "opaque"
+                response.status === 200
               ) {
 
                 const clone =
                   response.clone();
 
-                caches.open(APP_CACHE)
+                caches.open(CACHE_NAME)
                   .then((cache) => {
 
                     cache.put(
@@ -663,10 +486,20 @@ self.addEventListener("fetch", (event) => {
   }
 
 
-  /* ==========================================================
+  /* =========================
      EVERYTHING ELSE
      CACHE FIRST
-  ========================================================== */
+  ========================= */
+
+  /*
+    Images
+    JavaScript
+    CSS
+    MP3
+    PDF
+    Fonts
+    Other resources
+  */
 
   event.respondWith(
 
@@ -675,8 +508,7 @@ self.addEventListener("fetch", (event) => {
       .then((cachedResponse) => {
 
         /*
-          CACHE HIT
-          Return immediately.
+          1. Use cache immediately
         */
 
         if (cachedResponse) {
@@ -687,8 +519,8 @@ self.addEventListener("fetch", (event) => {
 
 
         /*
-          CACHE MISS
-          Go online.
+          2. Not cached?
+             Get it from internet.
         */
 
         return fetch(event.request)
@@ -696,7 +528,7 @@ self.addEventListener("fetch", (event) => {
           .then((response) => {
 
             /*
-              Don't cache bad responses.
+              Don't cache invalid responses.
             */
 
             if (
@@ -711,13 +543,13 @@ self.addEventListener("fetch", (event) => {
 
 
             /*
-              Store successful resource.
+              Save successful resource.
             */
 
             const clone =
               response.clone();
 
-            caches.open(APP_CACHE)
+            caches.open(CACHE_NAME)
               .then((cache) => {
 
                 cache.put(
@@ -735,10 +567,21 @@ self.addEventListener("fetch", (event) => {
           .catch(() => {
 
             /*
-              Nothing available.
+              If the resource is unavailable
+              and was not cached, return nothing.
             */
 
-            return undefined;
+            if (
+              requestUrl.includes(".pdf") ||
+              requestUrl.includes(".mp4") ||
+              requestUrl.includes(".mp3")
+            ) {
+
+              return caches.match(
+                event.request
+              );
+
+            }
 
           });
 
@@ -749,9 +592,9 @@ self.addEventListener("fetch", (event) => {
 });
 
 
-/* ============================================================
+/* =========================
    MESSAGE
-============================================================ */
+========================= */
 
 self.addEventListener("message", (event) => {
 
